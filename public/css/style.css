@@ -1,0 +1,880 @@
+.custom_header .bg-body-tertiary {
+    background-color: #fff !important;
+}
+
+.main_battle input[type="text"] {
+    height: 50px;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.main_battle img {
+    max-width: 100%;
+}
+
+img.bordered {
+    border: 3px solid #000;
+    height: 100%;
+    border-radius: unset !important;
+}
+
+.outer-div {
+    position: relative;
+    top: 0;
+    height: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    border-radius: 10px;
+    max-width: 190px;
+}
+
+
+
+
+.front_card_text {
+    height: 100%;
+    /* padding: 10px; */
+    position: relative;
+    z-index: 1;
+}
+
+.outer-div .card {
+    width: 100%;
+    /* height: 100% !important; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    backface-visibility: hidden;
+    transition: transform 0.5s;
+    display: block;
+    border: none;
+    /* transform: translateY(0) !important; */
+}
+
+.outer-div .card * {
+    height: 100%;
+    width: 100%;
+    object-position: center;
+    border: none;
+}
+
+.user_col_1 img {
+    border-radius: unset !important;
+}
+
+.user_col_3 input[type="text"] {
+    margin-bottom: 30px;
+}
+
+.Result_timmer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.Result_timmer input[type="text"] {
+    margin: 0;
+}
+.Result_timmer input {
+    outline: none;
+}
+.user_col_2 {
+    height: 100%;
+}
+
+.user_col_3 {
+    height: 100%;
+}
+
+.main_battle img {
+    max-width: 100%;
+    height: auto !important;
+    object-fit: contain;
+    border-radius: 0px;
+}
+
+.points_count img {
+    width: 50px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 30px;
+}
+
+.Result_wrapper_duration input {
+    margin-bottom: 30px;
+}
+
+.Result_wrapper_duration {
+    border: 2px solid #000;
+    padding: 0px 0px 0px 0px !important;
+    text-align: center;
+    width: calc(100% - 1.5rem) !important;
+    margin: 0 auto;
+}
+
+.points_count .item_point {
+    background: #000;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.points_count .item_point span {
+    color: #fff;
+    font-size: 18px;
+}
+
+.points_count {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+/* .Result_wrapper_computer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 30px;
+} */
+/* 
+.Result_wrapper_user {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 30px;
+} */
+
+.Result_wrapper > .container > .row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    align-items: center;
+}
+
+.Result_wrapper {
+    margin: 50px 0;
+}
+
+.user_col_1 img {
+    text-align: center;
+    border: 3px solid #000;
+    width: 100%;
+    aspect-ratio: 1;
+    height: calc(100% - 42px) !important;
+    object-fit: cover;
+    min-height: 210px;
+}
+.user_col_3 {
+    border: 2px solid #000;
+    padding: 10px 10px;
+    text-align: center;
+    display: grid;
+    align-items: center;
+    align-content: center;
+}
+.user_col_2_inner {
+    height: calc(100% - 42px) !important;
+    position: relative;
+    aspect-ratio: 2/3;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.Result_wrapper h3 {
+    border: 1px solid #000;
+    padding: 4px 7px;
+    font-size: 14px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+}
+
+.user_col_2 {
+    position: relative;
+    text-align: center;
+}
+
+.user_col_2 h2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    /* margin: 0 10px; */
+    border: 2px solid #000;
+    font-size: 25px;
+}
+
+.Result_wrapper_duration p {
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+    padding: 20px 50px 20px 10px;
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.Result_wrapper_duration .plus_icon,
+.Result_wrapper_duration .minus_icon {
+    background: none;
+    border: none;
+    line-height: 1;
+}
+
+.inline_buttons ul {
+    list-style: none;
+    padding: 0 50px;
+}
+
+.inline_buttons ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    text-align: center;
+}
+
+a.nav-link {
+    font-size: 20px;
+    color: #000;
+}
+
+.inline_buttons ul li a {
+    border: 1px solid #000;
+    /* padding: 10px 30px; */
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+.inline_buttons {
+    margin-bottom: 50px;
+}
+
+.modal-dialog {
+    max-width: 900px !important;
+}
+
+.fliped_cards .row {
+    max-width: 350px;
+    margin: auto;
+}
+
+.fliped_cards img {
+    max-width: 150px;
+}
+
+/* "dummy" */
+.card {
+    width: 150px;
+    height: 200px;
+    position: relative;
+    perspective: 1000px;
+    cursor: pointer;
+    border-color: white;
+    border: #fff;
+}
+
+/* .card-front,
+  .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    transition: transform 0.5s;
+  } */
+.inputSix {
+    position: relative;
+    /* top: 230px; */
+}
+
+.card-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-front img {
+    width: 100%;
+    max-width: 100%;
+    height: auto !important;
+    /* height: 100%; */
+}
+.card-front2 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 108px;
+    left: 0;
+    backface-visibility: hidden;
+    transition: transform 0.5s;
+}
+
+.card-fronter {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 10px;
+}
+
+.card-front2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.Result_wrapper_outer .Result_wrapper {
+    margin: 50px auto;
+}
+
+.Result_wrapper_outer .Result_wrapper .row .Result_wrapper_duration {
+    max-width: 370px;
+    margin: auto;
+}
+
+.Result_wrapper_outer .Result_wrapper .row {
+    grid: unset;
+}
+
+.fliped_cards {
+    margin-top: 50px;
+}
+
+.Result_wrapper_outer .Result_wrapper .row .Result_wrapper_duration {
+    max-width: 370px;
+    margin: auto;
+}
+
+.card-back {
+    background-color: #ccc;
+    transform: rotateY(180deg);
+}
+
+.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.flipped .card-back {
+    transform: rotateY(0);
+}
+
+
+@media (max-width:1024px) {
+    .Result_wrapper .row {
+        grid-template-columns: 1fr;
+    }
+
+    .inline_buttons ul {
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        text-align: center;
+    }
+
+}
+
+@media (max-width:768px) {
+    .Result_wrapper .row {
+        grid-template-columns: 1fr;
+    }
+
+    .inline_buttons ul {
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 10px;
+        padding: 0;
+        column-gap: 10px;
+    }
+
+    /* .inline_buttons ul li a {
+        padding: 10px 15px;
+    } */
+
+    .main_battle .row {
+        row-gap: 10px;
+    }
+
+    .points_count {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .Result_wrapper_user,
+    .Result_wrapper_computer {
+        grid-template-columns: 1fr;
+    }
+}
+
+.activeUser {
+    background-color: rgb(165, 50, 165);
+    color: #fff;
+}
+
+.auto-selected {
+    color: green;
+}
+
+.auto-selected1 {
+    color: red;
+}
+
+/* -------------------------SixCard-------------------- */
+.La_bataille .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    text-align: center;
+}
+
+.La_bataille .row .La_bataille_item .player_name {
+    border: 1px solid #000;
+    padding: 20px;
+}
+
+.La_bataille_item_inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.La_bataille_item_inner img {
+    width: 100%;
+}
+
+.La_bataille_item_left input {
+    padding: 20px;
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .La_bataille .row {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+
+}
+
+@media only screen and (max-width: 575px) {
+    .La_bataille .row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .La_bataille .row {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.user_col_2 .card {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+}
+
+.user_col_2 .card * {
+    width: 100%;
+    height: 100%;
+}
+
+.user_col_2 .card-fronter {
+    top: 0;
+}
+
+.user_col_2 h2 {
+    height: auto !important;
+    z-index: 1;
+    width: 90%;
+    left: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 !important;
+}
+
+.pts_box {
+    display: grid;
+    border-left: 1px solid #000;
+    font-size: 30px;
+}
+
+.Result_wrapper_user .card-fronter img {
+    height: auto !important;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto !important;
+    object-fit: contain;
+    border-radius: 0;
+}
+.battle_modal .modal-body {
+    background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-game-castle-dark-banner-image_178457.jpg);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.battle_modal .modal-body h2 {
+    font-size: 60px;
+    text-align: center;
+    font-weight: 800;
+}
+.modal-footer .close_modal_icon {
+    background: transparent;
+    border: none;
+    color: #020202;
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.close_modal_icon {
+    display: flex;
+    position: relative;
+    z-index: 1;
+}
+.modal-footer {
+    border: none !important;
+    padding: 0!important;
+}
+.modal-dialog {
+    max-width: 650px !important;
+}
+
+.modal-dialog .modal-content {
+    min-height: 200px;
+    /* align-items: center; */
+    background: #ffe9e9;
+}
+
+.modal-dialog .modal-content .modal-body {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+.strong_card_modal .modal-body {
+    background: none;
+    -webkit-text-fill-color: unset;
+}
+.strong_card_modal .modal-dialog {
+    max-width: 460px !important;
+}
+.strong_card_modal .modal-body h2 {
+    font-size: 40px;
+    font-weight: 600;
+}
+.modal-dialog .modal-content .modal-body .animated_img {
+    position: absolute;
+    width: 800px;
+    margin: 0 auto;
+    display: block;
+    z-index: 1;
+    left: 50%;
+    right: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+}
+.items_point_last .last_child {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    flex-direction: column;
+    font-weight: 600;
+}
+
+.items_point_last span {
+    font-size: 13px !important;
+}
+.battle_card_imgs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.imgs_wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.imgs_wrapper img {
+    position: static !important;
+    transform: none !important;
+    max-width: 120px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+.new_game_btn {
+    border-radius: 0px;
+    padding: 10px;
+    font-size: 15px;
+    background: #ffdbdb;
+    box-shadow: inset 2px -2px 0px #d9aaaa;
+    position: relative;
+    z-index: 1;
+    border: 1px solid #dfb2b2;
+}
+.new_game_btn:focus {
+    box-shadow: inset -2px 2px 0px #d9aaaa;
+}
+.userComputer_cards {
+    perspective: 1000px;
+    height: 100%;
+    border: 3px solid #000;
+}
+.userComputer_cards_inner {
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+.userComputer_cards_inner img{
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    transform: translateX(-100%);
+}
+.card_text_unavailable {
+    opacity: 0;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    margin: 0;
+}
+.userComputer_cards_inner img {
+    height: 100% !important;
+    width: 100%;
+}
+.userComputer_cards_inner p {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+
+/* form css */
+.form_field {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form_field .floating_input {
+    display: block;
+    background: transparent;
+    transition: all .3s ease;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid #b6babd;
+    border-radius: 10px;
+}
+.form_field label {
+    display: inline-block;
+    color: #c1c1c1;
+    font-weight: 400;
+}
+.form_field .floating_label {
+    position: absolute;
+    cursor: text;
+    top: 50%;
+    left: 10px;
+    font-size: 13px;
+    background: #f9f9f9;
+    padding: 0 2px;
+    color: #c1c1c1;
+    transition: all .3s ease;
+    transform: translateY(-50%);
+    font-weight: 500;
+}
+
+.form_field .floating_input:focus+label,
+.form_field .floating_input:valid+.floating_label {
+    top: -4px;
+    margin: 0;
+    z-index: 3;
+}
+
+.form_field .floating_input:focus {
+    outline: none;
+}
+
+.signup_form .btn-primary.form_btn {
+    background: #2499ef;
+    padding: 12px 20px;
+    font-size: 18px;
+}
+
+.signup_form {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px #0000001a;
+    border: 1px solid #dfdfdf;
+}
+
+
+@media ( max-width: 575px ) {
+    .Result_wrapper > .container > .row{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .user_col_2 h2{
+        font-size: 20px;
+    }
+    .Result_timmer {
+        display: grid;
+        align-items: center;
+        gap: 0;
+        justify-items: center;
+    }
+    .pts_box {
+        display: grid;
+        border-left: 0;
+        font-size: 30px;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+   /* ContactUs.css */
+
+  .contact-us {
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+  }
+   
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  textarea {
+    height: 150px;
+  }
+  
+  button {
+    display: block;
+    /* width: 100%; */
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* _________________BInary Card css-__________________ */
+  .binarycontainer{
+    border:4px solid black;
+    margin-bottom: 10px;
+  }
+
+  /**  Alert css
+  */
+  .conf_mail_msg_success .toast-header {
+    border-radius: 4px;
+    border: 0;
+    border: 1px solid green !important;
+    color: #198754 !important;
+    font-weight: 600;
+}
+  .conf_mail_msg_danger .toast-header {
+    border-radius: 4px;
+    border: 0;
+    border: 1px solid red !important;
+    color: red !important;
+    font-weight: 600;
+}
+.conf_mail_msg {border-radius: 5px;}
+.card-text {
+    border: 1px solid #000;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.field_icon {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 4;
+}
+.form_field{
+    margin: 0;
+}
+.error{
+    color: red;
+}
