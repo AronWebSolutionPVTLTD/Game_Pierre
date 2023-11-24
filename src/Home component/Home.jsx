@@ -107,7 +107,7 @@ export const Home = ({ handleFullScreen }) => {
   const buttonsound = new Audio("button click sound.wav");
   const battle = new Audio("battle sound.wav");
   const lost = new Audio("lost 1 point.wav");
-  const userName = localStorage.getItem("username");
+  const userName = localStorage.getItem("username") || "usager";
   const Token = localStorage.getItem("token");
   // const userName = "Prénom";
   const compName = "Ordinateur";
