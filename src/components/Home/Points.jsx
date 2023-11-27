@@ -32,9 +32,9 @@ export const Points = ({ color, checkValue, handleClick }) => {
 
   const crocheValue = [
     { value: 0.5, fraction: "1/2" },
-    { value: 1.0, fraction: "1/1" },
+1,
     { value: 1.5, fraction: "3/2" },
-    { value: 3.0, fraction: "3/1" },
+ 3,
     2,
     4,
     6,
@@ -122,6 +122,13 @@ export const Points = ({ color, checkValue, handleClick }) => {
                         transition={{ duration: 0.2, ease: 'linear' }}
                         initial={{ scale: 1 }}
                         
+                        animate={{
+                          scale:
+                            color !== "1" && color !== "2" ? 1 : checkValue === (typeof item === "object" ? item.value : item) ? 1.2 : 1,
+                          opacity:
+                            (color === "2" || (color === "1" && checkValue === (typeof item === "object" ? item.value : item))) ? 1 : 0.8,
+                        }}
+                        
                         style={{
                           background:
                             color === "2" &&
@@ -166,6 +173,14 @@ export const Points = ({ color, checkValue, handleClick }) => {
                           key={index}
                           variants={itemVariants}
                           transition={{ duration: 0.2, ease: 'linear' }}
+
+
+                          animate={{
+                            scale:
+                              color !== "1" && color !== "2" ? 1 : checkValue === (typeof item === "object" ? item.value : item) ? 1.2 : 1,
+                            opacity:
+                              (color === "2" || (color === "1" && checkValue === (typeof item === "object" ? item.value : item))) ? 1 : 0.8,
+                          }}
                           style={{
                             background:
                               color === "2" &&

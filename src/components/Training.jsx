@@ -14,6 +14,7 @@ import {
 } from "../Context/action";
 import { Points } from "./Home/Points";
 import { TrainingGameOver, GamePopUpModal } from "./Home/GameModals";
+import { toast } from "react-toastify";
 
 function Training() {
   const { state, dispatch, timerenable, setTimerEnable, color, setColor } =
@@ -22,7 +23,7 @@ function Training() {
   const [cards, setCards] = useState(state.cards);
   const [img, setImg] = useState("");
   const [checkValue, setCheckValue] = useState("");
-
+const[flip,setflip]=useState(true)
   const [flipcardValue, setFlipCardValue] = useState();
   const [valuePopUp, setValuePopUp] = useState(false);
   const [correctvalue, setCorrectValue] = useState(false);
@@ -37,16 +38,13 @@ function Training() {
   }, [TrainingTimer]);
 
   console.log(cards,"card")
+
   useEffect(() => {
     if (cards.length==0)
     setCards(state.cards);
-  }, [shuffle,state.cards]);
+  }, [shuffle,state.cards,cards]);
 
-  useEffect(() => {
-    if (cards.length === 0) {
-      setCards(state.cards);
-    }
-  }, [cards]);
+
 
   // _______________________Timer functionality________________________
 
@@ -86,31 +84,37 @@ function Training() {
   // ----------------------------flip card----------------------
 
   const flipCard = (id, val) => {
-    setFlipCardValue(val);
-    dispatch(MainValueSelected(true));
-    dispatch(Flipped(true));
-    setTimerEnable(true);
-
-    const updatedCards = cards.map((card) => {
-      if (card.id === id) {
-        setImg(card.img);
-
-        return { ...card, isFlipped: true };
-      } else {
-        return { ...card, isFlipped: false };
-      }
-    });
-
-    const getFalse = updatedCards.filter((el) => el.isFlipped == false);
-
-    setCards(getFalse);
+    if(flip){
+      setFlipCardValue(val);
+      dispatch(MainValueSelected(true));
+      dispatch(Flipped(true));
+      setTimerEnable(true);
+  
+      const updatedCards = cards.map((card) => {
+        if (card.id === id) {
+          setImg(card.img);
+  
+          return { ...card, isFlipped: true };
+        } else {
+          return { ...card, isFlipped: false };
+        }
+      });
+  
+      const getFalse = updatedCards.filter((el) => el.isFlipped == false);
+  
+      setCards(getFalse);
+      setflip(false)
+    }else{
+      toast('Sélectionnez la valeur pour continuer le jeu')
+    }
+ 
   };
 
   // -----------------------------------True value--------------------
 
   const handleClick = (val) => {
     setCheckValue(val);
-
+  
     if (mainvalueselect) {
       if (val === flipcardValue) {
         setColor("1");
@@ -127,6 +131,7 @@ function Training() {
         setColor("");
       }, 2000);
       dispatch(MainValueSelected(false));
+      setflip(true)
     } else {
       setValuePopUp(true);
     }
@@ -146,6 +151,7 @@ function Training() {
   const handleValuePop = () => {
     setValuePopUp(false);
   };
+
   const cardHeight = (i) => ({
     height: `calc(100% - ${cards.length * (1 / 2)}px)`,
     transform: `translateY(${i * 1}px)`,

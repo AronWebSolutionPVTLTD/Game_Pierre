@@ -243,7 +243,12 @@ import { React, useState,useEffect } from "react";
                      </span>
                    </div>
                  )}
-
+<div className="text-end mb-3">
+                     <span onClick={() =>navigate("/signup") }>
+                     
+                     S'inscrire
+                     </span>
+                   </div>
                  <div className="col-12">
                    <button
                      className="btn btn-primary w-100 form_btn"

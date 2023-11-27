@@ -100,7 +100,7 @@ const Deck = () => {
      
       const getFalse = updatedCards.filter((el) => el.isFlipped === false);
       setdeckcard(getFalse)
-  // setdeckcard(updatedCards);
+
       setUserCards(updatedCards);
       setValueSelected(true);
    

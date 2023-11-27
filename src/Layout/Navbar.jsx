@@ -42,10 +42,10 @@ export const Navbar = () => {
                 <Link to="/">Jouer</Link>
                 {/* <Link to="/evaluation">Evaluation</Link> */}
                 {/* <Link to="/sixcard">Sixcard</Link> */}
-                {/* <Link to="training">site de formation</Link> */}
+                <Link to="training">site de formation</Link>
                 <Link >Evaluation</Link> 
                 <Link >Sixcard</Link>
-                <Link >site de formation</Link>
+                {/* <Link >site de formation</Link> */}
                 <Link >Règles du jeu</Link>
                 <Link >Boutique</Link>
                 <Link to="/contact">Contact</Link>

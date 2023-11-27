@@ -55,13 +55,56 @@ function App() {
         <Route
           path="/"
           element={
-      
+            <ProtectedRoute>
               <Home handleFullScreen={handleFullScreen} />
-    
+            </ProtectedRoute>
           }
         />
-      
- 
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/evaluation"
+          element={
+            <ProtectedRoute>
+              <Evaluation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sixcard"
+          element={
+            <ProtectedRoute>
+            
+              <Sixcard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/training"
+          element={
+            <ProtectedRoute>
+              <Training />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <ProtectedRoute>
+              <GameSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <Contact />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/reset-password/:email" element={<ResetPassword />} />
+        <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     </div>
   );
