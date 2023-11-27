@@ -76,7 +76,7 @@ export default function Signup() {
       const payload = { firstName, lastName, email, password, phone };
 
       const response = await axios.post(
-        "http://localhost:5000/api/signup",
+        "https://game-backend-elkj.onrender.com/api/signup",
         payload,
       );
 

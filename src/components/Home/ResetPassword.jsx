@@ -31,7 +31,7 @@ export function ResetPassword() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/resetpassword",
+        "https://game-backend-elkj.onrender.com/api/resetpassword",
         { newPassword, email },
       );
       setMessage(response.data.message);

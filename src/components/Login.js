@@ -62,7 +62,7 @@ import { React, useState,useEffect } from "react";
 
        if (forgotpass) {
          axios
-           .post("http://localhost:5000/api/forgotpassword", { email })
+           .post("https://game-backend-elkj.onrender.com/api/forgotpassword", { email })
            .then((response) => {
              if (
                response.data.message ===
@@ -83,7 +83,7 @@ import { React, useState,useEffect } from "react";
          const payload = { email, password };
 
          const response = await axios.post(
-           "http://localhost:5000/api/login",
+           "https://game-backend-elkj.onrender.com/api/login",
            payload,
          );
 
