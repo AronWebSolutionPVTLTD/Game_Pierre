@@ -281,7 +281,7 @@ export const Home = ({ handleFullScreen }) => {
     useEffect(()=>{
 if(deckcard.length==0 && compturnstop ){
   setHomeTimer(0);
-  console.log(hometimer)
+  
 }
     },[deckcard.length,compturnstop])
    

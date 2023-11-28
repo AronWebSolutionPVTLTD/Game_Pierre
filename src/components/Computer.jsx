@@ -72,6 +72,9 @@ export const Computer = () => {
         dispatch(AIsetImg("./img/Image verso card.png"));
         setTimeout(() => {
           dispatch(UserNameColor(true));
+          if (deckcard.length===0){
+            setCompturnStop(true)
+           }
         }, 1000);
         return;
       }

@@ -35,12 +35,12 @@ import { React, useState,useEffect } from "react";
    function validate(values) {
     let errors = {};
     if (!values.email) {
-      errors.email = "Email address is required";
+      errors.email = "L'adresse e-mail est requise";
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-      errors.email = "Email address is invalid";
+      errors.email = "L'adresse e-mail n'est pas valide";
     }
     if (!values.password) {
-      errors.password = "Password is required";
+      errors.password = "Le mot de passe est requis";
     }
 
 
@@ -242,6 +242,7 @@ import { React, useState,useEffect } from "react";
                        Retour à la connexion?
                      </span>
                    </div>
+                   
                  )}
 <div className="text-end mb-3">
                      <span onClick={() =>navigate("/signup") }>

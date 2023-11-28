@@ -16,41 +16,56 @@ export default function Signup() {
   const navigate = useNavigate();
   const [data, setData] = useState(INITIAL_STATE);
   const [showpassword,setShowPassword]=useState(false)
+
+
   const validate = (value) => {
     let error = {};
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const phoneRegex =  /^[0]?[789]\d{9}$/
+    const phoneRegex = /^(\+33|0)[1-9](\d{2}){4}$/
+    const phoneNumber1 = value.phone;
+    const phoneNumber2 = value.phone;
+ 
     if (!value.firstName.trim()) {
-      error.firstName = "FirstName is required";
+      error.firstName = "Le prénom est requis";
     }
     if (!value.lastName.trim()) {
-      error.lastName = "LastName is required";
+      error.lastName = "Le nom de famille est requis";
     }
     if (!value.email.trim()) {
-      error.email = "Email is required";
+      error.email = "L'adresse e-mail est requise";
     } else if (!regex.test(value.email)) {
-      error.email = "Please enter the valid email";
+      error.email = "Veuillez saisir une adresse e-mail valide";
     }
     if (!value.phone.trim()) {
-      error.phone = "Contact number is required";
+      error.phone = "Le numéro de contact est requis";
     } 
-    else if(!phoneRegex.test(value.phone)){
-      error.phone="Invalid Number"
-    }
+
+
+
+else if (!phoneRegex.test(phoneNumber1)) {
+        error.phone="Numéro invalide"
+} 
+
+else if (!phoneRegex.test(phoneNumber2)) {
+       error.phone="Numéro invalide"
+} 
+    // else if(!phoneRegex.test(value.phone)){
+    //   error.phone="Numéro invalide"
+    // }
     // else if (value.phone.length !== 10) {
     //   error.phone = "Invalid Number ";
     // }
  
     if (!value.password.trim()) {
-      error.password = "Password is required";
+      error.password = "Le mot de passe est requis";
     } else if (value.password.trim().length < 8) {
-      error.password = "Password must be 8 or more characters";
+      error.password = "Le mot de passe doit comporter 8 caractères ou plus";
     } else if (!/\d/.test(value.password)) {
-      error.password = "Password must contain at least 1 number";
+      error.password = "Le mot de passe doit contenir au moins 1 chiffre";
     } else if (!/[!@#$%&?]/.test(value.password)) {
-      error.password = "Password must contain at least 1 special character";
+      error.password = "Le mot de passe doit contenir au moins 1 caractère spécial";
     } else if (!/[A-Z]/.test(value.password)) {
-      error.password = "Password must contain at least 1 capital letter";
+      error.password = "Le mot de passe doit contenir au moins 1 lettre majuscule";
     }
     return error;
   };
@@ -172,7 +187,8 @@ export default function Signup() {
                       onChange={handleChange}
                       className="floating_input"
                       onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
+                    
+                          if (!/[0-9+]/.test(event.key)) {
                           event.preventDefault();
                         }
                       }}
@@ -210,6 +226,12 @@ export default function Signup() {
                   </div>
                   {error.password && <small className="error">{error.password}</small>}
                 </div>
+                <div className="text-end mb-3">
+                     <span onClick={() =>navigate("/login") }>
+                     
+                     Se connecter
+                     </span>
+                   </div>
                 {/* <div className="col-sm-12">
                                     <div className="form_field">
                                         <input type="password"
@@ -227,7 +249,7 @@ export default function Signup() {
                     className="btn btn-primary w-100 form_btn"
                     onClick={btnsubmit}
                   >
-                    Submit
+                     Connexion
                   </button>
                 </div>
               </div>
