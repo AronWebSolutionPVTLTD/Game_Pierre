@@ -48,7 +48,7 @@ function Training() {
     TrainingTimer ? setTimer(TrainingTimer) : setTimer(120);
   }, [TrainingTimer]);
 
-  console.log(cards, "card");
+  // console.log(cards, "card");
 
   useEffect(() => {
     if (cards.length == 0) setCards(state.cards);

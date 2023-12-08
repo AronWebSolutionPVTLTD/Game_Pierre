@@ -39,8 +39,8 @@ const Deck = () => {
 
 
 
-  console.log(hometimer,"timer")
-  console.log(usercards,"user")
+  // console.log(hometimer,"timer")
+  // console.log(usercards,"user")
 
   useEffect(() => {
     if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
@@ -110,7 +110,7 @@ useEffect(() => {
 }, [hometimer]);
 
   // console.log(usercards, "user");
-  console.log(deckcard, "deck");
+  // console.log(deckcard, "deck");
  
   // -------------RECOVERY CARD_______________
   useEffect(() => {
