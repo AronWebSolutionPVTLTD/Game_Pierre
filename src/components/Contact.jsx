@@ -85,7 +85,7 @@ function Contact() {
             });
             setFormData({
               firstname: "",
-              lastname:"",
+              lastname: "",
               email: "",
               selectedOption: "message",
               message: "",
@@ -105,7 +105,7 @@ function Contact() {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <form className="signup_form" ref={form} onSubmit={handleSubmit}>
-            <h3 className="form_title text-center mb-4">Contact Us</h3>
+            <h3 className="form_title text-center mb-4">Contactez-nous</h3>
             <div className="row">
               <div className="col-sm-12 mb-3">
                 <div className="form_field">
@@ -121,7 +121,7 @@ function Contact() {
                     className="floating_input"
                   />
                   <label htmlFor="firstname" className="floating_label">
-                    First Name
+                    Prénom
                   </label>
                 </div>
               </div>
@@ -139,7 +139,7 @@ function Contact() {
                     className="floating_input"
                   />
                   <label htmlFor="lastName" className="floating_label">
-                    Last Name
+                    Nom
                   </label>
                 </div>
               </div>
@@ -178,7 +178,7 @@ function Contact() {
                     <option value="suggestion">Suggestion</option>
                   </select>
                   <label htmlFor="contactType" className="floating_label">
-                    Contact Type
+                    Type Du Message
                   </label>
                 </div>
               </div>
@@ -222,7 +222,7 @@ function Contact() {
 
               <div className="col-12 mb-3">
                 <button className="btn btn-primary w-100 form_btn">
-                  Submit
+                  Envoyer
                 </button>
               </div>
             </div>

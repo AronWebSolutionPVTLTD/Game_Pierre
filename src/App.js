@@ -14,12 +14,18 @@ import Contact from "./components/Contact";
 import { GameContext } from "./Context/GameContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { ResetPassword } from "./components/Home/ResetPassword";
-import NotFound from "./Layout/NotFound";
+
 import NotFoundPage from "./Layout/NotFound";
+import PricingComponent from "./Setting/PremiumPackage";
 
 function App() {
-  const { dispatch, setBinaryFilterCard, defaultbinary, setDefaultBinary } =
-    useContext(GameContext);
+  const {
+    dispatch,
+    setBinaryFilterCard,
+    defaultbinary,
+    setDefaultBinary,
+    premium,
+  } = useContext(GameContext);
 
   useEffect(() => {
     const storedCards = JSON.parse(localStorage.getItem("selectedCards"));
@@ -74,7 +80,6 @@ function App() {
           path="/sixcard"
           element={
             <ProtectedRoute>
-            
               <Sixcard />
             </ProtectedRoute>
           }
@@ -104,7 +109,8 @@ function App() {
           }
         />
         <Route path="/reset-password/:email" element={<ResetPassword />} />
-        <Route path="*" element={<NotFoundPage/>} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/premium" element={<PricingComponent />} />
       </Routes>
     </div>
   );

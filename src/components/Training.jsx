@@ -11,19 +11,30 @@ import {
   GameOver,
   MainValueSelected,
   Shuffled,
+  TurnOver,
+  WrongValue,
 } from "../Context/action";
 import { Points } from "./Home/Points";
 import { TrainingGameOver, GamePopUpModal } from "./Home/GameModals";
 import { toast } from "react-toastify";
-
+import {  motion } from "framer-motion";
 function Training() {
   const { state, dispatch, timerenable, setTimerEnable, color, setColor } =
     useContext(GameContext);
-  const { cardFlipped, mainvalueselect, shuffle, gameOver } = state;
+  const {
+    cardFlipped,
+    mainvalueselect,
+    shuffle,
+    gameOver,
+    correctValue,
+    wrongvalue,
+    turnover,
+  } = state;
+
   const [cards, setCards] = useState(state.cards);
   const [img, setImg] = useState("");
   const [checkValue, setCheckValue] = useState("");
-const[flip,setflip]=useState(true)
+  const [flip, setflip] = useState(true);
   const [flipcardValue, setFlipCardValue] = useState();
   const [valuePopUp, setValuePopUp] = useState(false);
   const [correctvalue, setCorrectValue] = useState(false);
@@ -37,14 +48,11 @@ const[flip,setflip]=useState(true)
     TrainingTimer ? setTimer(TrainingTimer) : setTimer(120);
   }, [TrainingTimer]);
 
-  console.log(cards,"card")
+  console.log(cards, "card");
 
   useEffect(() => {
-    if (cards.length==0)
-    setCards(state.cards);
-  }, [shuffle,state.cards,cards]);
-
-
+    if (cards.length == 0) setCards(state.cards);
+  }, [shuffle, state.cards, cards]);
 
   // _______________________Timer functionality________________________
 
@@ -84,54 +92,56 @@ const[flip,setflip]=useState(true)
   // ----------------------------flip card----------------------
 
   const flipCard = (id, val) => {
-    if(flip){
+    if (flip) {
+      dispatch(TurnOver());
       setFlipCardValue(val);
       dispatch(MainValueSelected(true));
       dispatch(Flipped(true));
       setTimerEnable(true);
-  
+
       const updatedCards = cards.map((card) => {
         if (card.id === id) {
           setImg(card.img);
-  
+
           return { ...card, isFlipped: true };
         } else {
           return { ...card, isFlipped: false };
         }
       });
-  
+
       const getFalse = updatedCards.filter((el) => el.isFlipped == false);
-  
+
       setCards(getFalse);
-      setflip(false)
-    }else{
-      toast('Sélectionnez la valeur pour continuer le jeu')
+      setflip(false);
+    } else {
+      toast("Sélectionnez la valeur pour continuer le jeu");
     }
- 
   };
 
   // -----------------------------------True value--------------------
 
   const handleClick = (val) => {
     setCheckValue(val);
-  
+
     if (mainvalueselect) {
       if (val === flipcardValue) {
         setColor("1");
         pointwin.play();
+        dispatch(CorrectValue());
       } else {
+        dispatch(WrongValue());
         setColor("2");
         lost.play();
         setTimeout(() => {
           setCorrectValue(true);
-        }, 2000);
+        }, 800);
       }
 
       setTimeout(() => {
         setColor("");
+        setflip(true);
       }, 2000);
       dispatch(MainValueSelected(false));
-      setflip(true)
     } else {
       setValuePopUp(true);
     }
@@ -140,12 +150,13 @@ const[flip,setflip]=useState(true)
     dispatch(GameOver(false));
     setTimer(120);
     dispatch(Shuffled(!shuffle));
+    setImg("");
   };
 
   useEffect(() => {
     setTimeout(() => {
       setCorrectValue(false);
-    }, 2000);
+    }, 1500);
   }, [correctvalue]);
 
   const handleValuePop = () => {
@@ -156,6 +167,9 @@ const[flip,setflip]=useState(true)
     height: `calc(100% - ${cards.length * (1 / 2)}px)`,
     transform: `translateY(${i * 1}px)`,
   });
+
+  const calculationstat = (correctValue / turnover) * 100;
+  const Roundpercent = Math.round(calculationstat);
   return (
     <>
       <div className="fliped_cards">
@@ -203,76 +217,98 @@ const[flip,setflip]=useState(true)
               </div>
             </div>
             <div className="col-md-6">
-              <img className="bordered" src={img || "./img/1 la ronde.jpg"} />
+              {img ? <img className="bordered" src={img} /> : ""}
             </div>
           </div>
         </div>
       </div>
+
+
+          {/* --------------------------------true value pop up________________________ */}
+     
+
+          {correctvalue && (
+            <motion.div
+              className="truevalue"
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+              <p>La valeur correcte est </p>
+              {flipcardValue !== "Joker" ? (
+                <h2 className="fs-1">{flipcardValue}</h2>
+              ) : (
+                <img
+                  style={{ width: "150px", height: "150px" }}
+                  src="img/11 point d_orgue.jpg"
+                />
+              )}
+            </motion.div>
+          )}
 
       <Points color={color} checkValue={checkValue} handleClick={handleClick} />
       <div className="Result_wrapper_outer">
         <div className="Result_wrapper">
           <div className="container">
             <div className="row">
-              <div className="Result_wrapper_duration">
-                <p>
-                  <div className="Result_timmer">
-                    <img src="./img/timmer_icon_trim.png" />
+              <div className="col-md-6">
+                <div className="Result_wrapper_duration">
+                  <p>
+                    <div className="Result_timmer">
+                      <img src="./img/timmer_icon_trim.png" />
 
-                    <input type="text" value={Formattime} readOnly />
-                    <div className="pts_box">
-                      <button
-                        className="plus_icon"
-                        onClick={() => !timerenable && setTimer(timer + 30)}
-                        disabled={timerenable}
-                      >
-                        +
-                      </button>
-                      <button
-                        className="minus_icon"
-                        onClick={() => {
-                          if (!timerenable && timer > 30) {
-                            setTimer(timer - 30);
-                          }
-                        }}
-                        disabled={timerenable}
-                      >
-                        -
-                      </button>
+                      <input type="text" value={Formattime} readOnly />
+                      <div className="pts_box">
+                        <button
+                          className="plus_icon"
+                          onClick={() => !timerenable && setTimer(timer + 30)}
+                          disabled={timerenable}
+                        >
+                          +
+                        </button>
+                        <button
+                          className="minus_icon"
+                          onClick={() => {
+                            if (!timerenable && timer > 30) {
+                              setTimer(timer - 30);
+                            }
+                          }}
+                          disabled={timerenable}
+                        >
+                          -
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </p>
+                  </p>
+                </div>
               </div>
+
+              <div className="col-md-6">
+                <div className="Result_wrapper_duration_stat">
+                  <div>
+                    <p> {turnover} cartes retournées</p>
+                    <p>{correctValue} bonnes réponses</p>
+                    <p>{wrongvalue} Mauvaises réponses</p>
+                    <p>
+                      {Roundpercent ? Roundpercent : 0}% Pourcentage de réussite
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* <div class="bottom_btn">
+                <button class="bottom_btn">Statistices</button>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
+
       <TrainingGameOver
         gameOver={gameOver}
         handleRestartGame={handleRestartGame}
       />
 
-      <Modal
-        show={correctvalue}
-        // onHide={handleGame}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header></Modal.Header>
-        <ModalBody>
-          <h5>La valeur correcte est:</h5>
-          <h3>{flipcardValue}</h3>
-        </ModalBody>
-
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleGame}>
-            <span className="close_modal_icon">
-              <IoCloseCircle />
-            </span>
-          </Button>
-        </Modal.Footer> */}
-      </Modal>
 
       {/* -------SELECT CARD FIRST POP UP__________________ */}
       <GamePopUpModal handleValuePop={handleValuePop} valuePopUp={valuePopUp} />

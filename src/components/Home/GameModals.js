@@ -17,7 +17,7 @@ export const GameOverModal = ({ gameOver, handleRestartGame, winnerName }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <p className="fw-bold"> Le gagnant est !</p>
+          <p className="fw-bold"> Le gagnant est :</p>
           {winnerName ? (
             <div>
               <h2>{winnerName}</h2>
@@ -75,7 +75,7 @@ export const GamePopUpModal = ({ handleValuePop, valuePopUp }) => {
         centered
       >
         <Modal.Body>
-          <h2>Sélectionnez d'abord la carte</h2>
+          <h2>Cliquez sur la pioche pour retourner 1 carte</h2>
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -93,64 +93,9 @@ export const GamePopUpModal = ({ handleValuePop, valuePopUp }) => {
   );
 };
 
-export const GameTrueValueModal = ({
-  // handleGameTrueValue,
-  trueValuePopUp,
-  cardvalue,
-}) => {
-  return (
-    <>
-      <Modal
-        show={trueValuePopUp}
-        // onHide={handleGameTrueValue}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Body>
-          <p className="fw-bold fs-3 ">La valeur correcte est:</p>
-          {cardvalue !== "Joker" ? (
-            <h3 className="fs-1">{cardvalue}</h3>
-          ) : (
-            <img
-              style={{ width: "150px", height: "200px" }}
-              src="img/11 point d_orgue.jpg"
-            />
-          )}
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};
 
-export const GameTrueValueModalComp = ({
-  trueValuePopUpAi,
-  compflip_cardVal,
-}) => {
-  return (
-    <>
-      <Modal
-        show={trueValuePopUpAi}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        {/* <Modal.Header></Modal.Header> */}
-        <Modal.Body>
-          <p className="fw-bold fs-3 ">La valeur correcte est:</p>
-          {compflip_cardVal !== "Joker" ? (
-            <h3 className="fs-1">{compflip_cardVal}</h3>
-          ) : (
-            <img
-              style={{ width: "150px", height: "200px" }}
-              src="img/11 point d_orgue.jpg"
-            />
-          )}
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};
+
+;
 
 export const EvaluationSelectCard = ({ handleValuePop, valuePopUp }) => {
   return (
@@ -219,7 +164,7 @@ export const BattleModal = ({
         centered
       >
         <Modal.Body>
-          <h2>Combattre des cartes cachées</h2>
+          <h2>Carte cachée de bataille</h2>
           <div className="battle_card_imgs">
             <div>
               <h3>{userName}</h3>
@@ -274,40 +219,5 @@ export const ModalStrongValue = ({ strongvalue, pointwinner }) => {
   );
 };
 
-export const UserPoint = ({ userpoint, userName, handleuser }) => {
-  return (
-    <>
-      <Modal
-        show={userpoint}
-        onHide={handleuser}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        className="battle_modal strong_card_modal"
-        centered
-      >
-        <Modal.Body>
-          <h2>{`${userName} + 1 Point`}</h2>
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};
 
-export const CompPoint = ({ comppoint, compName, handlecomp }) => {
-  return (
-    <>
-      <Modal
-        show={comppoint}
-        onHide={handlecomp}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        className="battle_modal strong_card_modal"
-        centered
-      >
-        <Modal.Body>
-          <h2>{`${compName} + 1 Point`}</h2>
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};
+

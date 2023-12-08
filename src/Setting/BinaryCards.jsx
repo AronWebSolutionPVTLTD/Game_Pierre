@@ -3,14 +3,12 @@ import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
 import { useState } from "react";
 import { BiCheck } from "react-icons/bi";
-import { BsArrowLeftCircleFill, BsCheckLg } from "react-icons/bs";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
-import PureModal from "react-pure-modal";
+
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { Button, Modal } from "react-bootstrap";
-import { filter } from "underscore";
 
 export default function BinaryCards() {
   const {
@@ -19,6 +17,8 @@ export default function BinaryCards() {
     setBinaryFilterCard,
     defaultbinary,
     setDefaultBinary,
+    premium,
+    setPremium,
   } = useContext(GameContext);
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
@@ -28,19 +28,33 @@ export default function BinaryCards() {
     setModal(false);
   };
 
+  console.log(premium, "premium");
+
+  const HandlePremium = () => {
+    setModal(false);
+    setPremium((prevPremium) => !prevPremium);
+  };
+
   useEffect(() => {
     const storedCards = JSON.parse(localStorage.getItem("selectedCards"));
 
     const initialCards = storedCards || defaultbinary.slice(0, 6);
-    // const initialCards = defaultbinary.slice(0, 6);
 
     setBinaryFilterCard(initialCards);
     dispatch({ type: "cards", payload: initialCards });
   }, []);
 
-  const handleChange = (e, card) => {
+  const handleCheckboxChange = (e, card) => {
     const { checked } = e.target;
 
+    if (premium) {
+      handlePremiumCheckboxChange(checked, card);
+    } else {
+      handleRegularCheckboxChange(checked, card);
+    }
+  };
+
+  const handleRegularCheckboxChange = (checked, card) => {
     const isFirstLineCard = defaultbinary.indexOf(card) < 6;
 
     if (checked && isFirstLineCard) {
@@ -63,9 +77,55 @@ export default function BinaryCards() {
     }
   };
 
+  const handlePremiumCheckboxChange = (checked, card) => {
+    if (checked) {
+      setBinaryFilterCard((prevfilter) => {
+        const updatedBinaryFilter = [...prevfilter, card];
+        dispatch({ type: "cards", payload: updatedBinaryFilter });
+        localStorage.setItem(
+          "selectedCards",
+          JSON.stringify(updatedBinaryFilter),
+        );
+        return updatedBinaryFilter;
+      });
+    } else {
+      const filteredData = binaryfiltercard.filter((el) => el.id !== card.id);
+      setBinaryFilterCard(filteredData);
+      dispatch({ type: "cards", payload: filteredData });
+      localStorage.setItem("selectedCards", JSON.stringify(filteredData));
+    }
+  };
+
+  console.log(binaryfiltercard, "bina");
+
+  const premiumclose = () => {
+    setPremium(false);
+    setBinaryFilterCard([]);
+    dispatch({ type: "cards", payload: [] });
+    localStorage.removeItem("selectedCards");
+    //  const ghhd=defaultbinary.slice(0, 6);
+    //  dispatch({ type: "cards", payload: ghhd });
+  };
+
   return (
-    <div className="container binarycontainer">
-      {/* <div onClick={() => navigate("/setting")}><BsArrowLeftCircleFill /></div> */}
+    <div className="container binarycontainer" style={{ position: "relative" }}>
+      {premium && (
+        <div
+          style={{
+            position: "absolute",
+            top: "10px", // Adjust the top distance as needed
+            left: "10px", // Adjust the left distance as needed
+            cursor: "pointer",
+            padding: "10px",
+            backgroundColor: "#007bff", // You can set the background color as per your design
+            color: "#fff", // You can set the text color as per your design
+            borderRadius: "5px",
+          }}
+          onClick={premiumclose}
+        >
+          <span>Normal Version</span>
+        </div>
+      )}
       <h1 className="fw-semibold mb-2 text-center">Binary Card</h1>
 
       <div className="row justify-content-center">
@@ -77,7 +137,7 @@ export default function BinaryCards() {
                 id={`beat_value_${i}`}
                 name="beat_selection"
                 className="d-none"
-                onChange={(e) => handleChange(e, el)}
+                onChange={(e) => handleCheckboxChange(e, el)}
                 checked={binaryfiltercard.some((card) => card.id === el.id)}
               />
 
@@ -100,7 +160,7 @@ export default function BinaryCards() {
           Purchase the Premium version to play with more cards!
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={HandlePremium}>
             Premium Version
           </Button>
         </Modal.Footer>

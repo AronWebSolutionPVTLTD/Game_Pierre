@@ -38,7 +38,7 @@ export function ResetPassword() {
       if (
         response.data.message === "Réinitialisation du mot de passe réussie"
       ) {
-        navigate("/login")
+        navigate("/login");
       }
       setNewPassword("");
       setConfirmPassword("");
@@ -53,7 +53,7 @@ export function ResetPassword() {
         <div className="col-md-6">
           <form className="signup_form">
             <h3 className="form_title text-center mb-4">
-            Réinitialiser le mot de passe du compte
+              Réinitialiser le mot de passe du compte
             </h3>
 
             <Toast

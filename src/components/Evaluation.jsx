@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+
 import { Points } from "./Home/Points";
-import { EvaluationGameOver, EvaluationSelectCard } from "./Home/GameModals";
+import { EvaluationSelectCard } from "./Home/GameModals";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
 import {
@@ -15,18 +14,13 @@ import {
 } from "../Context/action";
 import { Statistics } from "./Home/Statistics";
 import "../main component/toaster.css";
+import { pick } from "underscore";
 import { toast } from "react-toastify";
+
 export default function Evaluation() {
-  const {
-    state,
-    dispatch,
-    timerenable,
-    setTimerEnable,
-    timerValue,
-    setTimerValue,
-    defaultbinary, setDefaultBinary
-  } = useContext(GameContext);
-  const { cardFlipped, shuffle, correctValue, wrongvalue, turnover } = state;
+  const { state, dispatch, timerenable, setTimerEnable } =
+    useContext(GameContext);
+  const { cardFlipped, shuffle, correctValue, turnover } = state;
   const [cards, setCards] = useState(state.cards);
   const [gameover, setGameOver] = useState(false);
   const [check, setCheck] = useState(false);
@@ -37,24 +31,25 @@ export default function Evaluation() {
   const [flipcardValue, setFlipCardValue] = useState();
   const [mainValue, setMainValue] = useState(false);
   const [valuePopUp, setValuePopUp] = useState(false);
-  const [remainingCard, setRemainingCard] = useState([]);
-const [flip,setFlip]=useState(true)
+
+  const [flip, setFlip] = useState(true);
   const pointwin = new Audio("point added.wav");
   const lost = new Audio("lost 1 point.wav");
   const Time = JSON.parse(localStorage.getItem("timer"));
   const [evaluationtimer, setEvaluationTimer] = useState();
-
-  console.log(cards)
+  const [circlevalue, setCircleValue] = useState(state.cards);
+  const [auto, setAuto] = useState(false);
 
   useEffect(() => {
     Time ? setEvaluationTimer(Time) : setEvaluationTimer(120);
   }, [Time]);
 
   useEffect(() => {
-  if(cards.length===0){
-    setCards(state.cards);
-  }
-   }, [shuffle,state.cards,cards] );
+    if (cards.length === 0) {
+      setCards(state.cards);
+      setCircleValue(state.cards);
+    }
+  }, [shuffle, state.cards, cards]);
 
   // -----Calculate percentege-------------------
 
@@ -67,6 +62,9 @@ const [flip,setFlip]=useState(true)
       dispatch(Flipped(false));
       setGameOver(true);
       setTimerEnable(false);
+      setCheck(false);
+      setAuto(false);
+      setColor("");
       return;
     }
     if (!cardFlipped) {
@@ -89,32 +87,6 @@ const [flip,setFlip]=useState(true)
     }
   }, [evaluationtimer, cardFlipped]);
 
-
-  // useEffect(() => {
-  //   let interval;
-
-  //   if (evaluationtimer > 0 && cardFlipped) {
-  //     interval = setInterval(() => {
-  //       setEvaluationTimer((prevValue) => {
-  //         const newValue = prevValue - 1;
-
-  //         if (newValue === 0) {
-  //           dispatch(Flipped(false));
-  //           setGameOver(true);
-  //           setTimerEnable(false);
-  //           clearInterval(interval);
-  //         }
-
-  //         return newValue;
-  //       });
-  //     }, 1000);
-  //   }
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [evaluationtimer, cardFlipped])
-
   const minutes = Math.floor(evaluationtimer / 60);
   const seconds = evaluationtimer % 60;
   const formattedTime = `${minutes.toString().padStart(2, "0")}:${seconds
@@ -122,31 +94,37 @@ const [flip,setFlip]=useState(true)
     .padStart(2, "0")}`;
 
   // Handle card flipping
-  const flipCard = (id, val) => {
-    if(flip){
-      setFlipCardValue(val);
+
+  const flipCard = (card) => {
+    if (flip) {
+      setFlipCardValue(card?.value);
       setMainValue(true);
       dispatch(Flipped(true));
       setTimerEnable(true);
-  
-      const updatedCards = cards.map((card) => {
-        if (card.id === id) {
-          setImg(card.img);
-          return { ...card, isFlipped: true };
+
+      const updatedCards = cards.map((item) => {
+        if (item.id === card?.id) {
+          setImg(card?.img);
+
+          return { ...item, isFlipped: true };
         } else {
-          return { ...card, isFlipped: false };
+          return item;
         }
       });
-  
-      const getFalse = updatedCards.filter((el) => el.isFlipped === false);
-  
-      setRemainingCard(getFalse);
-      dispatch(TurnOver());
-      setFlip(false)
-    }
 
+      const getFalse = updatedCards.filter((el) => el.isFlipped === false);
+
+      setCards(getFalse);
+
+      dispatch(TurnOver());
+      setFlip(false);
+    } else {
+      if (mainValue) {
+        toast("Sélectionnez la valeur pour continuer le jeu.");
+      }
+    }
   };
-console.log(remainingCard,"remain")
+
   // __________________Handle click for circle value_________
   const handleClick = (val) => {
     setCheckValue(val);
@@ -166,91 +144,79 @@ console.log(remainingCard,"remain")
       }, 1000);
       setMainValue(false);
     } else {
-      setValuePopUp(true);
+      if (flip) {
+        setValuePopUp(true);
+      }
     }
     // ------------------------------------------
   };
 
-  
+  useEffect(() => {
+    if (check && !auto) {
+      dispatch(TurnOver());
+      let Remainingcards = [...cards];
+
+      let randomIndex = Math.floor(Math.random() * Remainingcards.length);
+
+      let picked = Remainingcards[randomIndex];
+
+      localStorage.setItem("autoflipcard", JSON.stringify(picked?.value));
+      setImg(picked?.img);
+      let remaincard = Remainingcards.filter((card) => card?.id !== picked?.id);
+      setCards(remaincard);
+
+      let MainValueIndex = Math.floor(Math.random() * circlevalue.length);
+
+      let Circle_val = circlevalue[MainValueIndex]?.value;
+      localStorage.setItem("autocircle", JSON.stringify(Circle_val));
+
+      setAuto(true);
+      setCheck(false);
+    }
+  }, [check]);
 
   useEffect(() => {
-    let loopInterval;
-    let continueCardSelectionLoop = true;
-    let updatedRemainingCard = [...remainingCard];
-    console.log(remainingCard,"tt")
-    const loop = (i) => {
-      if (!continueCardSelectionLoop ||i >= remainingCard.length || gameover) {
-        setColor("");
-        return;
-      }
-      dispatch(TurnOver());
-      let randomIndex = Math.floor(Math.random() * updatedRemainingCard.length);
-      let picked = updatedRemainingCard[randomIndex];
-      localStorage.setItem("autoflip", JSON.stringify(picked?.value));
-      setImg(picked?.img);
-      updatedRemainingCard = updatedRemainingCard.filter(
-        (card) => card.id !== picked?.id,
-      );
-      // console.log(updatedRemainingCard);
-      setCards(updatedRemainingCard);
-      const autoflip = JSON.parse(localStorage.getItem("autoflip"));
-      let randomIndex2 = Math.floor(
-        Math.random() * updatedRemainingCard.length,
-      );
-
-      let circle_Val = updatedRemainingCard[randomIndex2]?.value;
-
+    let timeoutId;
+    if (auto && !check) {
+      const card = JSON.parse(localStorage.getItem("autoflipcard"));
+      const value = JSON.parse(localStorage.getItem("autocircle"));
+      setCheckValue(value);
       setTimeout(() => {
-        if (circle_Val === autoflip) {
-          setCheckValue(circle_Val);
+        if (card === value) {
           setColor("1");
           pointwin.play();
           dispatch(CorrectValue());
         } else {
-          setCheckValue(circle_Val);
           setColor("2");
           lost.play();
           dispatch(WrongValue());
         }
       }, 1000);
 
-      loopInterval = setTimeout(() => {
-        if (updatedRemainingCard.length === 1) {
-          updatedRemainingCard = remainingCard;
-          loop(0);
-        }
+      timeoutId = setTimeout(() => {
+        setCheck(true);
         setColor("");
-        loop(i + 1); // Call the loop function
+        setAuto(false);
       }, 2000);
-
-  
-    };
-    if (check) {
-      setTimeout(() => {
-        loop(0);
-      }, 3000);
     }
+    return () => clearTimeout(timeoutId);
+  }, [auto, check]);
 
-    setColor("");
-
-    return () => {
-      clearTimeout(loopInterval);
-      continueCardSelectionLoop = false; 
-    };
-  }, [check, remainingCard, gameover]);
- 
   // Game over--------------------------------
+
   const handleRestartGame = () => {
     setCards(state.cards);
     setGameOver(false);
     setCheck(false);
-    setMainValue(false)
+    setMainValue(false);
     setEvaluationTimer(120);
     dispatch(Shuffled(!shuffle));
     dispatch({ type: "turnoverempty" });
     dispatch({ type: "correctValueempty" });
     dispatch({ type: "wrongvalueempty" });
-    setFlip(true)
+    setFlip(true);
+    setColor("");
+    setImg("");
   };
   const handleValuePop = () => {
     setValuePopUp(false);
@@ -265,15 +231,17 @@ console.log(remainingCard,"remain")
       <div className="fliped_cards">
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6  ">
               <div className="outer-div">
                 {cards.length !== 0 &&
                   cards.map((card, i) => (
                     <div
-                      key={card.id}
+                      key={card?.id}
                       style={cardHeight(i)}
-                      className={`card ${card.isFlipped ? "flipped" : ""}`}
-                      onClick={() => flipCard(card.id, card.value)}
+                      className={`card ${card?.isFlipped ? "flipped" : ""}`}
+                      onClick={() => {
+                        !check && flipCard(card);
+                      }}
                     >
                       <div>
                         <div className="card-front">
@@ -304,7 +272,7 @@ console.log(remainingCard,"remain")
               </div>
             </div>
             <div className="col-md-6">
-              <img className="bordered" src={img || "./img/1 la ronde.jpg"} />
+              {img ? <img className="bordered" src={img} /> : ""}
             </div>
           </div>
         </div>
@@ -350,13 +318,7 @@ console.log(remainingCard,"remain")
           </div>
         </div>
       </div>
-      {/* <div className="inline_buttons">
-        <ul>
-          <li>
-            <a onClick={handleEvalutionbtn}>Statistiques</a>
-          </li>
-        </ul>
-      </div> */}
+
       <EvaluationSelectCard
         handleValuePop={handleValuePop}
         valuePopUp={valuePopUp}

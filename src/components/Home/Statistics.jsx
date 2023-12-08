@@ -22,37 +22,44 @@ export const Statistics = ({
           <Modal.Title>STATISTIQUES</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ overflowX: "auto" }}>
+          <div className="wrap_stat" style={{ overflowX: "auto" }}>
             <table className="table table-striped">
               {/* <thead>STATISTIQUES</thead> */}
               <tbody>
                 <tr>
-                  <th scope="row">Carte retournée</th>
+                  <th scope="row">Cartes retournées</th>
                   <td>{turnover}</td>
                 </tr>
                 <tr>
-                  <th scope="row">Réponses correctes</th>
+                  <th scope="row">Bonnes réponses</th>
                   <td>{correctValue}</td>
                 </tr>
                 <tr>
-                  <th scope="row">Mauvaises REPONSES</th>
+                  <th scope="row">Mauvaises réponses</th>
                   <td>{wrongvalue}</td>
                 </tr>
 
+               
                 <tr>
-                  <th scope="row">Nombre de Woncards</th>
-                  <td>{wonCards.length}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Pourcentage de réussite TAUX %</th>
+                  <th scope="row">Taux de réussite</th>
                   <td>{Roundpercentage}%</td>
                 </tr>
+                <tr>
+                  <th scope="row">Total cartes gagnées</th>
+                  <td>{wonCards.length}</td>
+                </tr>
 
-                <div style={{ textAlign: "right" }}>
-                  <button onClick={handleClose}>Fermer</button>
-                </div>
+
+
               </tbody>
             </table>
+            <div>
+
+  <button>Details par carte</button>
+</div>
+                <div className="fermer" style={{ textAlign: "right" }}>
+                  <button onClick={handleClose}>Fermer</button>
+                </div>
           </div>
         </Modal.Body>
       </Modal>

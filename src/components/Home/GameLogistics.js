@@ -1,5 +1,11 @@
 export default function shuffleR(array) {
-  let currentIndex = array.length,
+  if (!array || array.length === 0) {
+    // Handle the case when the array is null, undefined, or empty
+    console.error("Invalid array");
+    return;
+  }
+
+  let currentIndex = array?.length,
     randomIndex;
   while (currentIndex != 0) {
     //Shuffling logic

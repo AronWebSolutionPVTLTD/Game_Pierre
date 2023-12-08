@@ -48,10 +48,9 @@ export const Result = ({
   const buttonRef = useRef(null);
 
   const HandleCardClick = (card, id, index) => {
-
     if (recoverycarduse === true) {
       toast(
-        "En cas de combat, vous ne pouvez pas utiliser la carte de récupération",
+        "En cas de bataille, vous ne pouvez pas utiliser la carte de récupération.",
       );
 
       return;

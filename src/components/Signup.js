@@ -15,16 +15,15 @@ export default function Signup() {
   const [error, setError] = useState({});
   const navigate = useNavigate();
   const [data, setData] = useState(INITIAL_STATE);
-  const [showpassword,setShowPassword]=useState(false)
-
+  const [showpassword, setShowPassword] = useState(false);
 
   const validate = (value) => {
     let error = {};
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const phoneRegex = /^(\+33|0)[1-9](\d{2}){4}$/
+    const phoneRegex = /^(\+33|0)[1-9](\d{2}){4}$/;
     const phoneNumber1 = value.phone;
     const phoneNumber2 = value.phone;
- 
+
     if (!value.firstName.trim()) {
       error.firstName = "Le prénom est requis";
     }
@@ -38,24 +37,18 @@ export default function Signup() {
     }
     if (!value.phone.trim()) {
       error.phone = "Le numéro de contact est requis";
-    } 
-
-
-
-else if (!phoneRegex.test(phoneNumber1)) {
-        error.phone="Numéro invalide"
-} 
-
-else if (!phoneRegex.test(phoneNumber2)) {
-       error.phone="Numéro invalide"
-} 
+    } else if (!phoneRegex.test(phoneNumber1)) {
+      error.phone = "Numéro invalide";
+    } else if (!phoneRegex.test(phoneNumber2)) {
+      error.phone = "Numéro invalide";
+    }
     // else if(!phoneRegex.test(value.phone)){
     //   error.phone="Numéro invalide"
     // }
     // else if (value.phone.length !== 10) {
     //   error.phone = "Invalid Number ";
     // }
- 
+
     if (!value.password.trim()) {
       error.password = "Le mot de passe est requis";
     } else if (value.password.trim().length < 8) {
@@ -63,9 +56,11 @@ else if (!phoneRegex.test(phoneNumber2)) {
     } else if (!/\d/.test(value.password)) {
       error.password = "Le mot de passe doit contenir au moins 1 chiffre";
     } else if (!/[!@#$%&?]/.test(value.password)) {
-      error.password = "Le mot de passe doit contenir au moins 1 caractère spécial";
+      error.password =
+        "Le mot de passe doit contenir au moins 1 caractère spécial";
     } else if (!/[A-Z]/.test(value.password)) {
-      error.password = "Le mot de passe doit contenir au moins 1 lettre majuscule";
+      error.password =
+        "Le mot de passe doit contenir au moins 1 lettre majuscule";
     }
     return error;
   };
@@ -134,7 +129,9 @@ else if (!phoneRegex.test(phoneNumber2)) {
                       First name
                     </label>
                   </div>
-                  {error.firstName && <small className="error">{error.firstName}</small>}
+                  {error.firstName && (
+                    <small className="error">{error.firstName}</small>
+                  )}
                 </div>
                 <div className="col-sm-6 mb-3">
                   <div className="form_field">
@@ -153,7 +150,9 @@ else if (!phoneRegex.test(phoneNumber2)) {
                       Last name
                     </label>
                   </div>
-                  {error.lastName && <small className="error">{error.lastName}</small>}
+                  {error.lastName && (
+                    <small className="error">{error.lastName}</small>
+                  )}
                 </div>
                 <div className="col-sm-12 mb-3">
                   <div className="form_field">
@@ -172,7 +171,9 @@ else if (!phoneRegex.test(phoneNumber2)) {
                       Email
                     </label>
                   </div>
-                  {error.email && <small className="error">{error.email}</small>}
+                  {error.email && (
+                    <small className="error">{error.email}</small>
+                  )}
                 </div>
                 <div className="col-sm-12 mb-3">
                   <div className="form_field">
@@ -187,24 +188,23 @@ else if (!phoneRegex.test(phoneNumber2)) {
                       onChange={handleChange}
                       className="floating_input"
                       onKeyPress={(event) => {
-                    
-                          if (!/[0-9+]/.test(event.key)) {
+                        if (!/[0-9+]/.test(event.key)) {
                           event.preventDefault();
                         }
                       }}
-                     
-                      
                     />
                     <label htmlFor="phone" className="floating_label">
                       Phone No.
                     </label>
                   </div>
-                  {error.phone && <small className="error">{error.phone}</small>}
+                  {error.phone && (
+                    <small className="error">{error.phone}</small>
+                  )}
                 </div>
                 <div className="col-sm-12 mb-3">
                   <div className="form_field">
                     <input
-                         type={showpassword ? "text" : "password"}
+                      type={showpassword ? "text" : "password"}
                       id="password"
                       placeholder=""
                       autoComplete="off"
@@ -218,20 +218,20 @@ else if (!phoneRegex.test(phoneNumber2)) {
                       Password
                     </label>
 
-
-                    <div className="field_icon" onClick={()=>setShowPassword(!showpassword)} > 
-                      {showpassword?<BsEyeFill/>:<BsEyeSlashFill/>}
-                      </div>
-       
+                    <div
+                      className="field_icon"
+                      onClick={() => setShowPassword(!showpassword)}
+                    >
+                      {showpassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+                    </div>
                   </div>
-                  {error.password && <small className="error">{error.password}</small>}
+                  {error.password && (
+                    <small className="error">{error.password}</small>
+                  )}
                 </div>
                 <div className="text-end mb-3">
-                     <span onClick={() =>navigate("/login") }>
-                     
-                     Se connecter
-                     </span>
-                   </div>
+                  <span onClick={() => navigate("/login")}>Se connecter</span>
+                </div>
                 {/* <div className="col-sm-12">
                                     <div className="form_field">
                                         <input type="password"
@@ -249,7 +249,7 @@ else if (!phoneRegex.test(phoneNumber2)) {
                     className="btn btn-primary w-100 form_btn"
                     onClick={btnsubmit}
                   >
-                     Connexion
+                    Connexion
                   </button>
                 </div>
               </div>

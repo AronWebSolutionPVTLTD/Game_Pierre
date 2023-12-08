@@ -8,7 +8,7 @@ import BootStrapNavbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const Navbar = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const Token = localStorage.getItem("token");
 
   return (
@@ -40,17 +40,27 @@ export const Navbar = () => {
                 navbarScroll
               >
                 <Link to="/">Jouer</Link>
-                {/* <Link to="/evaluation">Evaluation</Link> */}
-                {/* <Link to="/sixcard">Sixcard</Link> */}
-                <Link to="training">site de formation</Link>
-                <Link >Evaluation</Link> 
-                <Link >Sixcard</Link>
-                {/* <Link >site de formation</Link> */}
-                <Link >Règles du jeu</Link>
-                <Link >Boutique</Link>
+                <Link to="/evaluation">Evaluation</Link>
+                
+                <Link to="training">Par entrainement</Link>
+               
+                {/* <Link>Sixcard</Link> */}
+                
+                <Link>Règles du jeu</Link>
+                <a href="http://www.lirelamusique.com" target="_blank">
+                  Boutique
+                </a>
                 <Link to="/contact">Contact</Link>
-{Token &&     <Link onClick={()=>{localStorage.clear(); navigate("/login")}}>Déconnexion</Link>}
-            
+                {Token && (
+                  <Link
+                    onClick={() => {
+                      localStorage.clear();
+                      navigate("/login");
+                    }}
+                  >
+                    Déconnexion
+                  </Link>
+                )}
               </Nav>
             </BootStrapNavbar.Collapse>
           </Container>

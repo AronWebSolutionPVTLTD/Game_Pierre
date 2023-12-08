@@ -3,7 +3,6 @@ import { GameContext } from "../Context/GameContext";
 import {
   Flipped,
   GameOver,
-
   MainValueSelected,
   TurnOver,
   UserNameColor,
@@ -12,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 
 import shuffleR from "./Home/GameLogistics";
-import './bakwass.css'
+import "./bakwass.css";
 const Deck = () => {
   const {
     state,
@@ -29,56 +28,114 @@ const Deck = () => {
     flipback,
     setFlipBack,
     setTimerEnable,
-    recoverycarduse,setRecoveryCardUse,
-    deckcard,setdeckcard
+    recoverycarduse,
+    setRecoveryCardUse,
+    deckcard,
+    setdeckcard,
+    hometimer
   } = useContext(GameContext);
 
-  const { gameOver, loading, shuffle, recoveryCard,userCardimg} = state;
+  const { gameOver, loading, shuffle, recoveryCard, userCardimg } = state;
 
-// const[deckcard,setdeckcard]=useState ([{deckcard:0}])
 
+
+  console.log(hometimer,"timer")
+  console.log(usercards,"user")
 
   useEffect(() => {
-    if (deckcard[0]?.deckcard === 0) { 
+    if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
       setUserCards(state.cards);
     }
-  }, [state.cards]);
+  }, [deckcard, state.cards]);
 
-  console.log(usercards,"user")
+
+  // useEffect(() => {
+  //   setUserCards((prevCards) => {
+  //     const newCards = [];
+  //     const maxCardCount = hometimer || 0; 
+  //     const existingCardCount = prevCards.length;
   
+  //     for (let i = 0; i < maxCardCount; i++) {
+       
+  //       const existingCardIndex = i % existingCardCount;
+  //       const existingCard = prevCards[existingCardIndex];
   
+      
+  //       const newCard = {
+  //         id: i + 1,
+  //         value: existingCard?.value,
+  //         isFlipped: existingCard?.isFlipped || false,
+       
+  //         img: existingCard?.img,
+  //       };
+  
+  //       newCards.push(newCard);
+  //     }
+  
+  //     return newCards;
+  //   });
+  // }, [hometimer]);
+
+ 
+
+useEffect(() => {
+  setUserCards((prevCards) => {
+    const newCards = [...prevCards];
+    const maxCardCount = hometimer || 0; // Assuming hometimer is the desired number of repeats
+    const existingCardCount = prevCards.length;
+
+    if (maxCardCount < existingCardCount) {
+      // If the new timer is less than the existing card count, do not modify the cards
+      return prevCards;
+    }
+
+    for (let i = existingCardCount; i < maxCardCount; i++) {
+      // Copy details from existing cards
+      const existingCardIndex = i % existingCardCount;
+      const existingCard = prevCards[existingCardIndex];
+
+      // Duplicate the existing card details
+      const newCard = {
+        id: i + 1,
+        value: existingCard.value,
+        isFlipped: existingCard.isFlipped || false,
+        img: existingCard?.img,
+      };
+
+      newCards.push(newCard);
+    }
+
+    return newCards;
+  });
+}, [hometimer]);
+
+  // console.log(usercards, "user");
+  console.log(deckcard, "deck");
+ 
   // -------------RECOVERY CARD_______________
   useEffect(() => {
-    setUserCards((prevCards) => [...prevCards, ...recoveryCard]);
-    dispatch(UserNameColor(true)) 
+    setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
+    dispatch(UserNameColor(true));
   }, [recoveryCard]);
 
   useEffect(() => {
     const getShuffledData = shuffleR(state.cards);
     setUserCards(getShuffledData);
   }, [shuffle]);
-  // const flipcardCss = (i) =>({transform: `translateZ(${i*3}px)`})
 
 
 
-
-
-  const flipCard = (id, value, card,e) => {
-  
-    // debugger
-    console.log(e.currentTarget)
-   
+  const flipCard = (id, value, card, e) => {
     if (!valueSelected) {
-      
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));
-      setRecoveryCardUse(false)
-      // dispatch(UserNameColor(true));
+      setRecoveryCardUse(false);
+
       setTimerEnable(true);
 
       localStorage.setItem(
         "cardvalue",
-        JSON.stringify({ userCard: card, cardvalue: value })
+        JSON.stringify({ userCard: card, cardvalue: value }),
       );
       if (gameOver) {
         return alert("Game over");
@@ -88,23 +145,23 @@ const Deck = () => {
       }
       const updatedCards = usercards.map((card) => {
         if (card.id === id) {
-          e.currentTarget.classList.add('flipped');
-       
-          dispatch(UserSetImg(card.img));
+          e.currentTarget.classList.add("flipped");
 
+          dispatch(UserSetImg(card.img));
+ 
           return { ...card, isFlipped: true };
         } else {
-          return card
+          return card;
         }
-      });         
-     
-      const getFalse = updatedCards.filter((el) => el.isFlipped === false);
-      setdeckcard(getFalse)
+      });
 
+      const getFalse = updatedCards.filter((el) => el.isFlipped === false);
+
+      setdeckcard(getFalse);
       setUserCards(updatedCards);
+
       setValueSelected(true);
-   
-    } 
+    }
     // else {
     //   alert("select the value to continue the game");
     // }
@@ -112,16 +169,9 @@ const Deck = () => {
     dispatch(TurnOver());
   };
 
-
-  const cardHeight = (i) => ({
-    height: `calc(100% - ${usercards.length * (1 / 2)}px)`,
-    transform: `translateY(${i * 1}px)`,
-  });
-
-
   return (
     <>
-      {gameOver || usercards.length === 0 ? (
+      {gameOver || usercards?.length === 0 ? (
         <div
           style={{
             width: "100%",
@@ -138,59 +188,49 @@ const Deck = () => {
           <p>PLUS DE CARTES</p>
         </div>
       ) : (
-        // <div className="outer-div">
-        //   {usercards.length !== 0 &&
-        //     usercards.map((card, i) => (
-        //       <div
-        //         key={i}
-        //         style={cardHeight(i)}
-        //         className={`card ${card.isFlipped ? "flipped" : ""}`}
-        //         onClick={() => flipCard(card.id, card.value, card)}
-        //       >
-        //         <div>
-        //           <div className="card-front">
-        //             <img alt={card.id} src="./img/Image verso card.png" />
-        //           </div>
-        //         </div>
-        //       </div>
-        //     ))}
-        // </div>
-
         <article className="board">
-          
-            {deckcard.length == 0 ?<> <span className="card-text">
-            PLUS DE CARTES
-              </span>
+          {deckcard?.length === 0 ? (
+            <>
+              <span className="card-text">PLUS DE CARTES</span>
               <div className={`cards user_card flipped `}>
-              
-              <span className="wrapper">
-                <span className="content">
-                  <span className="face back"> 
-                    <img  src="./img/Image verso card.png"/>
+                <span className="wrapper">
+                  <span className="content">
+                    <span className="face back">
+                      <img src="./img/Image verso card.png" />
+                    </span>
+                    <span className="face front">
+                      <img src={userCardimg} />
+                    </span>
                   </span>
-                  <span className="face front"><img src={userCardimg} /></span>
                 </span>
-              </span>
-            </div></> :usercards.length !== 0 &&
-            usercards.map((card, i) => (
-    <div 
-            // style={flipcardCss(i)} 
-            id={`button_id_${i}`}
-            key={i} className={`cards user_card cards:nth-child(${i+1}) `} 
-            onClick={(e) => {
-            flipCard(card.id, card.value, card,e)}} alt={card.id}>
-
-              <span className="wrapper"><span className="content">
-                  <span className="face back"> 
-                    <img  src="./img/Image verso card.png"/>
+              </div>
+            </>
+          ) : (
+            usercards?.length !== 0 &&
+            usercards?.map((card, i) => (
+              <div
+                id={`button_id_${i}`}
+                key={i}
+                className={`cards user_card cards:nth-child(${i + 1}) `}
+                onClick={(e) => {
+                  flipCard(card.id, card.value, card, e);
+                }}
+                alt={card.id}
+              >
+                <span className="wrapper">
+                  <span className="content">
+                    <span className="face back">
+                      <img src="./img/Image verso card.png" />
+                    </span>
+                    <span className="face front">
+                      <img src={userCardimg} />
+                    </span>
                   </span>
-                  <span className="face front"><img src={userCardimg}/></span>
                 </span>
-              </span>
-            </div>
-             ))}  
-        </article> 
-
+              </div>
+            ))
+          )}
+        </article>
       )}
     </>
   );

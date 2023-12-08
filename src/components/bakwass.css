@@ -254,7 +254,12 @@
   
   .main_battle .face img{
     height: 100% !important;
+    object-fit: unset;
   }
+  .inline_buttons ul li button {
+    background: #14954e;
+    border-radius: 5px;
+}
   .wrapper {
     pointer-events: initial;
     display: block;
