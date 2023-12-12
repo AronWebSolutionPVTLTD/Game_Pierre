@@ -36,8 +36,9 @@ const Deck = () => {
   } = useContext(GameContext);
 
   const { gameOver, loading, shuffle, recoveryCard, userCardimg } = state;
+const [oldTarget, setOldTarget] = useState(null);
 
-
+const [lastFlippedCard,setLasFlippedCard]=useState(null)
 
   // console.log(hometimer,"timer")
   // console.log(usercards,"user")
@@ -115,7 +116,7 @@ useEffect(() => {
   // -------------RECOVERY CARD_______________
   useEffect(() => {
     setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
-    dispatch(UserNameColor(true));
+    // dispatch(UserNameColor(true));
   }, [recoveryCard]);
 
   useEffect(() => {
@@ -126,6 +127,7 @@ useEffect(() => {
 
 
   const flipCard = (id, value, card, e) => {
+ 
     if (!valueSelected) {
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));
@@ -143,24 +145,31 @@ useEffect(() => {
       if (loading) {
         return alert("Wait for computer turn");
       }
+
       const updatedCards = usercards.map((card) => {
+        
+        if (card.id === lastFlippedCard) {
+       oldTarget && oldTarget.classList.add('flipped_done');
+        }
         if (card.id === id) {
           e.currentTarget.classList.add("flipped");
-
           dispatch(UserSetImg(card.img));
- 
+
           return { ...card, isFlipped: true };
         } else {
           return card;
         }
       });
 
-      const getFalse = updatedCards.filter((el) => el.isFlipped === false);
-
-      setdeckcard(getFalse);
+      const getfalse=updatedCards.filter((el)=>el.isFlipped===false)
+    setdeckcard(getfalse)
       setUserCards(updatedCards);
-
+      setLasFlippedCard(id);
       setValueSelected(true);
+setOldTarget(e.currentTarget);
+
+
+      
     }
     // else {
     //   alert("select the value to continue the game");
@@ -198,8 +207,8 @@ useEffect(() => {
                     <span className="face back">
                       <img src="./img/Image verso card.png" />
                     </span>
-                    <span className="face front">
-                      <img src={userCardimg} />
+                    <span id="After_load_outer" className="face front">
+                      <img className="After_load" src={userCardimg} />
                     </span>
                   </span>
                 </span>
@@ -222,8 +231,8 @@ useEffect(() => {
                     <span className="face back">
                       <img src="./img/Image verso card.png" />
                     </span>
-                    <span className="face front">
-                      <img src={userCardimg} />
+                    <span id="After_load_outer" className="face front">
+                      <img className="After_load" src={userCardimg} />
                     </span>
                   </span>
                 </span>

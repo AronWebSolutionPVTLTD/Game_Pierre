@@ -101,8 +101,9 @@ export const Home = ({ handleFullScreen }) => {
   const [correct, setCorrect] = useState(false);
   const [showsbattlepop, setBattlePop] = useState(false);
   const pointwin = new Audio("point added.wav");
+  const winner=new Audio("win.mp3")
   const buttonsound = new Audio("button click sound.wav");
-  const battle = new Audio("battle sound.wav");
+
   const lost = new Audio("lost 1 point.wav");
   const userName = localStorage.getItem("username");
   const Token = localStorage.getItem("token");
@@ -164,6 +165,7 @@ export const Home = ({ handleFullScreen }) => {
     } else {
       setShowModal(false);
       dispatch(GameOver(true));
+      winner.play();
     }
   };
 
@@ -277,6 +279,7 @@ export const Home = ({ handleFullScreen }) => {
   // ________________HANDLE CLICK FOR VALUES____________________________
 
   const handleClick = async (value) => {
+    buttonsound.play();
     setFlipwonDeck(true);
     // setValueSelected(false);
     setCheckValue(value);
@@ -311,6 +314,7 @@ export const Home = ({ handleFullScreen }) => {
 
     const valuepopAI = debounce(() => {
       setTrueValuePopUpAi(true);
+       lost.play();
     }, 1000);
 
     // ______________________COmputer turn in the battle part ___________________________
@@ -324,6 +328,7 @@ export const Home = ({ handleFullScreen }) => {
           setColor("1");
           compvalue += 1;
           setTimeout(()=>{
+            pointwin.play();
             setCompPt(compvalue);
           },1000)
       
@@ -332,17 +337,19 @@ export const Home = ({ handleFullScreen }) => {
         setCheckValue(comp_MainValue, buttonsound.play());
         setTimeout(() => {
           setColor("2");
+          lost.play()
         }, 500);
       }
       setTimeout(() => {
         dispatch(AINameColor(false));
+        
         setColor("");
         setValueSelected(false);
       }, 2000);
     }, 3000);
 
     if (mainvalueselect) {
-      buttonsound.play();
+     
 
       if (compflip_cardVal === cardvalue) {
         setRecoveryCardUse(true);
@@ -352,6 +359,7 @@ export const Home = ({ handleFullScreen }) => {
           setUserPoint(true)
           uservalue += 1;
           setTimeout(()=>{
+            pointwin.play();
             setUserPoint(uservalue);
           },1000)
           dispatch(CorrectValue());
@@ -364,6 +372,7 @@ export const Home = ({ handleFullScreen }) => {
           setColor("2");
           dispatch(CorrectValue());
           setTimeout(() => {
+            lost.play()
             setColor("");
             dispatch(UserNameColor(false));
           }, 2000);
@@ -373,7 +382,7 @@ export const Home = ({ handleFullScreen }) => {
 
         setTimeout(() => {
           setCardMatchedValue(true);
-          battle.play();
+          
           setTimeout(() => {
             setFlipBack(true);
           }, 500);
@@ -382,15 +391,16 @@ export const Home = ({ handleFullScreen }) => {
       
       
       else {
+        
         if (mainvalue === cardvalue) {
-          pointwin.play();
+          
           uservalue += 1;
         
           setColor("1");
           dispatch(CorrectValue());
           setUserPoint(true);
           setTimeout(() => {
-           
+            pointwin.play();
             setPoints(uservalue);
           }, 1000);
         
@@ -399,30 +409,32 @@ export const Home = ({ handleFullScreen }) => {
             setColor("");
             dispatch(UserNameColor(false));
           }, 2000);
+
           setTimeout(() => {
             if (nextturn) {
               debouncefunction();
               if (comp_MainValue === compflip_cardVal) {
                 setCheckValue(comp_MainValue, buttonsound.play());
-                pointwin.play();
+               
                 setTimeout(() => {
                   setColor("1");
+                  
                 }, 500);
              
                 compvalue += 1;
-             
-
-           ;
-                setCompPoint(true);
+             setCompPoint(true);
                 setTimeout(() => {
-                
+                  pointwin.play();
                   setCompPt(compvalue);
                 }, 1000);
-              } else {
-                lost.play();
+              } 
+              
+              else {
+            
                 setCheckValue(comp_MainValue, buttonsound.play());
                 setTimeout(() => {
                   setColor("2");
+                 
                 }, 500);
                 valuepopAI();
               }
@@ -437,10 +449,11 @@ export const Home = ({ handleFullScreen }) => {
             dispatch(AINameColor(false));
           }, 3000);
         } else {
-          lost.play();
+          
           setColor("2");
           setTimeout(() => {
             setTrueValuePopUp(true);
+            lost.play();
           }, 1000);
 
           dispatch(WrongValue());
@@ -454,7 +467,7 @@ export const Home = ({ handleFullScreen }) => {
                 debouncefunction();
                 if (comp_MainValue === compflip_cardVal) {
                   setCheckValue(comp_MainValue, buttonsound.play());
-                  pointwin.play();
+                  
                   setTimeout(() => {
                     setColor("1");
                   }, 500);
@@ -462,13 +475,13 @@ export const Home = ({ handleFullScreen }) => {
               
                   setCompPoint(true);
                   setTimeout(() => {
-              
+                    pointwin.play();
                     setCompPt(compvalue);
 
                   },1000);
               
                 } else {
-                  lost.play();
+                  
 
                   setCheckValue(comp_MainValue, buttonsound.play());
                   setTimeout(() => {
@@ -480,8 +493,7 @@ export const Home = ({ handleFullScreen }) => {
                 setTimeout(() => {
                   setColor("");
                   dispatch(AINameColor(false));
-                  // -----------------
-                  // dispatch(UserNameColor(true))
+               
                 }, 3000);
               }
               setNextTurn(true);
@@ -508,7 +520,7 @@ export const Home = ({ handleFullScreen }) => {
             cardvalue === "Joker"
           ) {
             setStrongValue(true);
-            // toast(`${pointwinner} a la carte la plus élevée + 1 point`)
+            
             setPointWinner(userName);
             popup();
             dispatch(WonPiles(userCard));
@@ -517,7 +529,7 @@ export const Home = ({ handleFullScreen }) => {
             uservalue += 1;
             setUserPoint(true)
             setTimeout(() => {
-              
+              pointwin.play();
               setPoints(uservalue);
             }, 1000);
             setTimeout(() => {
@@ -530,14 +542,14 @@ export const Home = ({ handleFullScreen }) => {
             popup();
             setPointWinner(compName);
             setStrongValue(true);
-            // toast(`${pointwinner} a la carte la plus élevée + 1 point`)
+            
             dispatch(AiWonPiles(CompCard));
             dispatch(AiWonPiles(userCard));
             setCompPoint(true);
             compvalue += 1;
         
             setTimeout(() => {
-              
+              pointwin.play();
               setCompPt(compvalue);
             }, 1000);
             setTimeout(() => {

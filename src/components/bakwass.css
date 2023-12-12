@@ -327,3 +327,6 @@
   .flipped {
     transform: rotateY(180deg);
   }
+  /* .Result_wrapper_duration {
+    margin-left: -72px;
+} */

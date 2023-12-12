@@ -164,12 +164,14 @@ export const BattleModal = ({
         centered
       >
         <Modal.Body>
-          <h2>Carte cachée de bataille</h2>
+          <h2>Carte cachées </h2>
+          <h3>Pendant la bataille </h3>
           <div className="battle_card_imgs">
             <div>
               <h3>{userName}</h3>
               <div className="imgs_wrapper">
                 {userBattle.map((el, i) => (
+                  
                   <img key={i} src={el?.img} alt="image" />
                 ))}
               </div>

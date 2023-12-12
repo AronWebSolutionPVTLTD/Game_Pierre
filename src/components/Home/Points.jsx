@@ -6,71 +6,37 @@ import { motion, AnimatePresence } from "framer-motion";
 export const Points = ({ color, checkValue, handleClick }) => {
   const { selectedcardvalue, setselectedCardValue } = useContext(GameContext);
 
-  // const noireValue = [
-  //   { value: 0.25, fraction: "1/4" },
-  //   { value: 0.5, fraction: "1/2" },
-  //   { value: 0.75, fraction: "3/4" },
-  //   1,
-  //   { value: 1.5, fraction: "3/2" },
-  //   2,
-  //   3,
-  //   4,
-  //   "Joker",
-  // ];
-
-    // const crocheValue = [
-  //   { value: 0.5, fraction: "1/2" },
-  //   1,
-  //   { value: 1.5, fraction: "3/2" },
-  //   3,
-  //   2,
-  //   4,
-  //   6,
-  //   8,
-  //   "Joker",
-  // ];
-
-    // const blancheValue = [
-  //   { value: 0.125, fraction: "1/8" },
-  //   { value: 0.25, fraction: "1/4" },
-  //   { value: 0.375, fraction: "3/8" },
-  //   { value: 0.5, fraction: "1/2" },
-  //   { value: 0.75, fraction: "3/4" },
-  //   1,
-  //   { value: 1.5, fraction: "3/2" },
-  //   2,
-  //   "Joker",
-  // ];
-
-   const noireValue = [
-    0.25,
- 0.5,
-  0.75,
+  const noireValue = [
+    { value: 0.25, fraction: "1/4" },
+    { value: 0.5, fraction: "1/2" },
+    { value: 0.75, fraction: "3/4" },
     1,
+    // { value: 1.5, fraction: "3/2" },
     1.5,
     2,
-   3,
-   4,
+    3,
+    4,
     "Joker",
- ];
-
-
+  ];
 
   const blancheValue = [
-    0.125,
-    0.25,
-    0.375,
-    0.5,
-    0.75,
+    { value: 0.125, fraction: "1/8" },
+    { value: 0.25, fraction: "1/4" },
+    { value: 0.375, fraction: "3/8" },
+    { value: 0.5, fraction: "1/2" },
+    { value: 0.75, fraction: "3/4" },
     1,
+    // { value: 1.5, fraction: "3/2" },
     1.5,
     2,
     "Joker",
   ];
+
   const crocheValue = [
-    0.5,
+    { value: 0.5, fraction: "1/2" },
     1,
-    1.5,
+    // { value: 1.5, fraction: "3/2" },
+1.5,
     3,
     2,
     4,
@@ -78,7 +44,6 @@ export const Points = ({ color, checkValue, handleClick }) => {
     8,
     "Joker",
   ];
-
 
   const variants = {
     initial: { opacity: 0, y: -50 },
@@ -117,52 +82,48 @@ export const Points = ({ color, checkValue, handleClick }) => {
                             scale:
                               color !== "1" && color !== "2"
                                 ? 1
-                                : checkValue ===item
-                                    // (typeof item === "object"
-                                    //   ? item.value
-                                    //   : item)
+                                : checkValue ===
+                                    (typeof item === "object"
+                                      ? item.value
+                                      : item)
                                   ? 1.2
                                   : 1,
                             opacity:
                               color === "2" ||
                               (color === "1" &&
-                                checkValue ===item
-                                  // (typeof item === "object"
-                                  //   ? item.value
-                                  //   : item)
-                                  )
+                                checkValue ===
+                                  (typeof item === "object"
+                                    ? item.value
+                                    : item))
                                 ? 1
                                 : 0.8,
                           }}
                           style={{
                             background:
                               color === "2" &&
-                              checkValue ===item
-                                // (typeof item === "object" ? item.value : item)
+                              checkValue ===
+                                (typeof item === "object" ? item.value : item)
                                 ? "red"
                                 : color === "1" &&
-                                  checkValue ===item
-                                    // (typeof item === "object"
-                                    //   ? item.value
-                                    //   : item) 
-                                      &&
+                                  checkValue ===
+                                    (typeof item === "object"
+                                      ? item.value
+                                      : item) &&
                                   "green",
                           }}
                           className="item_point"
                           onClick={() =>
-                            handleClick(item
-                              // typeof item === "object" ? item.value : item,
+                            handleClick(
+                              typeof item === "object" ? item.value : item,
                             )
                           }
                         >
-                          {/* {typeof item === "object" ? (
+                          {typeof item === "object" ? (
                             <>
                               <span>{item.fraction}</span>
                               <span>{item.value}</span>
                             </>
-                          ) : */}
-                          
-                        { typeof item === "number" ? (
+                          ) : typeof item === "number" ? (
                             <span>{item}</span>
                           ) : (
                             <span className="point_bg_icon">
@@ -184,39 +145,48 @@ export const Points = ({ color, checkValue, handleClick }) => {
                               scale:
                                 color !== "1" && color !== "2"
                                   ? 1
-                                  : checkValue ===item
-                                 
+                                  : checkValue ===
+                                      (typeof item === "object"
+                                        ? item.value
+                                        : item)
                                     ? 1.2
                                     : 1,
                               opacity:
                                 color === "2" ||
                                 (color === "1" &&
-                                  checkValue ===item
-                                   
-                                    )
+                                  checkValue ===
+                                    (typeof item === "object"
+                                      ? item.value
+                                      : item))
                                   ? 1
                                   : 0.8,
                             }}
                             style={{
                               background:
                                 color === "2" &&
-                                checkValue ===item
-                              
+                                checkValue ===
+                                  (typeof item === "object" ? item.value : item)
                                   ? "red"
                                   : color === "1" &&
-                                    checkValue ===item
-                                    &&
+                                    checkValue ===
+                                      (typeof item === "object"
+                                        ? item.value
+                                        : item) &&
                                     "green",
                             }}
                             className="item_point"
                             onClick={() =>
-                              handleClick(item
-                               
+                              handleClick(
+                                typeof item === "object" ? item.value : item,
                               )
                             }
                           >
-                           
-                            { typeof item === "number" ? (
+                            {typeof item === "object" ? (
+                              <>
+                                <span>{item.fraction}</span>
+                                <span>{item.value}</span>
+                              </>
+                            ) : typeof item === "number" ? (
                               <span>{item}</span>
                             ) : (
                               <span className="point_bg_icon">
@@ -237,40 +207,48 @@ export const Points = ({ color, checkValue, handleClick }) => {
                               scale:
                                 color !== "1" && color !== "2"
                                   ? 1
-                                  : checkValue ===item
-                                      
+                                  : checkValue ===
+                                      (typeof item === "object"
+                                        ? item.value
+                                        : item)
                                     ? 1.2
                                     : 1,
                               opacity:
                                 color === "2" ||
                                 (color === "1" &&
-                                  checkValue ===item
-                                 
-                                      )
+                                  checkValue ===
+                                    (typeof item === "object"
+                                      ? item.value
+                                      : item))
                                   ? 1
                                   : 0.8,
                             }}
                             style={{
                               background:
                                 color === "2" &&
-                                checkValue ===item
-                              
+                                checkValue ===
+                                  (typeof item === "object" ? item.value : item)
                                   ? "red"
                                   : color === "1" &&
-                                    checkValue ===item
-                                     
-                                      &&
+                                    checkValue ===
+                                      (typeof item === "object"
+                                        ? item.value
+                                        : item) &&
                                     "green",
                             }}
                             className="item_point"
                             onClick={() =>
-                              handleClick(item
-                           
+                              handleClick(
+                                typeof item === "object" ? item.value : item,
                               )
                             }
                           >
-                           
-                            { typeof item === "number" ? (
+                            {typeof item === "object" ? (
+                              <>
+                                <span>{item.fraction}</span>
+                                <span>{item.value}</span>
+                              </>
+                            ) : typeof item === "number" ? (
                               <span>{item}</span>
                             ) : (
                               <span className="point_bg_icon">

@@ -37,7 +37,7 @@ export const Computer = () => {
     shuffle,
     AIimg,
   } = state;
-
+  const battle = new Audio("battle sound.wav");
   // console.log(userid,deckcard,"userlllllllll")
 
   useEffect(() => {
@@ -71,11 +71,13 @@ export const Computer = () => {
     if (nextturn) {
       if (userCardimg === "./img/Image verso card.png") {
         dispatch(AIsetImg("./img/Image verso card.png"));
+        battle.play();
         setTimeout(() => {
           dispatch(UserNameColor(true));
-          if (deckcard?.length === 0) {
-            setCompturnStop(true);
-          }
+          // if (deckcard?.length === 0) {
+          //   setCompturnStop(true);
+          // }
+      
         }, 1000);
         return;
       }

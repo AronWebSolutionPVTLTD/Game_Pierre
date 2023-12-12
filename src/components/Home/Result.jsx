@@ -122,7 +122,7 @@ export const Result = ({
         <div className="container">
           <div className="row">
             <div className="Result_wrapper_user">
-              <div className="row d-flex">
+              <div className="row d-flex justify-content-end">
                 <div className="col-sm-4">
                   <div className="user_col_1 h-100" onClick={Triggered_func}>
                     <img src="./img/12 reprise.jpg" />
@@ -165,7 +165,7 @@ export const Result = ({
                     <h3 className="user_col_2_h2 mt-2">{recovery.length}</h3>
                   </div>
                 </div>
-                <div className="col-sm-4">
+                {/* <div className="col-sm-4">
                   <div className="user_col_3">
                     <input
                       type="text"
@@ -174,7 +174,7 @@ export const Result = ({
                     />
                     <p>1pt par pli gagné + 1 pt par bonne réponse</p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="Result_wrapper_duration">
@@ -205,7 +205,7 @@ export const Result = ({
             </div>
             <div className="Result_wrapper_computer">
               <div className="row">
-                <div className="col-sm-4">
+                {/* <div className="col-sm-4">
                   <div className="user_col_3">
                     <input
                       type="text"
@@ -214,7 +214,7 @@ export const Result = ({
                     />
                     <p>1pt par pli gagné + 1 pt par bonne réponse</p>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-sm-4">
                   <div className="user_col_2">
                     <div className="user_col_2_inner">
