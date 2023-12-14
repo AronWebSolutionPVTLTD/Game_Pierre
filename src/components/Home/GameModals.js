@@ -163,9 +163,9 @@ export const BattleModal = ({
         className="battle_modal"
         centered
       >
-        <Modal.Body>
-          <h2>Carte cachées </h2>
-          <h3>Pendant la bataille </h3>
+         <Modal.Body>
+          <h2>Cartes cachées </h2>
+          <h3 className="h3">Pendant la bataille </h3>
           <div className="battle_card_imgs">
             <div>
               <h3>{userName}</h3>

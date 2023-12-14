@@ -129,6 +129,7 @@ useEffect(() => {
   const flipCard = (id, value, card, e) => {
  
     if (!valueSelected) {
+      dispatch(TurnOver());
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));
       setRecoveryCardUse(false);
@@ -175,7 +176,7 @@ setOldTarget(e.currentTarget);
     //   alert("select the value to continue the game");
     // }
     setFlipBack(false);
-    dispatch(TurnOver());
+
   };
 
   return (

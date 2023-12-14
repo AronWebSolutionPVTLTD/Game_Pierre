@@ -630,6 +630,17 @@ a.nav-link {
     text-align: center;
     font-weight: 800;
 }
+.battle_modal .h3{
+    background-image: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-game-castle-dark-banner-image_178457.jpg);
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-weight: bold;
+    font-weight: 800;
+    -webkit-font-smoothing: antialiased;
+    background-position: bottom 48px right -274px
+  }
 .modal-footer .close_modal_icon {
     background: transparent;
     border: none;
