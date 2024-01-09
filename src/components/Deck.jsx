@@ -141,9 +141,9 @@ setOldTarget(e.currentTarget);
 
       
     }
-    else {
-      toast("Sélectionnez la valeur pour continuer le jeu");
-    }
+    // else {
+    //   toast("Sélectionnez la valeur pour continuer le jeu");
+    // }
     setFlipBack(false);
 
   };
