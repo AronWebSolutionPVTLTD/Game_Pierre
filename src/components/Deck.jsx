@@ -2,33 +2,30 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../Context/GameContext";
 import {
   Flipped,
-  GameOver,
+
   MainValueSelected,
   TurnOver,
   UserNameColor,
   UserSetImg,
 } from "../Context/action";
-import { motion } from "framer-motion";
+
 
 import shuffleR from "./Home/GameLogistics";
 import "./bakwass.css";
+import { toast } from "react-toastify";
 const Deck = () => {
   const {
     state,
     dispatch,
     usercards,
     setUserCards,
-    setNextTurn,
-    nextturn,
-    compcard,
+
     valueSelected,
     setValueSelected,
-    turnover,
-    cardmatchValue,
-    flipback,
+ 
     setFlipBack,
     setTimerEnable,
-    recoverycarduse,
+   
     setRecoveryCardUse,
     deckcard,
     setdeckcard,
@@ -40,8 +37,7 @@ const [oldTarget, setOldTarget] = useState(null);
 
 const [lastFlippedCard,setLasFlippedCard]=useState(null)
 
-  // console.log(hometimer,"timer")
-  // console.log(usercards,"user")
+
 
   useEffect(() => {
     if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
@@ -50,43 +46,17 @@ const [lastFlippedCard,setLasFlippedCard]=useState(null)
   }, [deckcard, state.cards]);
 
 
-  // useEffect(() => {
-  //   setUserCards((prevCards) => {
-  //     const newCards = [];
-  //     const maxCardCount = hometimer || 0; 
-  //     const existingCardCount = prevCards.length;
-  
-  //     for (let i = 0; i < maxCardCount; i++) {
-       
-  //       const existingCardIndex = i % existingCardCount;
-  //       const existingCard = prevCards[existingCardIndex];
-  
-      
-  //       const newCard = {
-  //         id: i + 1,
-  //         value: existingCard?.value,
-  //         isFlipped: existingCard?.isFlipped || false,
-       
-  //         img: existingCard?.img,
-  //       };
-  
-  //       newCards.push(newCard);
-  //     }
-  
-  //     return newCards;
-  //   });
-  // }, [hometimer]);
 
  
 
 useEffect(() => {
   setUserCards((prevCards) => {
     const newCards = [...prevCards];
-    const maxCardCount = hometimer || 0; // Assuming hometimer is the desired number of repeats
+    const maxCardCount = hometimer || 0; 
     const existingCardCount = prevCards.length;
 
     if (maxCardCount < existingCardCount) {
-      // If the new timer is less than the existing card count, do not modify the cards
+    
       return prevCards;
     }
 
@@ -110,13 +80,12 @@ useEffect(() => {
   });
 }, [hometimer]);
 
-  // console.log(usercards, "user");
-  // console.log(deckcard, "deck");
+
  
   // -------------RECOVERY CARD_______________
   useEffect(() => {
     setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
-    // dispatch(UserNameColor(true));
+    dispatch(UserNameColor(true));
   }, [recoveryCard]);
 
   useEffect(() => {
@@ -172,9 +141,9 @@ setOldTarget(e.currentTarget);
 
       
     }
-    // else {
-    //   alert("select the value to continue the game");
-    // }
+    else {
+      toast("Sélectionnez la valeur pour continuer le jeu");
+    }
     setFlipBack(false);
 
   };

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import { Points } from "../components/Home/Points";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, } from "react-toastify";
 import "./Sixcard.css";
 import "react-toastify/dist/ReactToastify.css";
-import { FaRobot } from "react-icons/fa";
+
 import { RoomForm } from "./RoomForm";
 
 const socket = io("http://localhost:4000", { transports: ["websocket"] });
@@ -52,17 +52,7 @@ function Sixcard() {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      // toast.info(`${data.message}`, {
-      //   position: "top-right",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "dark",
-      //   icon: <FaRobot />,
-      // });
+   
 
       toast(`${data.message}`);
       setTimeout(() => {

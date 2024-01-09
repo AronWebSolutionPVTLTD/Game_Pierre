@@ -4,9 +4,9 @@ import {
   AIsetImg,
   LoadingProcess,
   UserNameColor,
-  UserSetImg,
+
 } from "../Context/action";
-import { motion } from "framer-motion";
+
 export const Computer = () => {
   const {
     state,
@@ -21,13 +21,7 @@ export const Computer = () => {
     setCompCardData,
     currentIndex,
     setCurrentIndex,
-    deckcard,
-    setdeckcard,
-    userid,
-    setUserId,
-    setUserCards,
-    compturnstop,
-    setCompturnStop,
+   
   } = useContext(GameContext);
 
   const {
@@ -38,17 +32,17 @@ export const Computer = () => {
     AIimg,
   } = state;
   const battle = new Audio("battle sound.wav");
-  // console.log(userid,deckcard,"userlllllllll")
+
 
   useEffect(() => {
     if (compcard?.length === 0) {
-      // setCompCard(state.cards);
+ 
       setCompCard(compcarddata);
     }
     function shuffleArray(array) {
       for (let i = array?.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements at i and j
+        [array[i], array[j]] = [array[j], array[i]]; 
       }
     }
 
@@ -59,13 +53,7 @@ export const Computer = () => {
     setCompCardData(shuffledData);
   }, [shuffle]);
 
-  // console.log(compcarddata, "comp");
 
-  // useEffect(() => {
-  //     const getShuffledData = shuffleR(state.cards);
-  //     localStorage.setItem("computercarddata", JSON.stringify(getShuffledData));
-  //     setCompCard(getShuffledData);
-  //   }, [shuffle]);
 
   useEffect(() => {
     if (nextturn) {
@@ -74,9 +62,7 @@ export const Computer = () => {
         battle.play();
         setTimeout(() => {
           dispatch(UserNameColor(true));
-          // if (deckcard?.length === 0) {
-          //   setCompturnStop(true);
-          // }
+         
       
         }, 1000);
         return;
@@ -85,7 +71,7 @@ export const Computer = () => {
       if (userCardimg) {
         dispatch(LoadingProcess(true));
         setTimeout(() => {
-          // let picked = compcard[Math.floor(Math.random() * compcard.length)];
+ 
 
           let picked = compcarddata[currentIndex];
           localStorage.setItem(
@@ -118,10 +104,7 @@ export const Computer = () => {
     }
   }, [userCardimg]);
 
-  // const cardHeight = (i) => ({
-  //   height: `calc(100% - ${usercards.length * (1 / 2)}px)`,
-  //   transform: `translateY(${i * 1}px)`,
-  // });
+  
 
   return (
     <>
@@ -142,50 +125,7 @@ export const Computer = () => {
           <p>PLUS DE CARTES</p>
         </div>
       ) : (
-        // <div className="outer-div">
-        //   {compcard.length !== 0 &&
-        //     compcard.map((card, i) => (
-        //       <div
-        //         key={card.id}
-        //         style={cardHeight(i)}
-        //         className={`card ${card.isFlipped ? "flipped" : ""}`}
-        //       >
-        //         <div>
-        //           <div className="card-front">
-        //             <img src="./img/Image verso card.png" />
-        //           </div>
-        //         </div>
-        //       </div>
-        //     ))}
-        // </div>
-        // <motion.article className="board">
-        //   {compcarddata.length !== 0 &&
-        //     compcarddata.map((card, i) => (
-        //       <motion.div
-        //         id={`button_id_${i}`}
-        //         key={i}
-        //         className={`cards computer_card  ${
-        //           flippedIndex === i ? "cards:nth-child(${i+1} flipped" : " "
-        //         } `}
-        //         animate={{
-        //           scale: [1, 2, 2, 1, 1],
-        //           rotate: [0, 0, 270, 270, 0],
-        //           borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-        //         }}
-        //       >
-        //         <span className="wrapper">
-        //           <span className="content">
-        //             <span className="face back">
-        //               <img alt={card.id} src="./img/Image verso card.png" />
-        //             </span>
-        //             <span className="face front">
-        //               <img src={AIimg} />
-        //             </span>
-        //           </span>
-        //         </span>
-        //       </motion.div>
-        //     ))}
-        // </motion.article>
+    
         <article className="board">
           {compcarddata?.length !== 0 &&
             compcarddata.map((card, i) => (
@@ -201,8 +141,8 @@ export const Computer = () => {
                     <span className="face back">
                       <img alt={card.id} src="./img/Image verso card.png" />
                     </span>
-                    <span className="face front">
-                      <img src={AIimg} />
+                    <span   className="face front">
+                      <img  src={AIimg} />
                     </span>
                   </span>
                 </span>

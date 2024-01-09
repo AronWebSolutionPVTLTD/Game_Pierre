@@ -14,7 +14,7 @@ import {
 } from "../Context/action";
 import { Statistics } from "./Home/Statistics";
 import "../main component/toaster.css";
-import { pick } from "underscore";
+
 import { toast } from "react-toastify";
 
 export default function Evaluation() {
@@ -228,9 +228,9 @@ export default function Evaluation() {
 
   return (
     <>
-      <div className="fliped_cards">
+      <div className="fliped_cards Evaluation">
         <div className="container">
-          <div className="row">
+          <div className="row Evaluation">
             <div className="col-md-6  ">
               <div className="outer-div">
                 {cards.length !== 0 &&
@@ -282,9 +282,9 @@ export default function Evaluation() {
       <div className="Result_wrapper_outer">
         <div className="Result_wrapper">
           <div className="container">
-            <div className="row">
+            <div className="row Evaluation_result">
               <div className="Result_wrapper_duration">
-                <p>
+                
                   <div className="Result_timmer">
                     <img src="./img/timmer_icon_trim.png" />
                     <input type="text" value={formattedTime} readOnly />
@@ -312,7 +312,7 @@ export default function Evaluation() {
                       </button>
                     </div>
                   </div>
-                </p>
+                
               </div>
             </div>
           </div>

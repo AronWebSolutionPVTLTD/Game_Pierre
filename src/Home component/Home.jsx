@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
-import { AnimateSharedLayout, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import {
   AINameColor,
   AIsetImg,
@@ -33,7 +34,7 @@ import { Points } from "../components/Home/Points";
 import { Result } from "../components/Home/Result";
 import { Statistics } from "../components/Home/Statistics";
 import { UserComputer } from "../components/Home/UserComputer";
-import { toast } from "react-toastify";
+
 
 import { Link } from "react-router-dom";
 
@@ -69,7 +70,8 @@ export const Home = ({ handleFullScreen }) => {
     setColor,
     setFlippedIndex,
     setCurrentIndex,
-   hometimer, setHomeTimer
+   hometimer, setHomeTimer,
+   chooseRecovery,setChooseRecovery
   } = useContext(GameContext);
   const {
     gameOver,
@@ -107,11 +109,11 @@ export const Home = ({ handleFullScreen }) => {
   const lost = new Audio("lost 1 point.wav");
   const userName = localStorage.getItem("username");
   const Token = localStorage.getItem("token");
-  // const userName = "Prénom";
+ 
   const compName = "Ordinateur";
   const draw = "Egalité";
   const Timer = JSON.parse(localStorage.getItem("timer"));
-  // const [hometimer, setHomeTimer] = useState();
+  
 
   // ________________FRAME MOTION_________________________
   const buttonVariants = {
@@ -182,13 +184,13 @@ export const Home = ({ handleFullScreen }) => {
   useEffect(() => {
     setTimeout(() => {
       setTrueValuePopUp(false);
-    }, 1000);
+    }, 1800);
   }, [trueValuePopUp]);
 
   useEffect(() => {
     setTimeout(() => {
       setTrueValuePopUpAi(false);
-    }, 1000);
+    }, 1800);
   }, [trueValuePopUpAi]);
 
   useEffect(() => {
@@ -197,13 +199,7 @@ export const Home = ({ handleFullScreen }) => {
     }, 2000);
   }, [strongvalue]);
 
-  // const handleuser = () => {
-  //   setUserPoint(false);
-  // };
-
-  // const handlecomp = () => {
-  //   setCompPoint(false);
-  // };
+  
 
   useEffect(() => {
     setTimeout(() => {
@@ -337,8 +333,10 @@ export const Home = ({ handleFullScreen }) => {
         setCheckValue(comp_MainValue, buttonsound.play());
         setTimeout(() => {
           setColor("2");
-          lost.play()
+          
+          
         }, 500);
+        valuepopAI();
       }
       setTimeout(() => {
         dispatch(AINameColor(false));
@@ -375,6 +373,7 @@ export const Home = ({ handleFullScreen }) => {
             lost.play()
             setColor("");
             dispatch(UserNameColor(false));
+            setTrueValuePopUp(true);
           }, 2000);
           computerturn();
         }
@@ -513,53 +512,59 @@ export const Home = ({ handleFullScreen }) => {
           }
         }, 2000);
 
-        setTimeout(async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          if (
-            (cardvalue > compflip_cardVal && compflip_cardVal !== "Joker") ||
-            cardvalue === "Joker"
-          ) {
-            setStrongValue(true);
-            
-            setPointWinner(userName);
-            popup();
-            dispatch(WonPiles(userCard));
-            dispatch(WonPiles(CompCard));
-           
-            uservalue += 1;
-            setUserPoint(true)
-            setTimeout(() => {
-              pointwin.play();
-              setPoints(uservalue);
-            }, 1000);
-            setTimeout(() => {
-              dispatch(UserNameColor(true));
-              setValueSelected(false);
-           
-            }, 3000);
-          
-          } else {
-            popup();
-            setPointWinner(compName);
-            setStrongValue(true);
-            
-            dispatch(AiWonPiles(CompCard));
-            dispatch(AiWonPiles(userCard));
-            setCompPoint(true);
-            compvalue += 1;
-        
-            setTimeout(() => {
-              pointwin.play();
-              setCompPt(compvalue);
-            }, 1000);
-            setTimeout(() => {
-              dispatch(UserNameColor(true));
-              setValueSelected(false);
-           
-            }, 3000);
-         
-          }
-        }, 5000);
+if(!chooseRecovery){
+
+
+  
+  setTimeout(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (
+      (cardvalue > compflip_cardVal && compflip_cardVal !== "Joker") ||
+      cardvalue === "Joker"
+    ) {
+      setStrongValue(true);
+      
+      setPointWinner(userName);
+      popup();
+      dispatch(WonPiles(userCard));
+      dispatch(WonPiles(CompCard));
+     
+      uservalue += 1;
+      setUserPoint(true)
+      setTimeout(() => {
+        pointwin.play();
+        setPoints(uservalue);
+      }, 1000);
+      setTimeout(() => {
+        dispatch(UserNameColor(true));
+        setValueSelected(false);
+     
+      }, 3000);
+    
+    } else {
+      popup();
+      setPointWinner(compName);
+      setStrongValue(true);
+      
+      dispatch(AiWonPiles(CompCard));
+      dispatch(AiWonPiles(userCard));
+      setCompPoint(true);
+      compvalue += 1;
+  
+      setTimeout(() => {
+        pointwin.play();
+        setCompPt(compvalue);
+      }, 1000);
+      setTimeout(() => {
+        dispatch(UserNameColor(true));
+        setValueSelected(false);
+     
+      }, 3000);
+   
+    }
+  }, 5000);
+}
+      
       }
     } else {
       setValuePopUp(true);
@@ -567,7 +572,7 @@ export const Home = ({ handleFullScreen }) => {
     setNextTurn(true);
   };
 
-  // console.log(pointwinner,"winner");
+ 
   // -------------------handle Game REStart pop up---------------------
   const handleRestartGame = () => {
     dispatch(GameOver(false));
@@ -635,256 +640,256 @@ export const Home = ({ handleFullScreen }) => {
 
   return (
     <div>
-      <div className="main_battle">
-        <div className="container" style={{ marginTop: "50px" }}>
-          <div>
-            <h1 className="text-center mb-5">LA BATAILLE RYTHMIQUE©</h1>
-          </div>
+    <div className="main_battle">
+      <div className="container" style={{ marginTop: "50px" }}>
+        <div>
+          <h1 className="text-center mb-5">LA BATAILLE RYTHMIQUE©</h1>
+        </div>
 
-          <div className="row align-items-center">
-            <div className="col-md-2">
-              <motion.input
+        <div className="row align-items-center">
+          <div className="col-md-2">
+            <motion.input
+              type="text"
+              defaultValue={localStorage.getItem("username")}
+              readOnly="readonly"
+              className={`${userNameColor ? "activeUser" : ""}`}
+              animate={{
+                scale: userNameColor ? 1.2 : 1,
+                opacity: userNameColor ? 1 : 1,
+              }}
+              transition={{ duration: 0.2, ease: "linear" }}
+            />
+            <div className="input_new">
+              <input
                 type="text"
-                defaultValue={localStorage.getItem("username")}
-                readOnly="readonly"
-                className={`${userNameColor ? "activeUser" : ""}`}
-                animate={{
-                  scale: userNameColor ? 1.2 : 1,
-                  opacity: userNameColor ? 1 : 1,
-                }}
-                transition={{ duration: 0.2, ease: "linear" }}
+                id="name"
+                name="name"
+                required
+                minlength="4"
+                maxlength="8"
+                size="10"
+                value={`${points} points`}
               />
-              <div className="input_new">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  minlength="4"
-                  maxlength="8"
-                  size="10"
-                  value={`${points} points`}
-                />
-              </div>
+            </div>
 {/* ___________________USER +1 point pop_________________ */}
-              {userpoint &&
-  <motion.div className="plus_point"
+            {userpoint &&
+<motion.div className="plus_point"
 
 
-  layout
-  initial={{ opacity: 0, y: 200, rotateX: 120, x: 300 }}
-  animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
-  exit={{ opacity: 0, y: 100 }}
-  transition={{ duration: 1, ease: "linear" }}
-   >
+layout
+initial={{ opacity: 0, y: 200, rotateX: 120, x: 300 }}
+animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
+exit={{ opacity: 0, y: 100 }}
+transition={{ duration: 1, ease: "linear" }}
+ >
 <span>+1 Point</span>
 </motion.div>
 }
 </div>
 {/* ___________________USER +1 point pop end_________________ */}
-          
+        
 
-            <UserComputer />
+          <UserComputer />
 
 
-            <div className="col-md-2">
-              <motion.input
+          <div className="col-md-2">
+            <motion.input
+              type="text"
+              defaultValue="Ordinateur"
+              readOnly="readonly"
+              className={`${compNameColor ? "activeUser" : ""}`}
+              animate={{
+                scale: compNameColor ? 1.2 : 1,
+                opacity: userNameColor ? 1 : 1,
+              }}
+              transition={{ duration: 0.2, ease: "linear" }}
+            />
+
+
+            <div className="input_new">
+              <input
                 type="text"
-                defaultValue="Ordinateur"
-                readOnly="readonly"
-                className={`${compNameColor ? "activeUser" : ""}`}
-                animate={{
-                  scale: compNameColor ? 1.2 : 1,
-                  opacity: userNameColor ? 1 : 1,
-                }}
-                transition={{ duration: 0.2, ease: "linear" }}
+                id="name"
+                name="name"
+                required
+                minlength="4"
+                maxlength="8"
+                size="10"
+                value={`${compPt} points`}
+                layout
               />
-
-
-              <div className="input_new">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  minlength="4"
-                  maxlength="8"
-                  size="10"
-                  value={`${compPt} points`}
-                  layout
-                />
-              </div>
+            </div>
 
 {/* ___________________COMP +1 point pop_________________ */}
-              {comppoint &&
-  <motion.div className="plus_point"
+            {comppoint &&
+<motion.div className="plus_point"
 
 
-  layout
-  initial={{ opacity: 0, y: 200, rotateX: 120, x: -300 }}
-  animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
-  exit={{ opacity: 0, y: 100 }}
-  transition={{ duration: 1, ease: "linear" }}
-   >
+layout
+initial={{ opacity: 0, y: 200, rotateX: 120, x: -300 }}
+animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
+exit={{ opacity: 0, y: 100 }}
+transition={{ duration: 1, ease: "linear" }}
+ >
 <span>+1 Point</span>
 </motion.div>
 }
 
 
-            </div>
           </div>
+        </div>
 
 
 
-          {/* --------------------------------true value pop up________________________ */}
-     
+        {/* --------------------------------true value pop up________________________ */}
+   
 
-          {trueValuePopUp && (
-            <motion.div
-              className="truevalue"
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-              <p>La valeur correcte est </p>
-              {cardvalue !== "Joker" ? (
-                <h2 className="fs-1">{cardvalue}</h2>
-              ) : (
-                <img
-                  style={{ width: "150px", height: "150px" }}
-                  src="img/11 point d_orgue.jpg"
-                />
-              )}
-            </motion.div>
-          )}
-          {trueValuePopUpAi && (
-            <motion.div
-              className="truevalue"
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-              <p>La valeur correcte est</p>
-              {compflip_cardVal !== "Joker" ? (
-                <h3 className="fs-1">{compflip_cardVal}</h3>
-              ) : (
-                <img
-                  style={{ width: "150px", height: "200px" }}
-                  src="img/11 point d_orgue.jpg"
-                />
-              )}
-            </motion.div>
-          )}
-
-
-
-
-
-
-          <Points
-            color={color}
-            checkValue={checkValue}
-            handleClick={handleClick}
-          />
-
-          {/* --------------POP up for GAME OVER & winner------------- */}
-          <GameOverModal
-            gameOver={gameOver}
-            handleRestartGame={handleRestartGame}
-            winnerName={winnerName}
-          />
-
-          {/* _______________________Battle pop up________________________ */}
-          <GameBattleModal cardmatchValue={cardmatchValue} />
-
-          {/* ___________________________Value POP UP_________________________ */}
-          <GamePopUpModal
-            handleValuePop={handleValuePop}
-            valuePopUp={valuePopUp}
-          />
-
-          
-          <ModalStrongValue
-            strongvalue={strongvalue}
-            pointwinner={pointwinner}
-          />
-
-
-          <Result
-            formathometime={formathometime}
-            points={points}
-            compPt={compPt}
-            hometimer={hometimer}
-            setHomeTimer={setHomeTimer}
-          />
-
+        {trueValuePopUp && (
           <motion.div
-            variants={listVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
+            className="truevalue"
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <div className="inline_buttons">
-              <motion.ul>
-                <motion.li variants={buttonVariants}>
-                  <motion.button
-                    className="w-100"
-                    onClick={handleFullScreen}
-                    variants={buttonVariants}
-                  >
-                    Plein écran
-                  </motion.button>
-                </motion.li>
-                <motion.li variants={buttonVariants}>
+            <p>La valeur correcte est </p>
+            {cardvalue !== "Joker" ? (
+              <h2 className="fs-1">{cardvalue}</h2>
+            ) : (
+              <img
+                style={{ width: "150px", height: "150px" }}
+                src="img/11 point d_orgue.jpg"
+              />
+            )}
+          </motion.div>
+        )}
+        {trueValuePopUpAi && (
+          <motion.div
+            className="truevalue"
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            <p>La valeur correcte est</p>
+            {compflip_cardVal !== "Joker" ? (
+              <h3 className="fs-1">{compflip_cardVal}</h3>
+            ) : (
+              <img
+                style={{ width: "150px", height: "200px" }}
+                src="img/11 point d_orgue.jpg"
+              />
+            )}
+          </motion.div>
+        )}
+
+
+
+
+
+
+        <Points
+          color={color}
+          checkValue={checkValue}
+          handleClick={handleClick}
+        />
+
+        {/* --------------POP up for GAME OVER & winner------------- */}
+        <GameOverModal
+          gameOver={gameOver}
+          handleRestartGame={handleRestartGame}
+          winnerName={winnerName}
+        />
+
+        {/* _______________________Battle pop up________________________ */}
+        <GameBattleModal cardmatchValue={cardmatchValue} />
+
+        {/* ___________________________Value POP UP_________________________ */}
+        <GamePopUpModal
+          handleValuePop={handleValuePop}
+          valuePopUp={valuePopUp}
+        />
+
+        
+        <ModalStrongValue
+          strongvalue={strongvalue}
+          pointwinner={pointwinner}
+        />
+
+
+        <Result
+          formathometime={formathometime}
+          points={points}
+          compPt={compPt}
+          hometimer={hometimer}
+          setHomeTimer={setHomeTimer}
+        />
+
+        <motion.div
+          variants={listVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <div className="inline_buttons">
+            <motion.ul>
+              <motion.li variants={buttonVariants}>
+                <motion.button
+                  className="w-100"
+                  onClick={handleFullScreen}
+                  variants={buttonVariants}
+                >
+                  Plein écran
+                </motion.button>
+              </motion.li>
+              <motion.li variants={buttonVariants}>
+                <motion.button
+                  className="w-100"
+                  onClick={handleRestartGame}
+                  variants={buttonVariants}
+                >
+                  Nouvelle partie
+                </motion.button>
+              </motion.li>
+              <motion.li variants={buttonVariants}>
+                <Link to="/setting" style={{ border: "none" }}>
                   <motion.button
                     className="w-100"
                     onClick={handleRestartGame}
                     variants={buttonVariants}
                   >
-                    Nouvelle partie
+                    Paramètres
                   </motion.button>
-                </motion.li>
-                <motion.li variants={buttonVariants}>
-                  <Link to="/setting" style={{ border: "none" }}>
-                    <motion.button
-                      className="w-100"
-                      onClick={handleRestartGame}
-                      variants={buttonVariants}
-                    >
-                      Paramètres
-                    </motion.button>
-                  </Link>
-                </motion.li>
-                <motion.li variants={buttonVariants}>
-                  <motion.button
-                    className="w-100"
-                    onClick={() => setShowModal(true)}
-                    variants={buttonVariants}
-                  >
-                    Statistiques
-                  </motion.button>
-                </motion.li>
-              </motion.ul>
-            </div>
-          </motion.div>
+                </Link>
+              </motion.li>
+              <motion.li variants={buttonVariants}>
+                <motion.button
+                  className="w-100"
+                  onClick={() => setShowModal(true)}
+                  variants={buttonVariants}
+                >
+                  Statistiques
+                </motion.button>
+              </motion.li>
+            </motion.ul>
+          </div>
+        </motion.div>
 
-          <Statistics
-            showModal={showModal}
-            handleClose={handleClose}
-            Roundpercentage={Roundpercentage}
-          />
+        <Statistics
+          showModal={showModal}
+          handleClose={handleClose}
+          Roundpercentage={Roundpercentage}
+        />
 
-          <BattleModal
-            showsbattlepop={showsbattlepop}
-            closeBattlePop={closeBattlePop}
-            userBattle={userBattle}
-            compBattle={compBattle}
-            userName={userName}
-          />
-        </div>
+        <BattleModal
+          showsbattlepop={showsbattlepop}
+          closeBattlePop={closeBattlePop}
+          userBattle={userBattle}
+          compBattle={compBattle}
+          userName={userName}
+        />
       </div>
     </div>
+  </div>
   );
 };

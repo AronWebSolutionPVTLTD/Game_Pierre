@@ -20,9 +20,14 @@ img.bordered {
 .fliped_cards .row {
     max-width: 350px;
     margin: auto;
+  
 } 
-
-    
+.Result_wrapper > .container > .row.Evaluation_result {
+    margin: 0 auto;
+}
+.fliped_cards.Evaluation {
+    margin-bottom: 20px;
+}    
 .outer-div {
     position: relative;
     top: 0;

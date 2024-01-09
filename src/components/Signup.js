@@ -42,12 +42,7 @@ export default function Signup() {
     } else if (!phoneRegex.test(phoneNumber2)) {
       error.phone = "Numéro invalide";
     }
-    // else if(!phoneRegex.test(value.phone)){
-    //   error.phone="Numéro invalide"
-    // }
-    // else if (value.phone.length !== 10) {
-    //   error.phone = "Invalid Number ";
-    // }
+  
 
     if (!value.password.trim()) {
       error.password = "Le mot de passe est requis";
@@ -232,18 +227,7 @@ export default function Signup() {
                 <div className="text-end mb-3">
                   <span onClick={() => navigate("/login")}>Se connecter</span>
                 </div>
-                {/* <div className="col-sm-12">
-                                    <div className="form_field">
-                                        <input type="password"
-                                            id="Confpassword"
-                                            placeholder=""
-                                            autoComplete="off"
-                                            name="Confpassword"
-                                            required 
-                                            className="floating_input" />
-                                        <label htmlFor="Confpassword" className="floating_label">Confirm Password</label>
-                                    </div>
-                                </div> */}
+              
                 <div className="col-12">
                   <button
                     className="btn btn-primary w-100 form_btn"

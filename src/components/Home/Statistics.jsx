@@ -24,7 +24,7 @@ export const Statistics = ({
         <Modal.Body>
           <div className="wrap_stat" style={{ overflowX: "auto" }}>
             <table className="table table-striped">
-              {/* <thead>STATISTIQUES</thead> */}
+     
               <tbody>
                 <tr>
                   <th scope="row">Cartes retournées</th>

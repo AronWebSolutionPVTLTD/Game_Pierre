@@ -1,6 +1,6 @@
 export default function shuffleR(array) {
   if (!array || array.length === 0) {
-    // Handle the case when the array is null, undefined, or empty
+
     console.error("Invalid array");
     return;
   }

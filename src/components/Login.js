@@ -91,7 +91,7 @@ export default function Login() {
       }
     } catch (error) {
       setShowError(true);
-      setErrorText(error.response.data);
+      setErrorText(error?.response?.data);
       // toast(error.response.data);
     }
   };

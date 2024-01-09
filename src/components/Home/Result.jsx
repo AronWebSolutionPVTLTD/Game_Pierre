@@ -1,18 +1,18 @@
-import React, { Children, useEffect } from "react";
+/* eslint-disable jsx-a11y/alt-text */
+import React, {  useEffect } from "react";
 import { useContext } from "react";
 import { GameContext } from "../../Context/GameContext";
-import { RecoveryCard, RecoveryImg, WonPiles } from "../../Context/action";
+import { RecoveryCard } from "../../Context/action";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { click } from "@testing-library/user-event/dist/click";
+
+
 import { toast } from "react-toastify";
-import { Toast } from "react-bootstrap";
+
 import { useRef } from "react";
 
 export const Result = ({
   formathometime,
-  points,
-  compPt,
+  
   hometimer,
   setHomeTimer,
 }) => {
@@ -27,13 +27,14 @@ export const Result = ({
     clickcount,
     setClickCount,
     valueSelected,
-    setValueSelected,
+  
     timerenable,
     recoverycarduse,
-    setRecoveryCardUse,
+    chooseRecovery,setChooseRecovery
+   
   } = useContext(GameContext);
-  const { wonCards, aiwonCards, recoveryCard, recoveryimg } = state;
-  const [disable, setDisable] = useState(false);
+  const { wonCards, aiwonCards } = state;
+  
   const [recovery, setRecovery] = useState(wonCards);
   const userName = localStorage.getItem("username");
   const recoveryRefs = useRef([]);
@@ -45,9 +46,9 @@ export const Result = ({
   }, [wonCards]);
 
   // -------------------RECovery Card click-------------------
-  const buttonRef = useRef(null);
+ 
 
-  const HandleCardClick = (card, id, index) => {
+  const HandleCardClick = async(card, id, index) => {
     if (recoverycarduse === true) {
       toast(
         "En cas de bataille, vous ne pouvez pas utiliser la carte de récupération.",
@@ -59,19 +60,25 @@ export const Result = ({
         recoveryRefs.current = recoveryRefs.current.filter(
           (_, i) => i !== index,
         );
-        // setCheck(false)
-        if (!valueSelected) {
+    // debugger;
+        // if (!valueSelected) {
           if (flipwondeck) {
+          
             if (clickcount > 0) {
+              await setChooseRecovery(prevState => {
+                if(prevState === "true"){
+                return chooseRecovery;}
+              });
+              console.log(chooseRecovery,"result")
               toast(`${userName} joué une carte prise`);
               card.id = Math.floor(Math.random() * 2000) + 34;
               dispatch(RecoveryCard(card));
 
-              // dispatch(RecoveryImg(card.img));
+            
 
               const filterwincards = recovery.filter((el) => el.id !== card.id);
               setRecovery(filterwincards);
-              dispatch({ type: "woncardsfiltered", payload: filterwincards });
+              dispatch({ type: "woncardsfiltered", payload: filterwincards });        
 
               if (usercards.length !== compcard) {
                 setNextTurn(false);
@@ -81,14 +88,15 @@ export const Result = ({
               toast("Carte de récupération utilisée trois fois seulement");
               return;
             }
+          
             setFlipwonDeck(false);
           } else {
             toast("Vous ne pouvez sélectionner qu'une seule carte à la fois");
           }
-          // setValueSelected(true);
-        } else {
-          toast("sélectionnez la valeur pour continuer le jeu");
-        }
+   
+        // } else {
+        //   toast("sélectionnez la valeur pour continuer le jeu");
+        // }
       }
     }
   };
@@ -104,7 +112,7 @@ export const Result = ({
       console.log(firstDivRef);
 
       if (firstDivRef) {
-        // setCheck(true)
+
         clickvalue = 1;
         firstDivRef.click();
       }
@@ -126,7 +134,7 @@ export const Result = ({
                 <div className="col-sm-4">
                   <div className="user_col_1 h-100" onClick={Triggered_func}>
                     <img src="./img/12 reprise.jpg" />
-                    {/* <h3 className="m-0 mt-2">Utilisable 3 fois</h3> */}
+             
                     <h3 className="m-0 mt-2">{clickcount}</h3>
                   </div>
                 </div>
@@ -165,16 +173,7 @@ export const Result = ({
                     <h3 className="user_col_2_h2 mt-2">{recovery.length}</h3>
                   </div>
                 </div>
-                {/* <div className="col-sm-4">
-                  <div className="user_col_3">
-                    <input
-                      type="text"
-                      value={`${points} points`}
-                      readOnly="readonly"
-                    />
-                    <p>1pt par pli gagné + 1 pt par bonne réponse</p>
-                  </div>
-                </div> */}
+           
               </div>
             </div>
             <div className="Result_wrapper_duration">
@@ -205,16 +204,7 @@ export const Result = ({
             </div>
             <div className="Result_wrapper_computer">
               <div className="row">
-                {/* <div className="col-sm-4">
-                  <div className="user_col_3">
-                    <input
-                      type="text"
-                      value={`${compPt} points`}
-                      readOnly="readonly"
-                    />
-                    <p>1pt par pli gagné + 1 pt par bonne réponse</p>
-                  </div>
-                </div> */}
+             
                 <div className="col-sm-4">
                   <div className="user_col_2">
                     <div className="user_col_2_inner">
@@ -244,12 +234,7 @@ export const Result = ({
                     <h3 className="user_col_2_h2 mt-2">{aiwonCards.length}</h3>
                   </div>
                 </div>
-                {/* <div className="col-sm-4">
-                  <div className="user_col_1 h-100">
-                    <img src="./img/12 reprise.jpg" />
-                    <h3 className="m-0 mt-2">Utilisable 3 fois</h3>
-                  </div>
-                </div> */}
+              
               </div>
             </div>
           </div>

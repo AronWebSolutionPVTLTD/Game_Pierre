@@ -305,7 +305,7 @@ export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [compcard, setCompCard] = useState(data);
   const [compcarddata, setCompCardData] = useState([]);
-  // const [compcard, setCompCard] = useState([])
+
   const [usercards, setUserCards] = useState([]);
   const [nextturn, setNextTurn] = useState(true);
   const [valueSelected, setValueSelected] = useState(false);
@@ -323,6 +323,7 @@ export const AppContextProvider = ({ children }) => {
   const [recoverycarduse, setRecoveryCardUse] = useState(false);
   const [flippedIndex, setFlippedIndex] = useState("");
   const [currentIndex, setCurrentIndex] = useState(37);
+  const[chooseRecovery,setChooseRecovery]=useState(false)
   // __________setting_____________________
   const [selectedmode, setSelectedMode] = useState("binary");
   const [selectedcardvalue, setselectedCardValue] = useState("noire");
@@ -353,7 +354,7 @@ export const AppContextProvider = ({ children }) => {
       dispatch({ type: "cards", payload: updatedData });
     }
   };
-  // console.log(state.cards, "context");
+
 
   useEffect(() => {
     updateCardValues(selectedcardvalue);
@@ -416,7 +417,8 @@ export const AppContextProvider = ({ children }) => {
         setCompturnStop,
         premium,
         setPremium,
-        hometimer, setHomeTimer
+        hometimer, setHomeTimer,
+        chooseRecovery,setChooseRecovery
       }}
     >
       {children}

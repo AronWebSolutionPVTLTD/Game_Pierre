@@ -308,9 +308,9 @@
   .cards.flipped .wrapper {
     transform: rotateY(0.5turn);
   }
-  .cards.flipped .content {
+  /* .cards.flipped .content {
     transform: rotateX(-0.5turn) rotateY(1.5turn);
-  }
+  } */
   .computer_card.flipped .content {
     transform: rotateX(-0.5turn) rotateY(-1.5turn);
   }
@@ -330,3 +330,7 @@
   /* .Result_wrapper_duration {
     margin-left: -72px;
 } */
+
+span#After_load_outer img {
+  transform: rotateX(-0.5turn) rotateY(1.5turn);
+}

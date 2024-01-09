@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./settings.css";
 import { BiCheck } from "react-icons/bi";
-import { FaEye } from "react-icons/fa";
+
 import { GameContext } from "../Context/GameContext";
 import BinaryCards from "./BinaryCards";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ function GameSettings() {
     setselectedCardValue,
   } = useContext(GameContext);
   const navigate = useNavigate();
-  // const[selectedmode,setSelectedMode]=useState("binary")
+
   // -------------------------timer-------------
   const minutes = Math.floor(timerValue / 60);
   const seconds = timerValue % 60;
@@ -98,7 +98,7 @@ function GameSettings() {
                   </label>
                   <div className="Result_wrapper_duration m-0 mt-2">
                     <div className="Result_timmer">
-                      {/* <img src="./img/timmer_icon_trim.png" /> */}
+              
                       <input
                         type="text"
                         className="w-100 text-center"

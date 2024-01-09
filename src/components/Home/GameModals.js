@@ -36,11 +36,7 @@ export const GameOverModal = ({ gameOver, handleRestartGame, winnerName }) => {
             Nouveau jeu
           </button>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleRestartGame}>
-            <span className="close_modal_icon"><IoCloseCircle /></span>
-          </Button>
-        </Modal.Footer> */}
+    
       </Modal>
     </>
   );

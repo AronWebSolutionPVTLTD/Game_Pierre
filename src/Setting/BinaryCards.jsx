@@ -16,13 +16,13 @@ export default function BinaryCards() {
     binaryfiltercard,
     setBinaryFilterCard,
     defaultbinary,
-    setDefaultBinary,
+  
     premium,
     setPremium,
   } = useContext(GameContext);
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
-  const [checked, setChecked] = useState(false);
+
 
   const handleClose = () => {
     setModal(false);
@@ -103,8 +103,7 @@ export default function BinaryCards() {
     setBinaryFilterCard([]);
     dispatch({ type: "cards", payload: [] });
     localStorage.removeItem("selectedCards");
-    //  const ghhd=defaultbinary.slice(0, 6);
-    //  dispatch({ type: "cards", payload: ghhd });
+  
   };
 
   return (
@@ -113,12 +112,12 @@ export default function BinaryCards() {
         <div
           style={{
             position: "absolute",
-            top: "10px", // Adjust the top distance as needed
-            left: "10px", // Adjust the left distance as needed
+            top: "10px", 
+            left: "10px", 
             cursor: "pointer",
             padding: "10px",
-            backgroundColor: "#007bff", // You can set the background color as per your design
-            color: "#fff", // You can set the text color as per your design
+            backgroundColor: "#007bff", 
+            color: "#fff", 
             borderRadius: "5px",
           }}
           onClick={premiumclose}

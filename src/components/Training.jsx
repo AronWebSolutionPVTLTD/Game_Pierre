@@ -1,10 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useState } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import { ModalBody } from "react-bootstrap";
+
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
-import { IoCloseCircle } from "react-icons/io5";
+
 import {
   CorrectValue,
   Flipped,
@@ -48,10 +47,10 @@ function Training() {
     TrainingTimer ? setTimer(TrainingTimer) : setTimer(120);
   }, [TrainingTimer]);
 
-  // console.log(cards, "card");
+  
 
   useEffect(() => {
-    if (cards.length == 0) setCards(state.cards);
+    if (cards.length === 0) setCards(state.cards);
   }, [shuffle, state.cards, cards]);
 
   // _______________________Timer functionality________________________
@@ -151,6 +150,10 @@ function Training() {
     setTimer(120);
     dispatch(Shuffled(!shuffle));
     setImg("");
+    dispatch({ type: "turnoverempty" });
+    
+    dispatch({ type: "correctValueempty" });
+    dispatch({ type: "wrongvalueempty" });
   };
 
   useEffect(() => {
@@ -172,9 +175,9 @@ function Training() {
   const Roundpercent = Math.round(calculationstat);
   return (
     <>
-      <div className="fliped_cards">
+      <div className="fliped_cards Evaluation">
         <div className="container">
-          <div className="row">
+          <div className="row Evaluation">
             <div className="col-md-6">
               <div className="outer-div">
                 <>
@@ -188,7 +191,7 @@ function Training() {
                       >
                         <div>
                           <div className="card-front">
-                            <img src="./img/Image verso card.png" />
+                            <img src="./img/Image verso card.png"  />
                           </div>
                         </div>
                       </div>
@@ -196,7 +199,7 @@ function Training() {
                 </>
 
                 <>
-                  {cards.length == 0 && (
+                  {cards.length === 0 && (
                     <div
                       className="front_card_text"
                       style={{
@@ -251,7 +254,7 @@ function Training() {
       <div className="Result_wrapper_outer">
         <div className="Result_wrapper">
           <div className="container">
-            <div className="row">
+            <div className="row Evaluation_result">
               <div className="col-md-6">
                 <div className="Result_wrapper_duration">
                   <p>
