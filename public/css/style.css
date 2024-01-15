@@ -145,14 +145,17 @@ img.bordered {
 }
 .wrap_stat {
     width: 100%;
-    max-width: 437px;
     margin: 0 0 75px;
 }
 .wrap_stat table tr {
     height: 50px;
-    line-height: 50px;
+    line-height: normal;
     font-size: 20px;
 } 
+
+.wrap_stat table th {
+    font-size: 15px;
+}
 .fade.modal.show {
     overflow: hidden;
 }

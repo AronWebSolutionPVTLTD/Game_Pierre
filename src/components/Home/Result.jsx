@@ -30,7 +30,7 @@ export const Result = ({
   
     timerenable,
     recoverycarduse,
-    chooseRecovery,setChooseRecovery
+ 
    
   } = useContext(GameContext);
   const { wonCards, aiwonCards } = state;
@@ -60,16 +60,12 @@ export const Result = ({
         recoveryRefs.current = recoveryRefs.current.filter(
           (_, i) => i !== index,
         );
-    // debugger;
-        // if (!valueSelected) {
+
+        if (!valueSelected) {
           if (flipwondeck) {
           
             if (clickcount > 0) {
-              await setChooseRecovery(prevState => {
-                if(prevState === "true"){
-                return chooseRecovery;}
-              });
-              console.log(chooseRecovery,"result")
+        
               toast(`${userName} joué une carte prise`);
               card.id = Math.floor(Math.random() * 2000) + 34;
               dispatch(RecoveryCard(card));
@@ -82,6 +78,7 @@ export const Result = ({
 
               if (usercards.length !== compcard) {
                 setNextTurn(false);
+                // setchooserecovery(false)
               }
               setClickCount((prevCount) => prevCount - 1);
             } else {
@@ -94,12 +91,14 @@ export const Result = ({
             toast("Vous ne pouvez sélectionner qu'une seule carte à la fois");
           }
    
-        // } else {
+        } 
+        // else {
         //   toast("sélectionnez la valeur pour continuer le jeu");
         // }
       }
     }
   };
+
 
   const cardHeight = (i) => ({
     height: `calc(100% - ${usercards.length * (1 / 2)}px)`,
@@ -109,7 +108,7 @@ export const Result = ({
   const Triggered_func = () => {
     if (recoveryRefs.current.length > 0) {
       const firstDivRef = recoveryRefs.current[0];
-      console.log(firstDivRef);
+     
 
       if (firstDivRef) {
 

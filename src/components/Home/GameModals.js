@@ -1,5 +1,8 @@
+
 import { Button, Modal } from "react-bootstrap";
 import { IoCloseCircle } from "react-icons/io5";
+
+
 
 export const GameOverModal = ({ gameOver, handleRestartGame, winnerName }) => {
   return (
@@ -200,10 +203,12 @@ export const BattleModal = ({
 };
 
 export const ModalStrongValue = ({ strongvalue, pointwinner }) => {
+  
+
   return (
     <>
       <Modal
-        show={strongvalue}
+        show={strongvalue }
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         className="battle_modal strong_card_modal"

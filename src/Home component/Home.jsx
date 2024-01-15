@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
@@ -71,7 +71,9 @@ export const Home = ({ handleFullScreen }) => {
     setFlippedIndex,
     setCurrentIndex,
    hometimer, setHomeTimer,
-   chooseRecovery,setChooseRecovery
+   setFlippedCardArray,
+   truevaluearray, setTrueValueArray
+ 
   } = useContext(GameContext);
   const {
     gameOver,
@@ -113,8 +115,9 @@ export const Home = ({ handleFullScreen }) => {
   const compName = "Ordinateur";
   const draw = "Egalité";
   const Timer = JSON.parse(localStorage.getItem("timer"));
-  
+  // const chooserecoveryRef = useRef (chooserecovery);
 
+ 
   // ________________FRAME MOTION_________________________
   const buttonVariants = {
     initial: { opacity: 0, x: -50 },
@@ -272,14 +275,27 @@ export const Home = ({ handleFullScreen }) => {
     .padStart(2, "0")}`;
     
 
+
+
+
+    // useEffect(() => {
+    //   console.log("useEffect triggered with chooserecovery:", chooserecovery);
+    //   // Update the chooserecoveryRef whenever chooserecovery changes
+    //   chooserecoveryRef.current = chooserecovery;
+    // }, [chooserecovery]);
+
   // ________________HANDLE CLICK FOR VALUES____________________________
+ 
+
+
 
   const handleClick = async (value) => {
+
     buttonsound.play();
     setFlipwonDeck(true);
     // setValueSelected(false);
     setCheckValue(value);
-    let uservalue = points;
+    let uservalue = points;               
     let compvalue = compPt;
 
     // // -----------------Computer Main value----------------
@@ -288,6 +304,7 @@ export const Home = ({ handleFullScreen }) => {
     const originalArray = clickvalue;
     const newValue = compflip_cardVal;
 
+
     let gettingValue = originalArray.filter((val) => val !== newValue);
     const randomIndex = Math.floor(Math.random() * gettingValue?.length);
     const random = Math.floor(Math.random() * 100) + 1;
@@ -295,8 +312,10 @@ export const Home = ({ handleFullScreen }) => {
       if (originalArray.includes(newValue)) {
         comp_MainValue = newValue;
       }
+      
     } else {
       comp_MainValue = gettingValue[randomIndex];
+
     }
 
     // _________________user card value----------------------
@@ -392,8 +411,11 @@ export const Home = ({ handleFullScreen }) => {
       else {
         
         if (mainvalue === cardvalue) {
-          
-          uservalue += 1;
+userCard.isCorrect = true;
+       
+  setTrueValueArray((prevArray) => [...prevArray, userCard])
+
+     uservalue += 1;
         
           setColor("1");
           dispatch(CorrectValue());
@@ -507,17 +529,19 @@ export const Home = ({ handleFullScreen }) => {
         // ______________STRONGER CARD POINT ADDITION_____________________
 
         const popup = debounce(() => {
+
           if (correct) {
             setBattlePop(true);
           }
         }, 2000);
 
-if(!chooseRecovery){
+// setchooserecovery((prev)=>{
+//   console.log(prev);
+//   return prev;
+// })
 
-
-  
-  setTimeout(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+setTimeout(async () => {
+ await new Promise((resolve) => setTimeout(resolve, 1000));
     if (
       (cardvalue > compflip_cardVal && compflip_cardVal !== "Joker") ||
       cardvalue === "Joker"
@@ -563,16 +587,22 @@ if(!chooseRecovery){
    
     }
   }, 5000);
-}
+
       
       }
-    } else {
+    } 
+    else {
       setValuePopUp(true);
     }
     setNextTurn(true);
   };
 
+//   useEffect(()=>{
+//     handleClick(value);
+// },[chooserecovery]);
+
  
+
   // -------------------handle Game REStart pop up---------------------
   const handleRestartGame = () => {
     dispatch(GameOver(false));
@@ -615,6 +645,7 @@ if(!chooseRecovery){
     setFlippedIndex("");
     setCurrentIndex(37);
     setTimerEnable(false);
+    setFlippedCardArray([])
   };
   // ----------------------handle winner------------------
   const handlewinner = () => {
@@ -637,6 +668,8 @@ if(!chooseRecovery){
       handlewinner();
     }
   }, [gameOver]);
+
+  
 
   return (
     <div>
@@ -879,6 +912,7 @@ transition={{ duration: 1, ease: "linear" }}
           showModal={showModal}
           handleClose={handleClose}
           Roundpercentage={Roundpercentage}
+       
         />
 
         <BattleModal

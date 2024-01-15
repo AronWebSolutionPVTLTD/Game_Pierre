@@ -12,7 +12,7 @@ import {
 
 import shuffleR from "./Home/GameLogistics";
 import "./bakwass.css";
-import { toast } from "react-toastify";
+
 const Deck = () => {
   const {
     state,
@@ -29,7 +29,9 @@ const Deck = () => {
     setRecoveryCardUse,
     deckcard,
     setdeckcard,
-    hometimer
+    hometimer,
+   setFlippedCardArray,
+
   } = useContext(GameContext);
 
   const { gameOver, loading, shuffle, recoveryCard, userCardimg } = state;
@@ -68,6 +70,7 @@ useEffect(() => {
       // Duplicate the existing card details
       const newCard = {
         id: i + 1,
+        name:existingCard.name,
         value: existingCard.value,
         isFlipped: existingCard.isFlipped || false,
         img: existingCard?.img,
@@ -93,11 +96,15 @@ useEffect(() => {
     setUserCards(getShuffledData);
   }, [shuffle]);
 
+  // let dataArray = [];
+
 
 
   const flipCard = (id, value, card, e) => {
+  
  
     if (!valueSelected) {
+      setFlippedCardArray((prevArray) => [...prevArray, card])
       dispatch(TurnOver());
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));
@@ -117,7 +124,9 @@ useEffect(() => {
       }
 
       const updatedCards = usercards.map((card) => {
-        
+     
+       
+
         if (card.id === lastFlippedCard) {
        oldTarget && oldTarget.classList.add('flipped_done');
         }
@@ -141,12 +150,26 @@ setOldTarget(e.currentTarget);
 
       
     }
-    else {
-      toast("Sélectionnez la valeur pour continuer le jeu");
-    }
+    // else {
+    //   toast("Sélectionnez la valeur pour continuer le jeu");
+    // }
     setFlipBack(false);
 
+
   };
+
+//   const storedDataString = localStorage.getItem("cardvalue");
+// const storedDataObject = JSON.parse(storedDataString);
+// const userCardData = storedDataObject.userCard;
+
+
+// Agar userCardData mein kuch data hai, toh use array mein add karein
+// if (userCardData) {
+//     dataArray.push(userCardData);
+// }
+
+
+
 
   return (
     <>
