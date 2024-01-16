@@ -117,6 +117,8 @@ export const Home = ({ handleFullScreen }) => {
   const Timer = JSON.parse(localStorage.getItem("timer"));
   // const chooserecoveryRef = useRef (chooserecovery);
 
+
+  
  
   // ________________FRAME MOTION_________________________
   const buttonVariants = {
