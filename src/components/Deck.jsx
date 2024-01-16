@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../Context/GameContext";
 import {
@@ -45,6 +46,7 @@ const [lastFlippedCard,setLasFlippedCard]=useState(null)
     if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
       setUserCards(state.cards);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckcard, state.cards]);
 
 
@@ -53,13 +55,17 @@ const [lastFlippedCard,setLasFlippedCard]=useState(null)
 
 useEffect(() => {
   setUserCards((prevCards) => {
-    const newCards = [...prevCards];
+    const existingCards = prevCards || [];
+    // const newCards = [...prevCards];
+    const newCards = [...existingCards];
     const maxCardCount = hometimer || 0; 
-    const existingCardCount = prevCards.length;
+    // const existingCardCount = prevCards.length;
+    const existingCardCount = existingCards.length
+    
 
     if (maxCardCount < existingCardCount) {
     
-      return prevCards;
+      return existingCards;
     }
 
     for (let i = existingCardCount; i < maxCardCount; i++) {
@@ -70,9 +76,9 @@ useEffect(() => {
       // Duplicate the existing card details
       const newCard = {
         id: i + 1,
-        name:existingCard.name,
-        value: existingCard.value,
-        isFlipped: existingCard.isFlipped || false,
+        name:existingCard?.name,
+        value: existingCard?.value,
+        isFlipped: existingCard?.isFlipped || false,
         img: existingCard?.img,
       };
 
@@ -81,6 +87,7 @@ useEffect(() => {
 
     return newCards;
   });
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [hometimer]);
 
 
@@ -100,11 +107,16 @@ useEffect(() => {
 
 
 
+
+
   const flipCard = (id, value, card, e) => {
   
  
     if (!valueSelected) {
-      setFlippedCardArray((prevArray) => [...prevArray, card])
+      setFlippedCardArray
+      
+      ((prevArray) => [...prevArray, card])
+      
       dispatch(TurnOver());
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));

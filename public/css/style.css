@@ -152,6 +152,9 @@ img.bordered {
     line-height: normal;
     font-size: 20px;
 } 
+.carties_table table th {
+    width: 130px !important;
+}
 
 .wrap_stat table th {
     font-size: 15px;

@@ -346,13 +346,15 @@ export const AppContextProvider = ({ children }) => {
   const updateCardValues = (selectedValue) => {
     const updatedData = state.cards.map((card) => {
       if (card.value) {
+      
         switch (selectedValue) {
           case "noire":
             return { ...card, value: card.value };
           case "blanche":
-            return { ...card, value: card.value / 2 };
+            // return { ...card, value: card.value / 2 };
+            return { ...card, value: card.value === "Joker" ? card.value : card.value /2};
           case "croche":
-            return { ...card, value: card.value * 2 };
+            return { ...card, value: card.value!=="Joker"?card.value * 2 :card.value };
 
           default:
             return card;

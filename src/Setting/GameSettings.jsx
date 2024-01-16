@@ -44,7 +44,7 @@ function GameSettings() {
     }
   };
 
-  console.log(selectedcardvalue, "value", "Mode", selectedmode);
+
 
   return (
     <>

@@ -369,6 +369,10 @@ export const Home = ({ handleFullScreen }) => {
      
 
       if (compflip_cardVal === cardvalue) {
+        userCard.isCorrect = true;
+       
+  setTrueValueArray((prevArray) => [...prevArray, userCard])
+
         setRecoveryCardUse(true);
 
         if (mainvalue === cardvalue) {
@@ -646,6 +650,7 @@ setTimeout(async () => {
     setCurrentIndex(37);
     setTimerEnable(false);
     setFlippedCardArray([])
+    setTrueValueArray([])
   };
   // ----------------------handle winner------------------
   const handlewinner = () => {
@@ -910,6 +915,7 @@ transition={{ duration: 1, ease: "linear" }}
 
         <Statistics
           showModal={showModal}
+          setShowModal={setShowModal}
           handleClose={handleClose}
           Roundpercentage={Roundpercentage}
        
