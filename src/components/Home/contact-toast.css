@@ -1,0 +1,10 @@
+.Toastify__toast {
+    display: flex;
+    justify-content: space-between;
+}
+button.Toastify__close-button {
+    width: auto;
+}
+.Toastify__close-button:hover{
+    background: none;
+}

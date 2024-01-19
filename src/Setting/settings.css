@@ -1,0 +1,57 @@
+.setting_field input {
+    border: none;
+    outline: none;
+}
+.setting_field label {
+    font-weight: 500;
+}
+.radio_btn label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+.radio_btn img{
+    max-width: 100%;
+}
+.radio_btn input[type="radio"] {
+    display: none;
+}
+
+.radio_btn .radio_box {
+    display: inline-flex;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #000;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+}
+
+
+
+.radio_btn input:checked ~ label .radio_box {
+    font-size: 20px;
+}
+.radio_btn.radio_img_btn label {
+    display: grid;
+    justify-items: center;
+}
+.setting_radio {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.plus_icon{
+    color: black;
+}
+.minus_icon{
+    color: black;
+}
+
+.radio_btn {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    flex-direction: row-reverse;
+}
