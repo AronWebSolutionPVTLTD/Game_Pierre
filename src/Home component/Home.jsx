@@ -463,6 +463,7 @@ if(CompCard){
           }, 2000);
 
           setTimeout(() => {
+         
             if (nextturn) {
               debouncefunction();
               if (comp_MainValue === compflip_cardVal) {

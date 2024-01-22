@@ -61,7 +61,7 @@ console.log(compcarddata,"compcarddata")
     setCompCardData(shuffledData);
   }, [shuffle]);
 
-
+ 
 //  useEffect(() => {
 //     setCompCardData((prevCards) => {
 //       const existingCards = prevCards || [];
@@ -132,6 +132,8 @@ if(hometimer===0){
           );
           const updatedCards = compcarddata?.map((card, index) => {
             if (card.id === picked?.id) {
+              setCompFlippedCardArray((prev)=>[...prev,card])
+              
               setCompFlippedCardArray((prev)=>[...prev,card])
               
               dispatch(LoadingProcess(false));
