@@ -146,14 +146,14 @@ let data = [
   {
     id: 19,
     isFlipped: false,
-    name:"Triolet de croches",
+    name:"triolet de croches",
     img: "/img/20 Triolet de croches.jpg",
     value: 1,
   },
   {
     id: 20,
     isFlipped: false,
-    name:"Triolet de croches attachées",
+    name:"triolet de croches attachées",
     img: "/img/21 Triolet de croches attachées.jpg",
     value: 1,
   },
@@ -334,6 +334,10 @@ export const AppContextProvider = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(37);
   const [flippedcardarray, setFlippedCardArray] = useState([]);
   const [truevaluearray, setTrueValueArray] = useState([]);
+  const [compflippedcardarray, setCompFlippedCardArray] = useState([]);
+  const [comptruevaluearray, setCompTrueValueArray] = useState([]);
+  const[averageresponsetime,setAverageResponseTime]=useState([])
+  const[averageresponsetimecomp,setAverageResponseTimeComp]=useState([])
   // __________setting_____________________
   const [selectedmode, setSelectedMode] = useState("binary");
   const [selectedcardvalue, setselectedCardValue] = useState("noire");
@@ -431,7 +435,11 @@ export const AppContextProvider = ({ children }) => {
         setPremium,
         hometimer, setHomeTimer,
         flippedcardarray, setFlippedCardArray,
-        truevaluearray, setTrueValueArray
+        truevaluearray, setTrueValueArray,
+        compflippedcardarray, setCompFlippedCardArray,
+        comptruevaluearray, setCompTrueValueArray,
+        averageresponsetime,setAverageResponseTime,
+        averageresponsetimecomp,setAverageResponseTimeComp
       }}
     >
       {children}

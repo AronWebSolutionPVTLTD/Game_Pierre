@@ -3,13 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../Context/GameContext";
 import {
   Flipped,
-
   MainValueSelected,
   TurnOver,
   UserNameColor,
   UserSetImg,
 } from "../Context/action";
-
 
 import shuffleR from "./Home/GameLogistics";
 import "./bakwass.css";
@@ -20,78 +18,66 @@ const Deck = () => {
     dispatch,
     usercards,
     setUserCards,
-
     valueSelected,
     setValueSelected,
- 
-    setFlipBack,
+     setFlipBack,
     setTimerEnable,
-   
     setRecoveryCardUse,
     deckcard,
     setdeckcard,
     hometimer,
-   setFlippedCardArray,
-
+    setFlippedCardArray,
   } = useContext(GameContext);
 
   const { gameOver, loading, shuffle, recoveryCard, userCardimg } = state;
-const [oldTarget, setOldTarget] = useState(null);
+  const [oldTarget, setOldTarget] = useState(null);
 
-const [lastFlippedCard,setLasFlippedCard]=useState(null)
-
-
+  const [lastFlippedCard, setLasFlippedCard] = useState(null);
 
   useEffect(() => {
+ 
     if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
       setUserCards(state.cards);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [deckcard, state.cards]);
 
 
+  useEffect(() => {
+    setUserCards((prevCards) => {
+      const existingCards = prevCards || [];
+      // const newCards = [...prevCards];
+      const newCards = [...existingCards];
+      const maxCardCount = hometimer || 0;
+      // const existingCardCount = prevCards.length;
+      const existingCardCount = existingCards.length;
 
- 
+      if (maxCardCount < existingCardCount) {
+        return existingCards;
+      }
 
-useEffect(() => {
-  setUserCards((prevCards) => {
-    const existingCards = prevCards || [];
-    // const newCards = [...prevCards];
-    const newCards = [...existingCards];
-    const maxCardCount = hometimer || 0; 
-    // const existingCardCount = prevCards.length;
-    const existingCardCount = existingCards.length
-    
+      for (let i = existingCardCount; i < maxCardCount; i++) {
+        // Copy details from existing cards
+        const existingCardIndex = i % existingCardCount;
+        const existingCard = prevCards[existingCardIndex];
 
-    if (maxCardCount < existingCardCount) {
-    
-      return existingCards;
-    }
+        // Duplicate the existing card details
+        const newCard = {
+          id: i + 1,
+          name: existingCard?.name,
+          value: existingCard?.value,
+          isFlipped: existingCard?.isFlipped || false,
+          img: existingCard?.img,
+        };
 
-    for (let i = existingCardCount; i < maxCardCount; i++) {
-      // Copy details from existing cards
-      const existingCardIndex = i % existingCardCount;
-      const existingCard = prevCards[existingCardIndex];
+        newCards.push(newCard);
+      }
 
-      // Duplicate the existing card details
-      const newCard = {
-        id: i + 1,
-        name:existingCard?.name,
-        value: existingCard?.value,
-        isFlipped: existingCard?.isFlipped || false,
-        img: existingCard?.img,
-      };
+      return newCards;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hometimer]);
 
-      newCards.push(newCard);
-    }
-
-    return newCards;
-  });
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [hometimer]);
-
-
- 
   // -------------RECOVERY CARD_______________
   useEffect(() => {
     setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
@@ -103,20 +89,14 @@ useEffect(() => {
     setUserCards(getShuffledData);
   }, [shuffle]);
 
-  // let dataArray = [];
-
-
-
-
 
   const flipCard = (id, value, card, e) => {
-  
- 
     if (!valueSelected) {
-      setFlippedCardArray
-      
-      ((prevArray) => [...prevArray, card])
-      
+      const startTimeUser = new Date().getTime();
+      localStorage.setItem("userstarttime", startTimeUser);
+
+      setFlippedCardArray((prevArray) => [...prevArray, card]);
+
       dispatch(TurnOver());
       dispatch(Flipped(true));
       dispatch(MainValueSelected(true));
@@ -136,11 +116,8 @@ useEffect(() => {
       }
 
       const updatedCards = usercards.map((card) => {
-     
-       
-
         if (card.id === lastFlippedCard) {
-       oldTarget && oldTarget.classList.add('flipped_done');
+          oldTarget && oldTarget.classList.add("flipped_done");
         }
         if (card.id === id) {
           e.currentTarget.classList.add("flipped");
@@ -152,34 +129,18 @@ useEffect(() => {
         }
       });
 
-      const getfalse=updatedCards.filter((el)=>el.isFlipped===false)
-    setdeckcard(getfalse)
+      const getfalse = updatedCards.filter((el) => el.isFlipped === false);
+      setdeckcard(getfalse);
       setUserCards(updatedCards);
       setLasFlippedCard(id);
       setValueSelected(true);
-setOldTarget(e.currentTarget);
-
-
-      
+      setOldTarget(e.currentTarget);
     }
     // else {
     //   toast("Sélectionnez la valeur pour continuer le jeu");
     // }
     setFlipBack(false);
-
-
   };
-
-//   const storedDataString = localStorage.getItem("cardvalue");
-// const storedDataObject = JSON.parse(storedDataString);
-// const userCardData = storedDataObject.userCard;
-
-
-// Agar userCardData mein kuch data hai, toh use array mein add karein
-// if (userCardData) {
-//     dataArray.push(userCardData);
-// }
-
 
 
 

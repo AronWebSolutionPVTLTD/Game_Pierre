@@ -1,7 +1,16 @@
 .custom_header .bg-body-tertiary {
     background-color: #fff !important;
 }
-
+.all_card_stat table.table.table-striped {
+    margin: 0 20px;
+}
+.fermer {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 40px;
+    bottom: 30px;
+}
 .main_battle input[type="text"] {
     height: 50px;
     padding: 10px 20px;
@@ -11,7 +20,9 @@
 .main_battle img {
     max-width: 100%;
 }
-
+.all_card_stat  .modal-dialog {
+    max-width: 1000px  !important;
+}
 img.bordered {
     border: 3px solid #000;
     height: 100%;
@@ -696,11 +707,42 @@ a.nav-link {
     -webkit-text-fill-color: unset;
 }
 .strong_card_modal .modal-dialog {
-    max-width: 460px !important;
+    max-width: 180px !important;
+    margin-left: 300px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) !important;
+}
+.strong_card_modal .modal-dialog .modal-content {
+    min-height: 100px;
+    margin-top: 50px;
 }
 .strong_card_modal .modal-body h2 {
-    font-size: 40px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+}
+.strong_card_comp .modal-body {
+    background: none;
+    -webkit-text-fill-color: unset;
+}
+.strong_card_comp .modal-dialog {
+    max-width: 180px !important;
+    margin-right: 300px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) !important;
+}
+.strong_card_comp .modal-dialog .modal-content {
+    min-height: 100px;
+    margin-top: 50px;
+}
+.strong_card_comp .modal-body h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
 }
 .modal-dialog .modal-content .modal-body .animated_img {
     position: absolute;
@@ -890,7 +932,41 @@ button.bottom_btn:hover {
     box-shadow: 0px 5px 20px #0000001a;
     border: 1px solid #dfdfdf;
 }
+@media ( max-width: 1600px ) {
+.strong_card_modal .modal-dialog {
+    margin-left: 120px;
+    transform: translateY(-43%) !important;
+}
+.strong_card_comp .modal-dialog {
+    margin-right: 120px;
+    transform: translateY(-43%) !important;
+}
 
+}
+@media ( max-width: 1200px ) {
+    .strong_card_modal .modal-dialog {
+        margin-left: 20px;
+        transform: translateY(-43%) !important;
+    }
+    .strong_card_comp .modal-dialog {
+        margin-right: 20px;
+        transform: translateY(-43%) !important;
+    }
+    
+    }
+    @media ( max-width: 768px ) {
+        .strong_card_modal .modal-dialog {
+            margin-left: 20px;
+            left: 50%;
+            transform: translate(-50% , -50%) !important;
+        }
+        .strong_card_comp .modal-dialog {
+            margin-right: 20px;
+            left: 50%;
+            transform: translate(-50% , -50%) !important;
+        }
+        
+        }
 
 @media ( max-width: 575px ) {
     .Result_wrapper > .container > .row{
@@ -910,6 +986,17 @@ button.bottom_btn:hover {
         border-left: 0;
         font-size: 30px;
         grid-template-columns: 1fr 1fr;
+    }
+    .strong_card_modal .modal-dialog {
+        max-width: 180px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .strong_card_modal .modal-dialog .modal-content {
+        margin-top: 0;
+    }
+    body.modal-open {
+        padding-right: 0 !important;
     }
 }
 

@@ -11,7 +11,7 @@ export const Points = ({ color, checkValue, handleClick }) => {
     { value: 0.5, fraction: "1/2" },
     { value: 0.75, fraction: "3/4" },
     1,
-  
+
     1.5,
     2,
     3,
@@ -26,7 +26,7 @@ export const Points = ({ color, checkValue, handleClick }) => {
     { value: 0.5, fraction: "1/2" },
     { value: 0.75, fraction: "3/4" },
     1,
-   
+
     1.5,
     2,
     "Joker",
@@ -35,8 +35,8 @@ export const Points = ({ color, checkValue, handleClick }) => {
   const crocheValue = [
     { value: 0.5, fraction: "1/2" },
     1,
-  
-1.5,
+
+    1.5,
     3,
     2,
     4,

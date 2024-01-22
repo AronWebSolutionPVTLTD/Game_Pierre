@@ -1,8 +1,5 @@
-
 import { Button, Modal } from "react-bootstrap";
 import { IoCloseCircle } from "react-icons/io5";
-
-
 
 export const GameOverModal = ({ gameOver, handleRestartGame, winnerName }) => {
   return (
@@ -39,7 +36,6 @@ export const GameOverModal = ({ gameOver, handleRestartGame, winnerName }) => {
             Nouveau jeu
           </button>
         </Modal.Body>
-    
       </Modal>
     </>
   );
@@ -91,10 +87,6 @@ export const GamePopUpModal = ({ handleValuePop, valuePopUp }) => {
     </>
   );
 };
-
-
-
-;
 
 export const EvaluationSelectCard = ({ handleValuePop, valuePopUp }) => {
   return (
@@ -162,7 +154,7 @@ export const BattleModal = ({
         className="battle_modal"
         centered
       >
-         <Modal.Body>
+        <Modal.Body>
           <h2>Cartes cachées </h2>
           <h3 className="h3">Pendant la bataille </h3>
           <div className="battle_card_imgs">
@@ -170,7 +162,6 @@ export const BattleModal = ({
               <h3>{userName}</h3>
               <div className="imgs_wrapper">
                 {userBattle.map((el, i) => (
-                  
                   <img key={i} src={el?.img} alt="image" />
                 ))}
               </div>
@@ -203,24 +194,24 @@ export const BattleModal = ({
 };
 
 export const ModalStrongValue = ({ strongvalue, pointwinner }) => {
-  
 
   return (
     <>
       <Modal
-        show={strongvalue }
+        show={strongvalue}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        className="battle_modal strong_card_modal"
+        className= {pointwinner==="Ordinateur" ?"battle_modal strong_card_comp":
+    
+        "battle_modal strong_card_modal"
+      }
         centered
       >
         <Modal.Body>
+ 
           <h2>{`${pointwinner} a la carte la plus élevée + 1 point`}</h2>
         </Modal.Body>
       </Modal>
     </>
   );
 };
-
-
-

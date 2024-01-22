@@ -16,7 +16,7 @@ import {
 import { Points } from "./Home/Points";
 import { TrainingGameOver, GamePopUpModal } from "./Home/GameModals";
 import { toast } from "react-toastify";
-import {  motion } from "framer-motion";
+import { motion } from "framer-motion";
 function Training() {
   const { state, dispatch, timerenable, setTimerEnable, color, setColor } =
     useContext(GameContext);
@@ -46,8 +46,6 @@ function Training() {
   useEffect(() => {
     TrainingTimer ? setTimer(TrainingTimer) : setTimer(120);
   }, [TrainingTimer]);
-
-  
 
   useEffect(() => {
     if (cards.length === 0) setCards(state.cards);
@@ -151,7 +149,7 @@ function Training() {
     dispatch(Shuffled(!shuffle));
     setImg("");
     dispatch({ type: "turnoverempty" });
-    
+
     dispatch({ type: "correctValueempty" });
     dispatch({ type: "wrongvalueempty" });
   };
@@ -191,7 +189,7 @@ function Training() {
                       >
                         <div>
                           <div className="card-front">
-                            <img src="./img/Image verso card.png"  />
+                            <img src="./img/Image verso card.png" />
                           </div>
                         </div>
                       </div>
@@ -226,29 +224,27 @@ function Training() {
         </div>
       </div>
 
+      {/* --------------------------------true value pop up________________________ */}
 
-          {/* --------------------------------true value pop up________________________ */}
-     
-
-          {correctvalue && (
-            <motion.div
-              className="truevalue"
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-              <p>La valeur correcte est </p>
-              {flipcardValue !== "Joker" ? (
-                <h2 className="fs-1">{flipcardValue}</h2>
-              ) : (
-                <img
-                  style={{ width: "150px", height: "150px" }}
-                  src="img/11 point d_orgue.jpg"
-                />
-              )}
-            </motion.div>
+      {correctvalue && (
+        <motion.div
+          className="truevalue"
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          <p>La valeur correcte est </p>
+          {flipcardValue !== "Joker" ? (
+            <h2 className="fs-1">{flipcardValue}</h2>
+          ) : (
+            <img
+              style={{ width: "150px", height: "150px" }}
+              src="img/11 point d_orgue.jpg"
+            />
           )}
+        </motion.div>
+      )}
 
       <Points color={color} checkValue={checkValue} handleClick={handleClick} />
       <div className="Result_wrapper_outer">
@@ -311,7 +307,6 @@ function Training() {
         gameOver={gameOver}
         handleRestartGame={handleRestartGame}
       />
-
 
       {/* -------SELECT CARD FIRST POP UP__________________ */}
       <GamePopUpModal handleValuePop={handleValuePop} valuePopUp={valuePopUp} />

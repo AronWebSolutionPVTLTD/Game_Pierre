@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { GameContext } from "../../Context/GameContext";
 import { RecoveryCard } from "../../Context/action";
 import { useState } from "react";
-
 
 import { toast } from "react-toastify";
 
@@ -12,7 +11,7 @@ import { useRef } from "react";
 
 export const Result = ({
   formathometime,
-  
+
   hometimer,
   setHomeTimer,
 }) => {
@@ -27,14 +26,12 @@ export const Result = ({
     clickcount,
     setClickCount,
     valueSelected,
-  
+
     timerenable,
     recoverycarduse,
- 
-   
   } = useContext(GameContext);
   const { wonCards, aiwonCards } = state;
-  
+
   const [recovery, setRecovery] = useState(wonCards);
   const userName = localStorage.getItem("username");
   const recoveryRefs = useRef([]);
@@ -46,9 +43,8 @@ export const Result = ({
   }, [wonCards]);
 
   // -------------------RECovery Card click-------------------
- 
 
-  const HandleCardClick = async(card, id, index) => {
+  const HandleCardClick = async (card, id, index) => {
     if (recoverycarduse === true) {
       toast(
         "En cas de bataille, vous ne pouvez pas utiliser la carte de récupération.",
@@ -63,18 +59,14 @@ export const Result = ({
 
         if (!valueSelected) {
           if (flipwondeck) {
-          
             if (clickcount > 0) {
-        
               toast(`${userName} joué une carte prise`);
               card.id = Math.floor(Math.random() * 2000) + 34;
               dispatch(RecoveryCard(card));
 
-            
-
               const filterwincards = recovery.filter((el) => el.id !== card.id);
               setRecovery(filterwincards);
-              dispatch({ type: "woncardsfiltered", payload: filterwincards });        
+              dispatch({ type: "woncardsfiltered", payload: filterwincards });
 
               if (usercards.length !== compcard) {
                 setNextTurn(false);
@@ -85,20 +77,18 @@ export const Result = ({
               toast("Carte de récupération utilisée trois fois seulement");
               return;
             }
-          
+
             setFlipwonDeck(false);
           } else {
             toast("Vous ne pouvez sélectionner qu'une seule carte à la fois");
           }
-   
-        } 
+        }
         // else {
         //   toast("sélectionnez la valeur pour continuer le jeu");
         // }
       }
     }
   };
-
 
   const cardHeight = (i) => ({
     height: `calc(100% - ${usercards.length * (1 / 2)}px)`,
@@ -108,10 +98,8 @@ export const Result = ({
   const Triggered_func = () => {
     if (recoveryRefs.current.length > 0) {
       const firstDivRef = recoveryRefs.current[0];
-     
 
       if (firstDivRef) {
-
         clickvalue = 1;
         firstDivRef.click();
       }
@@ -133,7 +121,7 @@ export const Result = ({
                 <div className="col-sm-4">
                   <div className="user_col_1 h-100" onClick={Triggered_func}>
                     <img src="./img/12 reprise.jpg" />
-             
+
                     <h3 className="m-0 mt-2">{clickcount}</h3>
                   </div>
                 </div>
@@ -151,10 +139,10 @@ export const Result = ({
                             key={card.id}
                             style={cardHeight(i)}
                             className={`card ${
-                              card.isFlipped ? "flipped" : ""
+                              card?.isFlipped ? "flipped" : ""
                             }`}
                             onClick={() => {
-                              HandleCardClick(card, card.id, i);
+                              HandleCardClick(card, card?.id, i);
                             }}
                           >
                             <div>
@@ -172,7 +160,6 @@ export const Result = ({
                     <h3 className="user_col_2_h2 mt-2">{recovery.length}</h3>
                   </div>
                 </div>
-           
               </div>
             </div>
             <div className="Result_wrapper_duration">
@@ -203,7 +190,6 @@ export const Result = ({
             </div>
             <div className="Result_wrapper_computer">
               <div className="row">
-             
                 <div className="col-sm-4">
                   <div className="user_col_2">
                     <div className="user_col_2_inner">
@@ -233,7 +219,6 @@ export const Result = ({
                     <h3 className="user_col_2_h2 mt-2">{aiwonCards.length}</h3>
                   </div>
                 </div>
-              
               </div>
             </div>
           </div>

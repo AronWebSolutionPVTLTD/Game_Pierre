@@ -1,7 +1,7 @@
 const userModel = require("../model/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const nodemailer=require("nodemailer")
+const nodemailer = require("nodemailer");
 module.exports = {
   async signup(req, res) {
     // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>REGISTER",user)
@@ -33,7 +33,9 @@ module.exports = {
     const { email, password } = req.body;
     try {
       if (!email || !password) {
-        return res.status(400).send("Veuillez fournir les informations requises.");
+        return res
+          .status(400)
+          .send("Veuillez fournir les informations requises.");
       }
       const exist = await userModel.findOne({ email: email });
       if (!exist) {
@@ -48,12 +50,12 @@ module.exports = {
           process.env.SECRET_KEY,
           {
             expiresIn: "30d",
-          }
+          },
         );
         const userData = await userModel.findOneAndUpdate(
           { email: email },
           { token: token, status: true },
-          { new: true }
+          { new: true },
         );
         return res
           .status(200)
@@ -64,70 +66,70 @@ module.exports = {
     }
   },
 
-async forgotpassword (req, res) {
-  const { email } = req.body;
+  async forgotpassword(req, res) {
+    const { email } = req.body;
 
-  try {
-    // Check if the user with the provided email exists
-    const user = await userModel.findOne({ email });
+    try {
+      // Check if the user with the provided email exists
+      const user = await userModel.findOne({ email });
 
-    if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé." });
-    }
-
-  
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.Nodemailer_id,
-        pass: process.env.Nodemailer_pass,
-      },
-    });
-
-    const mailOptions = {
-
-      from: process.env.Nodemailer_id,
-      to: user.email,
-      subject: "Password Reset",
-      text: `Click the following link to reset your password: ${process.env.AppURL}/reset-password/${user.email}`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return res.status(500).json({ message: "Failed to send reset email" });
+      if (!user) {
+        return res.status(404).json({ message: "Utilisateur non trouvé." });
       }
 
-      console.log("Email sent: " + info.response);
-      res.json({ message: "Password reset instructions sent to your email" });
-    });
-  } catch (error) {
-    console.error("Error handling forgot password request:", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-},
+      const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.Nodemailer_id,
+          pass: process.env.Nodemailer_pass,
+        },
+      });
 
-// Reset Password API endpoint
-async resetpassword (req, res) {
-  const { email, newPassword } = req.body;
+      const mailOptions = {
+        from: process.env.Nodemailer_id,
+        to: user.email,
+        subject: "Password Reset",
+        text: `Click the following link to reset your password: ${process.env.AppURL}/reset-password/${user.email}`,
+      };
 
-  try {
-    const user = await userModel.findOne({email:email});
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res
+            .status(500)
+            .json({ message: "Failed to send reset email" });
+        }
 
-    if (!user) {
-      return res.status(400).json({ message: "Invalid or expired token" });
+        console.log("Email sent: " + info.response);
+        res.json({ message: "Password reset instructions sent to your email" });
+      });
+    } catch (error) {
+      console.error("Error handling forgot password request:", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
     }
+  },
 
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+  // Reset Password API endpoint
+  async resetpassword(req, res) {
+    const { email, newPassword } = req.body;
 
-    user.password = hashedPassword;
+    try {
+      const user = await userModel.findOne({ email: email });
 
-    await user.save();
+      if (!user) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+      }
 
-    res.json({ message: "Réinitialisation du mot de passe réussie" });
-  } catch (error) {
-    console.error("Error resetting password:", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-}
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      user.password = hashedPassword;
+
+      await user.save();
+
+      res.json({ message: "Réinitialisation du mot de passe réussie" });
+    } catch (error) {
+      console.error("Error resetting password:", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };

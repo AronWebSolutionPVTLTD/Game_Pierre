@@ -14,14 +14,14 @@ export const Computer = () => {
     compcard,
     setCompCard,
     nextturn,
-
+    hometimer,
     flippedIndex,
     setFlippedIndex,
     compcarddata,
     setCompCardData,
     currentIndex,
     setCurrentIndex,
-   
+    setCompFlippedCardArray
   } = useContext(GameContext);
 
   const {
@@ -33,8 +33,16 @@ export const Computer = () => {
   } = state;
   const battle = new Audio("battle sound.wav");
 
+console.log(compcarddata,"compcarddata")
+
+// useEffect(()=>{
+// setCompCardData(state.cards)
+
+// },[state.cards])
+
 
   useEffect(() => {
+  
     if (compcard?.length === 0) {
  
       setCompCard(compcarddata);
@@ -54,8 +62,46 @@ export const Computer = () => {
   }, [shuffle]);
 
 
+//  useEffect(() => {
+//     setCompCardData((prevCards) => {
+//       const existingCards = prevCards || [];
+//       // const newCards = [...prevCards];
+//       const newCards = [...existingCards];
+//       const maxCardCount = hometimer || 0;
+//       // const existingCardCount = prevCards.length;
+//       const existingCardCount = existingCards.length;
+
+//       if (maxCardCount < existingCardCount) {
+//         return existingCards;
+//       }
+
+//       for (let i = existingCardCount; i < maxCardCount; i++) {
+//         // Copy details from existing cards
+//         const existingCardIndex = i % existingCardCount;
+//         const existingCard = prevCards[existingCardIndex];
+
+//         // Duplicate the existing card details
+//         const newCard = {
+//           id: i + 1,
+//           name: existingCard?.name,
+//           value: existingCard?.value,
+//           isFlipped: existingCard?.isFlipped || false,
+//           img: existingCard?.img,
+//         };
+
+//         newCards.push(newCard);
+//       }
+
+//       return newCards;
+//     });
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [hometimer]);
+
 
   useEffect(() => {
+if(hometimer===0){
+  return;
+}
     if (nextturn) {
       if (userCardimg === "./img/Image verso card.png") {
         dispatch(AIsetImg("./img/Image verso card.png"));
@@ -72,6 +118,9 @@ export const Computer = () => {
         dispatch(LoadingProcess(true));
         setTimeout(() => {
  
+          const startTimeComp = new Date().getTime();
+          localStorage.setItem("compstarttime",startTimeComp)
+    
 
           let picked = compcarddata[currentIndex];
           localStorage.setItem(
@@ -83,6 +132,8 @@ export const Computer = () => {
           );
           const updatedCards = compcarddata?.map((card, index) => {
             if (card.id === picked?.id) {
+              setCompFlippedCardArray((prev)=>[...prev,card])
+              
               dispatch(LoadingProcess(false));
               dispatch(AIsetImg(card.img));
               setFlippedIndex(index);
@@ -104,8 +155,8 @@ export const Computer = () => {
     }
   }, [userCardimg]);
 
+  // console.log(compcarddata,"compcarddata")
   
-
   return (
     <>
       {gameOver || compcarddata?.length === 0 ? (

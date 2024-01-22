@@ -41,11 +41,11 @@ export const Navbar = () => {
               >
                 <Link to="/">Jouer</Link>
                 <Link to="/evaluation">Evaluation</Link>
-                
+
                 <Link to="training">Par entrainement</Link>
-               
+
                 {/* <Link>Sixcard</Link> */}
-                
+
                 <Link>Règles du jeu</Link>
                 <a href="http://www.lirelamusique.com" target="_blank">
                   Boutique

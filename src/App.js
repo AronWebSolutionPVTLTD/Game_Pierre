@@ -31,7 +31,6 @@ function App() {
     const storedCards = JSON.parse(localStorage.getItem("selectedCards"));
 
     const initialCards = storedCards || defaultbinary.slice(0, 6);
-    
 
     setBinaryFilterCard(initialCards);
     dispatch({ type: "cards", payload: initialCards });

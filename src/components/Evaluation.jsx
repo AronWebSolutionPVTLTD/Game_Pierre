@@ -284,35 +284,32 @@ export default function Evaluation() {
           <div className="container">
             <div className="row Evaluation_result">
               <div className="Result_wrapper_duration">
-                
-                  <div className="Result_timmer">
-                    <img src="./img/timmer_icon_trim.png" />
-                    <input type="text" value={formattedTime} readOnly />
-                    <div className="pts_box">
-                      <button
-                        className="plus_icon"
-                        onClick={() =>
-                          !timerenable &&
-                          setEvaluationTimer(evaluationtimer + 30)
+                <div className="Result_timmer">
+                  <img src="./img/timmer_icon_trim.png" />
+                  <input type="text" value={formattedTime} readOnly />
+                  <div className="pts_box">
+                    <button
+                      className="plus_icon"
+                      onClick={() =>
+                        !timerenable && setEvaluationTimer(evaluationtimer + 30)
+                      }
+                      disabled={timerenable}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="minus_icon"
+                      onClick={() => {
+                        if (!timerenable && evaluationtimer > 30) {
+                          setEvaluationTimer(evaluationtimer - 30);
                         }
-                        disabled={timerenable}
-                      >
-                        +
-                      </button>
-                      <button
-                        className="minus_icon"
-                        onClick={() => {
-                          if (!timerenable && evaluationtimer > 30) {
-                            setEvaluationTimer(evaluationtimer - 30);
-                          }
-                        }}
-                        disabled={timerenable}
-                      >
-                        -
-                      </button>
-                    </div>
+                      }}
+                      disabled={timerenable}
+                    >
+                      -
+                    </button>
                   </div>
-                
+                </div>
               </div>
             </div>
           </div>

@@ -44,8 +44,6 @@ function GameSettings() {
     }
   };
 
-
-
   return (
     <>
       <div className="container">
@@ -98,7 +96,6 @@ function GameSettings() {
                   </label>
                   <div className="Result_wrapper_duration m-0 mt-2">
                     <div className="Result_timmer">
-              
                       <input
                         type="text"
                         className="w-100 text-center"

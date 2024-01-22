@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import StripeCheckout from "react-stripe-checkout";
 
-
 const PricingComponent = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [payment, setPayment] = useState(false);
@@ -19,7 +18,6 @@ const PricingComponent = () => {
     console.log(token);
   };
   return (
-
     <section className="pricing-section">
       <div className="container">
         <div className="sec-title text-center">

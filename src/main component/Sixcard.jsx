@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import { Points } from "../components/Home/Points";
-import { toast, } from "react-toastify";
+import { toast } from "react-toastify";
 import "./Sixcard.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -52,8 +52,6 @@ function Sixcard() {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-   
-
       toast(`${data.message}`);
       setTimeout(() => {
         if (data?.remove) {

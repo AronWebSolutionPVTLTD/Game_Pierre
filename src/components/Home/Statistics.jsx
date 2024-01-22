@@ -12,39 +12,66 @@ export const Statistics = ({
   handleRestartGame,
   Roundpercentage,
   gameover,
- 
-  
 }) => {
-  const { state, flippedcardarray ,truevaluearray} = useContext(GameContext);
-  const {correctValue, wrongvalue, turnover,  wonCards } =state;
-const [carddetail,setcardDetail]=useState(false)
+  const {
+    state,
+    flippedcardarray,
+    truevaluearray,
+    compflippedcardarray,
+    comptruevaluearray,
+    averageresponsetime,
+    averageresponsetimecomp,
+  } = useContext(GameContext);
+  const { correctValue, wrongvalue, turnover, wonCards } = state;
+  const [carddetail, setcardDetail] = useState(false);
+  const userName = localStorage.getItem("username");
 
-// let storedData = localStorage.getItem("truevalueCard");
+  // __________________USER RETURN CARD_________________
 
+  const rightAnswers = {};
+  // if(storedData !==null){
 
-
-const rightAnswers = {}; 
-// if(storedData !==null){
-
-//   const retrievedData = JSON.parse(storedData);
-  truevaluearray.forEach(card => {
-    const cardName = card.name.toLowerCase();
+  //   const retrievedData = JSON.parse(storedData);
+  truevaluearray.forEach((card) => {
+    const cardName = card?.name?.toLowerCase();
     if (card.isCorrect) {
       rightAnswers[cardName] = (rightAnswers[cardName] || 0) + 1;
     }
   });
-// }
+  // }
 
-const calculateCardCounts = () => {
-  const cardCounts = {};
-  flippedcardarray.forEach(card => {
+  const calculateCardCounts = () => {
+    const cardCounts = {};
+    flippedcardarray.forEach((card) => {
+      const cardName = card?.name?.toLowerCase();
+      cardCounts[cardName] = (cardCounts[cardName] || 0) + 1;
+    });
+    return cardCounts;
+  };
+
+  const cardCounts = calculateCardCounts();
+
+  // ________________COMP RETURN CARD_______________________
+
+  const rightAnswersComp = {};
+
+  comptruevaluearray.forEach((card) => {
     const cardName = card?.name?.toLowerCase();
-    cardCounts[cardName] = (cardCounts[cardName] || 0) + 1;
+    if (card?.isCorrect) {
+      rightAnswersComp[cardName] = (rightAnswersComp[cardName] || 0) + 1;
+    }
   });
-  return cardCounts;
-};
 
-const cardCounts = calculateCardCounts();
+  const calculateCardCountsComp = () => {
+    const cardCounts = {};
+    compflippedcardarray.forEach((card) => {
+      const cardName = card?.name?.toLowerCase();
+      cardCounts[cardName] = (cardCounts[cardName] || 0) + 1;
+    });
+    return cardCounts;
+  };
+
+  const cardCountsComp = calculateCardCountsComp();
 
   return (
     <div>
@@ -55,7 +82,6 @@ const cardCounts = calculateCardCounts();
         <Modal.Body>
           <div className="wrap_stat" style={{ overflowX: "auto" }}>
             <table className="table table-striped">
-     
               <tbody>
                 <tr>
                   <th scope="row">Cartes retournées</th>
@@ -70,7 +96,6 @@ const cardCounts = calculateCardCounts();
                   <td>{wrongvalue}</td>
                 </tr>
 
-               
                 <tr>
                   <th scope="row">Taux de réussite</th>
                   <td>{Roundpercentage}%</td>
@@ -79,87 +104,228 @@ const cardCounts = calculateCardCounts();
                   <th scope="row">Total cartes gagnées</th>
                   <td>{wonCards.length}</td>
                 </tr>
-
-
-
               </tbody>
             </table>
             <div>
-
-  <button onClick={()=>{setcardDetail(true); setShowModal(false)}}>Details par carte</button>
-</div>
-                <div className="fermer" style={{ textAlign: "right" }}>
-                  <button onClick={handleClose}>Fermer</button>
-                </div>
+              <button
+                onClick={() => {
+                  setcardDetail(true);
+                  setShowModal(false);
+                }}
+              >
+                Details par carte
+              </button>
+            </div>
+            <div className="fermer" style={{ textAlign: "right" }}>
+              <button onClick={handleClose}>Fermer</button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
 
+      {/* _____________________________ALL CARD STAT_________________________________ */}
 
-{/* _____________________________ALL CARD STAT_________________________________ */}
-
-      <Modal show={carddetail}>
+      <Modal show={carddetail} className="all_card_stat">
         <Modal.Header>
           <Modal.Title>STATISTIQUES DE TOUTES LES CARTES </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="wrap_stat carties_table" style={{ overflowX: "auto" }}>
+          <div
+            className="wrap_stat carties_table "
+            style={{ overflowX: "auto", display: "flex" }}
+          >
             <table className="table table-striped">
+              <thead>
+                <h4>{userName}</h4>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">VALUE</th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    NOMBRE DE FOIS RETOURNÉS
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    NOMBRE DE BONNES RÉPONSES
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    TEMPS DE RÉPONSE MOYEN
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    TAUX %
+                  </th>
+                </tr>
 
-  <tbody>
-              <tr>
-                <th scope="row">VALUE</th>
-                <th scope="row" style={{ textAlign: 'center' }}>NUMBER OF TIMES RETURNED</th>
-                <th scope="row" style={{ textAlign: 'center' }}>NUMBER OF RIGHT ANSWERS</th>
-                <th scope="row" style={{ textAlign: 'center' }}>RATE %</th>
-              </tr>
-        
-               {Object.keys(cardCounts).map(cardName => {
-            const timesReturned = cardCounts[cardName];
-            const rightAnswerCount = rightAnswers[cardName] || 0;
-            const ratePercentage = (rightAnswerCount / timesReturned) * 100 || 0;
+                {Object.keys(cardCounts).map((cardName) => {
+                  const timesReturned = cardCounts[cardName];
+                  const rightAnswerCount = rightAnswers[cardName] || 0;
+                  const ratePercentage =
+                    (rightAnswerCount / timesReturned) * 100 || 0;
+                  const averageData = averageresponsetime[cardName] || {
+                    sum: 0,
+                    count: 0,
+                    average: 0,
+                  };
 
-            return (
-              <tr key={cardName}>
-                <th scope="row">{cardName}</th>
-                <td style={{ textAlign: 'center' }}>{timesReturned}</td>
-                <td style={{ textAlign: 'center' }}>{rightAnswerCount}</td>
-                <td style={{ textAlign: 'center' }}>{ratePercentage.toFixed(0)}%</td>
-              </tr>
-            );
-          })}
+                  return (
+                    <tr key={cardName}>
+                      <th scope="row">{cardName}</th>
+                      <td style={{ textAlign: "center" }}>{timesReturned}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {rightAnswerCount}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {(averageData.average / 1000).toFixed(2)}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {ratePercentage.toFixed(0)}%
+                      </td>
+                    </tr>
+                  );
+                })}
 
-<tr>
-    <th scope="row">Total :</th>
-    <td style={{ textAlign: 'center' }}>
-      {Object.values(cardCounts).reduce((acc, count) => acc + count, 0)}
-    </td>
-    <td style={{ textAlign: 'center' }}>
-      {Object.values(rightAnswers).reduce((acc, count) => acc + count, 0)}
-    </td>
-    <td style={{ textAlign: 'center' }}>
-    {Math.round(
-    (Object.values(rightAnswers).reduce((acc, count) => acc + count, 0) /
-      Object.values(cardCounts).reduce((acc, count) => acc + count, 0)) *
-    100
-  ) || 0}%
-      
-    
-    </td>
-  </tr>
-            </tbody>
+                <tr>
+                  <th scope="row">Total :</th>
+                  <td style={{ textAlign: "center" }}>
+                    {Object.values(cardCounts).reduce(
+                      (acc, count) => acc + count,
+                      0,
+                    )}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {Object.values(rightAnswers).reduce(
+                      (acc, count) => acc + count,
+                      0,
+                    )}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {(
+                      Object.values(averageresponsetime).reduce(
+                        (acc, data) => acc + data.average,
+                        0,
+                      ) / 1000
+                    ).toFixed(2)}
+                  </td>
 
+                  <td style={{ textAlign: "center" }}>
+                    {Math.round(
+                      (Object.values(rightAnswers).reduce(
+                        (acc, count) => acc + count,
+                        0,
+                      ) /
+                        Object.values(cardCounts).reduce(
+                          (acc, count) => acc + count,
+                          0,
+                        )) *
+                        100,
+                    ) || 0}
+                    %
+                  </td>
+                </tr>
+              </tbody>
             </table>
-            <div>
 
-</div>
-                <div className="fermer" style={{ textAlign: "right" }}>
-                  <button onClick={()=>{setcardDetail(false); setShowModal(true)}}>Fermer</button>
-                </div>
+            <table className="table table-striped">
+              <thead>
+                <h4>Ordinateur</h4>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">VALUE</th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    NOMBRE DE FOIS RETOURNÉS
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    NOMBRE DE BONNES RÉPONSES
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    TEMPS DE RÉPONSE MOYEN
+                  </th>
+                  <th scope="row" style={{ textAlign: "center" }}>
+                    TAUX %
+                  </th>
+                </tr>
+
+                {Object.keys(cardCountsComp).map((cardName) => {
+                  const timesReturned = cardCountsComp[cardName];
+                  const rightAnswerCount = rightAnswersComp[cardName] || 0;
+                  const ratePercentage =
+                    (rightAnswerCount / timesReturned) * 100 || 0;
+                  const averageDataComp = averageresponsetimecomp[cardName] || {
+                    sum: 0,
+                    count: 0,
+                    average: 0,
+                  };
+
+                  return (
+                    <tr key={cardName}>
+                      <th scope="row">{cardName}</th>
+                      <td style={{ textAlign: "center" }}>{timesReturned}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {rightAnswerCount}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {(averageDataComp.average / 1000).toFixed(2)}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {ratePercentage.toFixed(0)}%
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                <tr>
+                  <th scope="row">Total :</th>
+                  <td style={{ textAlign: "center" }}>
+                    {Object.values(cardCountsComp).reduce(
+                      (acc, count) => acc + count,
+                      0,
+                    )}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {Object.values(rightAnswersComp).reduce(
+                      (acc, count) => acc + count,
+                      0,
+                    )}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {(
+                      Object.values(averageresponsetimecomp).reduce(
+                        (acc, data) => acc + data.average,
+                        0,
+                      ) / 1000
+                    ).toFixed(2)}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {Math.round(
+                      (Object.values(rightAnswersComp).reduce(
+                        (acc, count) => acc + count,
+                        0,
+                      ) /
+                        Object.values(cardCountsComp).reduce(
+                          (acc, count) => acc + count,
+                          0,
+                        )) *
+                        100,
+                    ) || 0}
+                    %
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div></div>
+            <div className="fermer" style={{ textAlign: "right" }}>
+              <button
+                onClick={() => {
+                  setcardDetail(false);
+                  setShowModal(true);
+                }}
+              >
+                Fermer
+              </button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
-
 
       {/* _________________________Evaluation Statistics------------------------- */}
 
