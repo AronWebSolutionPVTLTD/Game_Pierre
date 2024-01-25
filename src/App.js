@@ -19,13 +19,8 @@ import NotFoundPage from "./Layout/NotFound";
 import PricingComponent from "./Setting/PremiumPackage";
 
 function App() {
-  const {
-    dispatch,
-    setBinaryFilterCard,
-    defaultbinary,
-    setDefaultBinary,
-    premium,
-  } = useContext(GameContext);
+  const { dispatch, setBinaryFilterCard, defaultbinary, setDefaultBinary } =
+    useContext(GameContext);
 
   useEffect(() => {
     const storedCards = JSON.parse(localStorage.getItem("selectedCards"));
@@ -34,7 +29,7 @@ function App() {
 
     setBinaryFilterCard(initialCards);
     dispatch({ type: "cards", payload: initialCards });
-  }, [dispatch, setDefaultBinary, setBinaryFilterCard]);
+  }, []);
 
   const handleFullScreen = () => {
     const doc = window.document;

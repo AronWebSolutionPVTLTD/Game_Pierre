@@ -20,7 +20,7 @@ const Deck = () => {
     setUserCards,
     valueSelected,
     setValueSelected,
-     setFlipBack,
+    setFlipBack,
     setTimerEnable,
     setRecoveryCardUse,
     deckcard,
@@ -35,21 +35,23 @@ const Deck = () => {
   const [lastFlippedCard, setLasFlippedCard] = useState(null);
 
   useEffect(() => {
- 
-    if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
+    if (deckcard[0]?.deckcard === 0 && deckcard.length == 1 ) {
       setUserCards(state.cards);
     }
-   
-  }, [deckcard, state.cards]);
+  }, [deckcard, state.cards,usercards]);
+ 
+  
 
 
+  
+  
   useEffect(() => {
     setUserCards((prevCards) => {
       const existingCards = prevCards || [];
-      // const newCards = [...prevCards];
+
       const newCards = [...existingCards];
       const maxCardCount = hometimer || 0;
-      // const existingCardCount = prevCards.length;
+
       const existingCardCount = existingCards.length;
 
       if (maxCardCount < existingCardCount) {
@@ -57,11 +59,9 @@ const Deck = () => {
       }
 
       for (let i = existingCardCount; i < maxCardCount; i++) {
-        // Copy details from existing cards
         const existingCardIndex = i % existingCardCount;
         const existingCard = prevCards[existingCardIndex];
 
-        // Duplicate the existing card details
         const newCard = {
           id: i + 1,
           name: existingCard?.name,
@@ -75,20 +75,29 @@ const Deck = () => {
 
       return newCards;
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hometimer]);
 
+
+  
+
   // -------------RECOVERY CARD_______________
+  
+  
+  // console.log(recoveryCard,"recovery")
+
+
+  // console.log(deckcard,"deck",deckcard.length,"length")
   useEffect(() => {
     setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
     dispatch(UserNameColor(true));
   }, [recoveryCard]);
 
+
+
   useEffect(() => {
     const getShuffledData = shuffleR(state.cards);
     setUserCards(getShuffledData);
   }, [shuffle]);
-
 
   const flipCard = (id, value, card, e) => {
     if (!valueSelected) {
@@ -141,8 +150,6 @@ const Deck = () => {
     // }
     setFlipBack(false);
   };
-
-
 
   return (
     <>

@@ -702,7 +702,48 @@ a.nav-link {
     justify-content: center;
     flex-direction: column;
 }
-.strong_card_modal .modal-body {
+
+.strong_user, .strong_computer {
+    position: absolute;
+    background: #ffe0e6;
+    max-width: 200px;
+    padding: 20px;
+    z-index: 1;
+    border-radius: 10px;
+
+}
+.strong_computer {
+    right: 0;
+    transform: translate(20px, -10px);
+}
+.strong_user {
+    left: 0;
+    transform: translate(-10px, -10px);
+
+} 
+.strong_computer h2, .strong_user h2 {
+    font-size: 15px;
+}
+.main_battle {
+    position: relative;
+}
+@media(max-width:1199px){
+    .strong_user {
+        left: 0;
+        transform: translate(15px, 0);
+    }
+}
+@media(max-width:991px){
+    .strong_user, .strong_computer {
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        transform: translate(0px, 40px);
+    }
+    
+}
+
+/* .strong_card_modal .modal-body {
     background: none;
     -webkit-text-fill-color: unset;
 }
@@ -722,8 +763,9 @@ a.nav-link {
     font-size: 16px;
     font-weight: 700;
     line-height: 18px;
-}
-.strong_card_comp .modal-body {
+} */
+
+/* .strong_card_comp .modal-body {
     background: none;
     -webkit-text-fill-color: unset;
 }
@@ -743,7 +785,7 @@ a.nav-link {
     font-size: 16px;
     font-weight: 700;
     line-height: 18px;
-}
+} */
 .modal-dialog .modal-content .modal-body .animated_img {
     position: absolute;
     width: 800px;

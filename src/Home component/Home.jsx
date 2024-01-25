@@ -77,6 +77,9 @@ export const Home = ({ handleFullScreen }) => {
     setAverageResponseTime,
     setAverageResponseTimeComp,
     averageresponsetimecomp,
+    timerValue,
+    setCompCard,
+    setCompCardData,
   } = useContext(GameContext);
   const {
     gameOver,
@@ -185,13 +188,13 @@ export const Home = ({ handleFullScreen }) => {
   useEffect(() => {
     setTimeout(() => {
       setTrueValuePopUp(false);
-    }, 1800);
+    }, 1500);
   }, [trueValuePopUp]);
 
   useEffect(() => {
     setTimeout(() => {
       setTrueValuePopUpAi(false);
-    }, 1800);
+    }, 1500);
   }, [trueValuePopUpAi]);
 
   useEffect(() => {
@@ -304,11 +307,11 @@ export const Home = ({ handleFullScreen }) => {
   const handleComputerEndTime = () => {
     const endTimecomp = new Date().getTime();
     const responseTimeComp = endTimecomp - startTimeComp;
-    
+
     onValueSelectComp(CompCard?.name, responseTimeComp);
-if(CompCard){
-  CompCard.isCorrect = true;
-}
+    if (CompCard) {
+      CompCard.isCorrect = true;
+    }
 
     setCompTrueValueArray((prev) => [...prev, CompCard]);
   };
@@ -369,7 +372,7 @@ if(CompCard){
     const valuepopAI = debounce(() => {
       setTrueValuePopUpAi(true);
       lost.play();
-    }, 1000);
+    }, 800);
 
     // ______________________COmputer turn in the battle part ___________________________
 
@@ -401,7 +404,7 @@ if(CompCard){
         setColor("");
         setValueSelected(false);
       }, 2000);
-    }, 3000);
+    }, 2500);
 
     if (mainvalueselect) {
       if (compflip_cardVal === cardvalue) {
@@ -421,7 +424,7 @@ if(CompCard){
           setTimeout(() => {
             setColor("");
             dispatch(UserNameColor(false));
-          }, 2000);
+          }, 1500);
           computerturn();
         } else {
           setColor("2");
@@ -431,7 +434,7 @@ if(CompCard){
             setColor("");
             dispatch(UserNameColor(false));
             setTrueValuePopUp(true);
-          }, 2000);
+          }, 1500);
           computerturn();
         }
         dispatch(MainValueSelected(false));
@@ -460,10 +463,9 @@ if(CompCard){
           setTimeout(() => {
             setColor("");
             dispatch(UserNameColor(false));
-          }, 2000);
+          }, 1500);
 
           setTimeout(() => {
-         
             if (nextturn) {
               debouncefunction();
               if (comp_MainValue === compflip_cardVal) {
@@ -502,7 +504,7 @@ if(CompCard){
           setTimeout(() => {
             setTrueValuePopUp(true);
             lost.play();
-          }, 1000);
+          }, 800);
 
           dispatch(WrongValue());
 
@@ -557,7 +559,7 @@ if(CompCard){
           if (correct) {
             setBattlePop(true);
           }
-        }, 2000);
+        }, 1800);
 
         setTimeout(async () => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -601,7 +603,7 @@ if(CompCard){
               setValueSelected(false);
             }, 2000);
           }
-        }, 5000);
+        }, 4000);
       }
     } else {
       setValuePopUp(true);
@@ -649,7 +651,7 @@ if(CompCard){
     setCompPoint(false);
     setRecoveryCardUse(false);
     setFlippedIndex("");
-    setCurrentIndex(37);
+    setCurrentIndex("");
     setTimerEnable(false);
     setFlippedCardArray([]);
     setTrueValueArray([]);
@@ -657,6 +659,8 @@ if(CompCard){
     setCompFlippedCardArray([]);
     setAverageResponseTime([]);
     setAverageResponseTimeComp([]);
+    setCompCard([]);
+    setCompCardData([]);
   };
   // ----------------------handle winner------------------
   const handlewinner = () => {
@@ -721,7 +725,7 @@ if(CompCard){
                   initial={{ opacity: 0, y: 200, rotateX: 120, x: 300 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
                   exit={{ opacity: 0, y: 100 }}
-                  transition={{ duration: 1, ease: "linear" }}
+                  transition={{ duration: 0.7, ease: "linear" }}
                 >
                   <span>+1 Point</span>
                 </motion.div>
@@ -766,7 +770,7 @@ if(CompCard){
                   initial={{ opacity: 0, y: 200, rotateX: 120, x: -300 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
                   exit={{ opacity: 0, y: 100 }}
-                  transition={{ duration: 1, ease: "linear" }}
+                  transition={{ duration: 0.7, ease: "linear" }}
                 >
                   <span>+1 Point</span>
                 </motion.div>
@@ -816,6 +820,8 @@ if(CompCard){
           )}
 
           <Points
+          strongvalue={strongvalue}
+          pointwinner={pointwinner}
             color={color}
             checkValue={checkValue}
             handleClick={handleClick}
@@ -837,10 +843,6 @@ if(CompCard){
             valuePopUp={valuePopUp}
           />
 
-          <ModalStrongValue
-            strongvalue={strongvalue}
-            pointwinner={pointwinner}
-          />
 
           <Result
             formathometime={formathometime}

@@ -193,25 +193,4 @@ export const BattleModal = ({
   );
 };
 
-export const ModalStrongValue = ({ strongvalue, pointwinner }) => {
 
-  return (
-    <>
-      <Modal
-        show={strongvalue}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        className= {pointwinner==="Ordinateur" ?"battle_modal strong_card_comp":
-    
-        "battle_modal strong_card_modal"
-      }
-        centered
-      >
-        <Modal.Body>
- 
-          <h2>{`${pointwinner} a la carte la plus élevée + 1 point`}</h2>
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};

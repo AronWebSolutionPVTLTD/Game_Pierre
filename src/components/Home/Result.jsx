@@ -45,6 +45,7 @@ export const Result = ({
   // -------------------RECovery Card click-------------------
 
   const HandleCardClick = async (card, id, index) => {
+  
     if (recoverycarduse === true) {
       toast(
         "En cas de bataille, vous ne pouvez pas utiliser la carte de récupération.",
@@ -63,7 +64,7 @@ export const Result = ({
               toast(`${userName} joué une carte prise`);
               card.id = Math.floor(Math.random() * 2000) + 34;
               dispatch(RecoveryCard(card));
-
+            
               const filterwincards = recovery.filter((el) => el.id !== card.id);
               setRecovery(filterwincards);
               dispatch({ type: "woncardsfiltered", payload: filterwincards });
@@ -111,6 +112,9 @@ export const Result = ({
     recoveryRefs.current = Array(recovery.length).fill(null);
   }, [recovery.length]);
 
+  
+
+  
   return (
     <div>
       <div className="Result_wrapper">
@@ -136,7 +140,7 @@ export const Result = ({
                         recovery?.map((card, i) => (
                           <div
                             ref={(el) => (recoveryRefs.current[i] = el)} // Assign ref to the DOM element
-                            key={card.id}
+                            key={card?.id}
                             style={cardHeight(i)}
                             className={`card ${
                               card?.isFlipped ? "flipped" : ""

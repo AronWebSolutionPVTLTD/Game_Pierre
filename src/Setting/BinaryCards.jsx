@@ -27,7 +27,7 @@ export default function BinaryCards() {
     setModal(false);
   };
 
-  console.log(premium, "premium");
+  // console.log(premium, "premium");
 
   const HandlePremium = () => {
     setModal(false);
@@ -95,7 +95,7 @@ export default function BinaryCards() {
     }
   };
 
-  console.log(binaryfiltercard, "bina");
+  // console.log(binaryfiltercard, "bina");
 
   const premiumclose = () => {
     setPremium(false);
