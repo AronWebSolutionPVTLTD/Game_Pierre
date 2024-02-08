@@ -35,16 +35,11 @@ const Deck = () => {
   const [lastFlippedCard, setLasFlippedCard] = useState(null);
 
   useEffect(() => {
-    if (deckcard[0]?.deckcard === 0 && deckcard.length == 1 ) {
+    if (deckcard[0]?.deckcard === 0 && deckcard.length == 1) {
       setUserCards(state.cards);
     }
-  }, [deckcard, state.cards,usercards]);
- 
-  
+  }, [deckcard, state.cards, usercards]);
 
-
-  
-  
   useEffect(() => {
     setUserCards((prevCards) => {
       const existingCards = prevCards || [];
@@ -77,22 +72,15 @@ const Deck = () => {
     });
   }, [hometimer]);
 
-
-  
-
   // -------------RECOVERY CARD_______________
-  
-  
-  // console.log(recoveryCard,"recovery")
 
+  // console.log(recoveryCard,"recovery")
 
   // console.log(deckcard,"deck",deckcard.length,"length")
   useEffect(() => {
     setUserCards((prevCards) => [...(prevCards || []), ...recoveryCard]);
     dispatch(UserNameColor(true));
   }, [recoveryCard]);
-
-
 
   useEffect(() => {
     const getShuffledData = shuffleR(state.cards);
@@ -178,10 +166,14 @@ const Deck = () => {
                 <span className="wrapper">
                   <span className="content">
                     <span className="face back">
-                      <img src="./img/Image verso card.png" />
+                      <img src="./img/Image verso card.png" alt="verso" />
                     </span>
                     <span id="After_load_outer" className="face front">
-                      <img className="After_load" src={userCardimg} />
+                      <img
+                        className="After_load"
+                        src={userCardimg}
+                        alt="userimage"
+                      />
                     </span>
                   </span>
                 </span>
@@ -202,10 +194,14 @@ const Deck = () => {
                 <span className="wrapper">
                   <span className="content">
                     <span className="face back">
-                      <img src="./img/Image verso card.png" />
+                      <img src="./img/Image verso card.png" alt="verso" />
                     </span>
                     <span id="After_load_outer" className="face front">
-                      <img className="After_load" src={userCardimg} />
+                      <img
+                        className="After_load"
+                        src={userCardimg}
+                        alt="userimage"
+                      />
                     </span>
                   </span>
                 </span>

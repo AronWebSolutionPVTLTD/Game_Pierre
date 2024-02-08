@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
@@ -25,7 +25,6 @@ import {
   GameOverModal,
   GamePopUpModal,
   BattleModal,
-  ModalStrongValue,
 } from "../components/Home/GameModals";
 import { Points } from "../components/Home/Points";
 import { Result } from "../components/Home/Result";
@@ -69,17 +68,17 @@ export const Home = ({ handleFullScreen }) => {
     hometimer,
     setHomeTimer,
     setFlippedCardArray,
-    truevaluearray,
+
     setTrueValueArray,
     setCompTrueValueArray,
     setCompFlippedCardArray,
-    averageresponsetime,
+
     setAverageResponseTime,
     setAverageResponseTimeComp,
-    averageresponsetimecomp,
-    timerValue,
+
     setCompCard,
     setCompCardData,
+    rhythm,
   } = useContext(GameContext);
   const {
     gameOver,
@@ -110,17 +109,24 @@ export const Home = ({ handleFullScreen }) => {
     JSON.parse(localStorage.getItem("cardvalue")) || 0;
   const [correct, setCorrect] = useState(false);
   const [showsbattlepop, setBattlePop] = useState(false);
-  const pointwin = new Audio("point added.wav");
-  const winner = new Audio("win.mp3");
-  const buttonsound = new Audio("button click sound.wav");
 
-  const lost = new Audio("lost 1 point.wav");
   const userName = localStorage.getItem("username");
 
   const compName = "Ordinateur";
   const draw = "Egalité";
   const Timer = JSON.parse(localStorage.getItem("timer"));
   const startTimeComp = JSON.parse(localStorage.getItem("compstarttime"));
+
+  console.log(rhythm, "rhythm");
+
+  let pointwin, winner, buttonsound, lost;
+
+  if (rhythm === "yes") {
+    pointwin = new Audio("point added.wav");
+    winner = new Audio("win.mp3");
+    buttonsound = new Audio("button click sound.wav");
+    lost = new Audio("lost 1 point.wav");
+  }
 
   // ________________FRAME MOTION_________________________
   const buttonVariants = {
@@ -138,9 +144,7 @@ export const Home = ({ handleFullScreen }) => {
   // ________________FRAME MOTION_________________________END
 
   useEffect(() => {
-    {
-      Timer ? setHomeTimer(Timer) : setHomeTimer(120);
-    }
+    Timer ? setHomeTimer(Timer) : setHomeTimer(120);
   }, [Timer]);
 
   useEffect(() => {
@@ -171,7 +175,7 @@ export const Home = ({ handleFullScreen }) => {
     } else {
       setShowModal(false);
       dispatch(GameOver(true));
-      winner.play();
+      winner?.play();
     }
   };
 
@@ -336,7 +340,6 @@ export const Home = ({ handleFullScreen }) => {
 
   // ________________HANDLE CLICK FOR VALUES____________________________
   const handleClick = async (value) => {
-    buttonsound.play();
     setFlipwonDeck(true);
     // setValueSelected(false);
     setCheckValue(value);
@@ -371,7 +374,7 @@ export const Home = ({ handleFullScreen }) => {
 
     const valuepopAI = debounce(() => {
       setTrueValuePopUpAi(true);
-      lost.play();
+      lost?.play();
     }, 800);
 
     // ______________________COmputer turn in the battle part ___________________________
@@ -381,18 +384,18 @@ export const Home = ({ handleFullScreen }) => {
       if (comp_MainValue === compflip_cardVal) {
         handleComputerEndTime();
 
-        setCheckValue(comp_MainValue, buttonsound.play());
+        setCheckValue(comp_MainValue, buttonsound?.play());
         setTimeout(() => {
           setCompPoint(true);
           setColor("1");
           compvalue += 1;
           setTimeout(() => {
-            pointwin.play();
+            pointwin?.play();
             setCompPt(compvalue);
           }, 1000);
         }, 500);
       } else {
-        setCheckValue(comp_MainValue, buttonsound.play());
+        setCheckValue(comp_MainValue, buttonsound?.play());
         setTimeout(() => {
           setColor("2");
         }, 500);
@@ -407,6 +410,7 @@ export const Home = ({ handleFullScreen }) => {
     }, 2500);
 
     if (mainvalueselect) {
+      buttonsound?.play();
       if (compflip_cardVal === cardvalue) {
         setRecoveryCardUse(true);
 
@@ -417,7 +421,7 @@ export const Home = ({ handleFullScreen }) => {
           setUserPoint(true);
           uservalue += 1;
           setTimeout(() => {
-            pointwin.play();
+            pointwin?.play();
             setUserPoint(uservalue);
           }, 1000);
           dispatch(CorrectValue());
@@ -430,7 +434,7 @@ export const Home = ({ handleFullScreen }) => {
           setColor("2");
           dispatch(CorrectValue());
           setTimeout(() => {
-            lost.play();
+            lost?.play();
             setColor("");
             dispatch(UserNameColor(false));
             setTrueValuePopUp(true);
@@ -456,7 +460,7 @@ export const Home = ({ handleFullScreen }) => {
           dispatch(CorrectValue());
           setUserPoint(true);
           setTimeout(() => {
-            pointwin.play();
+            pointwin?.play();
             setPoints(uservalue);
           }, 1000);
 
@@ -471,7 +475,7 @@ export const Home = ({ handleFullScreen }) => {
               if (comp_MainValue === compflip_cardVal) {
                 handleComputerEndTime();
 
-                setCheckValue(comp_MainValue, buttonsound.play());
+                setCheckValue(comp_MainValue, buttonsound?.play());
 
                 setTimeout(() => {
                   setColor("1");
@@ -480,11 +484,11 @@ export const Home = ({ handleFullScreen }) => {
                 compvalue += 1;
                 setCompPoint(true);
                 setTimeout(() => {
-                  pointwin.play();
+                  pointwin?.play();
                   setCompPt(compvalue);
                 }, 1000);
               } else {
-                setCheckValue(comp_MainValue, buttonsound.play());
+                setCheckValue(comp_MainValue, buttonsound?.play());
                 setTimeout(() => {
                   setColor("2");
                 }, 500);
@@ -503,7 +507,7 @@ export const Home = ({ handleFullScreen }) => {
           setColor("2");
           setTimeout(() => {
             setTrueValuePopUp(true);
-            lost.play();
+            lost?.play();
           }, 800);
 
           dispatch(WrongValue());
@@ -519,7 +523,7 @@ export const Home = ({ handleFullScreen }) => {
                 if (comp_MainValue === compflip_cardVal) {
                   handleComputerEndTime();
 
-                  setCheckValue(comp_MainValue, buttonsound.play());
+                  setCheckValue(comp_MainValue, buttonsound?.play());
 
                   setTimeout(() => {
                     setColor("1");
@@ -528,11 +532,11 @@ export const Home = ({ handleFullScreen }) => {
 
                   setCompPoint(true);
                   setTimeout(() => {
-                    pointwin.play();
+                    pointwin?.play();
                     setCompPt(compvalue);
                   }, 1000);
                 } else {
-                  setCheckValue(comp_MainValue, buttonsound.play());
+                  setCheckValue(comp_MainValue, buttonsound?.play());
                   setTimeout(() => {
                     setColor("2");
                   }, 500);
@@ -577,7 +581,7 @@ export const Home = ({ handleFullScreen }) => {
             uservalue += 1;
             setUserPoint(true);
             setTimeout(() => {
-              pointwin.play();
+              pointwin?.play();
               setPoints(uservalue);
             }, 1000);
             setTimeout(() => {
@@ -595,7 +599,7 @@ export const Home = ({ handleFullScreen }) => {
             compvalue += 1;
 
             setTimeout(() => {
-              pointwin.play();
+              pointwin?.play();
               setCompPt(compvalue);
             }, 1000);
             setTimeout(() => {
@@ -820,8 +824,8 @@ export const Home = ({ handleFullScreen }) => {
           )}
 
           <Points
-          strongvalue={strongvalue}
-          pointwinner={pointwinner}
+            strongvalue={strongvalue}
+            pointwinner={pointwinner}
             color={color}
             checkValue={checkValue}
             handleClick={handleClick}
@@ -842,7 +846,6 @@ export const Home = ({ handleFullScreen }) => {
             handleValuePop={handleValuePop}
             valuePopUp={valuePopUp}
           />
-
 
           <Result
             formathometime={formathometime}

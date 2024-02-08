@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { GameContext } from "../Context/GameContext";
 import { AIsetImg, LoadingProcess, UserNameColor } from "../Context/action";
-import { useRef } from "react";
 
 export const Computer = () => {
   const {
@@ -19,6 +18,8 @@ export const Computer = () => {
     currentIndex,
     setCurrentIndex,
     setCompFlippedCardArray,
+
+    rhythm,
   } = useContext(GameContext);
 
   const {
@@ -28,23 +29,17 @@ export const Computer = () => {
     shuffle,
     AIimg,
   } = state;
-  const battle = new Audio("battle sound.wav");
-const ref = useRef(null);
 
-  // console.log(compcarddata, "compcarddata", currentIndex);
+  let battle;
+  if (rhythm === "yes") {
+    battle = new Audio("battle sound.wav");
+  }
+
+  console.log(compcarddata, "compcarddata", currentIndex);
 
   useEffect(() => {
-    // if(compcarddata?.length === 1){
-    //   const transformedData = state.cards.map((el) => ({
-    //     ...el,
-    //     id: el.id * 2,
-    //   }));
-    // console.log(transformedData);
-    //   setCompCardData(transformedData);
-    // }
     if (compcard?.length === 0 || compcarddata?.length === 1) {
       setCompCard(state.cards);
-
 
       function shuffleArray(array) {
         for (let i = array?.length - 1; i > 0; i--) {
@@ -58,14 +53,10 @@ const ref = useRef(null);
 
       setCompCardData(shuffledData);
       setCurrentIndex(shuffledData.length - 1);
-
-   
-   
     }
   }, [shuffle, state.cards, compcard, compcarddata]);
 
   // console.log(flippedIndex,"flip")
- 
 
   useEffect(() => {
     if (hometimer === 0) {
@@ -73,8 +64,9 @@ const ref = useRef(null);
     }
     if (nextturn) {
       if (userCardimg === "./img/Image verso card.png") {
+        battle?.play();
         dispatch(AIsetImg("./img/Image verso card.png"));
-        battle.play();
+
         setTimeout(() => {
           dispatch(UserNameColor(true));
         }, 1000);
@@ -96,14 +88,13 @@ const ref = useRef(null);
             }),
           );
           const updatedCards = compcarddata?.map((card, index) => {
-   
             if (card.id === picked?.id) {
               setCompFlippedCardArray((prev) => [...prev, card]);
 
               dispatch(LoadingProcess(false));
               dispatch(AIsetImg(card.img));
-              setFlippedIndex(index-1);
-              
+
+              setFlippedIndex(index - 1);
 
               return { ...card, isFlipped: true };
             } else {
@@ -122,6 +113,7 @@ const ref = useRef(null);
     }
   }, [userCardimg]);
 
+  console.log(flippedIndex, "flipindex");
   return (
     <>
       {gameOver || compcarddata?.length === 0 ? (
@@ -141,17 +133,16 @@ const ref = useRef(null);
           <p>PLUS DE CARTES</p>
         </div>
       ) : (
+        // <article className="board ">
         <article className="board">
           {compcarddata?.length !== 0 &&
             compcarddata.map((card, i) => (
               <div
                 id={`button_id_${i}`}
                 key={i}
-                // className={`cards computer_card  ${
-                //   flippedIndex === i ? "cards:nth-child(${i+1} flipped" : " "
-                // } `}
-                className={`cards computer_card ${flippedIndex === i? `cards:nth-child(${i + 1}) flipped` : ""}`}
-
+                className={`cards computer_card ${
+                  flippedIndex === i ? `flipped ${flippedIndex}` : ""
+                }`}
               >
                 <span className="wrapper">
                   <span className="content">
@@ -159,7 +150,7 @@ const ref = useRef(null);
                       <img alt={card.id} src="./img/Image verso card.png" />
                     </span>
                     <span className="face front">
-                      <img src={AIimg} />
+                      <img src={AIimg} alt="aiimage" />
                     </span>
                   </span>
                 </span>

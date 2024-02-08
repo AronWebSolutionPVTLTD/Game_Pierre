@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { act } from "react-dom/test-utils";
-
 export const LoadingProcess = (value) => {
   return {
     type: "loading",

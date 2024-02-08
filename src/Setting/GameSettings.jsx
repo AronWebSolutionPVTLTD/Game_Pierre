@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import "./settings.css";
 import { BiCheck } from "react-icons/bi";
 
 import { GameContext } from "../Context/GameContext";
 import BinaryCards from "./BinaryCards";
-import { useNavigate } from "react-router-dom";
+
 import TernaryCards from "./TernaryCards";
 
 function GameSettings() {
@@ -15,8 +15,9 @@ function GameSettings() {
     setSelectedMode,
     selectedcardvalue,
     setselectedCardValue,
+    setRhythm,
+    rhythm,
   } = useContext(GameContext);
-  const navigate = useNavigate();
 
   // -------------------------timer-------------
   const minutes = Math.floor(timerValue / 60);
@@ -130,7 +131,14 @@ function GameSettings() {
                     Rhythm sound of my card
                   </label>
                   <div className="radio_btn">
-                    <input type="radio" id="rythm_yes" name="rythm" />
+                    <input
+                      type="radio"
+                      id="rythm_yes"
+                      name="rythm"
+                      value="yes"
+                      checked={rhythm === "yes"}
+                      onChange={(e) => setRhythm(e.target.value)}
+                    />
                     <label htmlFor="rythm_yes" className="fw-medium">
                       <span className="radio_box">
                         <BiCheck />
@@ -139,7 +147,14 @@ function GameSettings() {
                     </label>
                   </div>
                   <div className="radio_btn">
-                    <input type="radio" id="rythm_no" name="rythm" />
+                    <input
+                      type="radio"
+                      id="rythm_no"
+                      name="rythm"
+                      value="no"
+                      checked={rhythm === "no"}
+                      onChange={(e) => setRhythm(e.target.value)}
+                    />
 
                     <label htmlFor="rythm_no" className="fw-medium">
                       <span className="radio_box">

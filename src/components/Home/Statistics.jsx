@@ -12,6 +12,9 @@ export const Statistics = ({
   handleRestartGame,
   Roundpercentage,
   gameover,
+  cardturnover,
+  correctvalue,
+  wrongValue,
 }) => {
   const {
     state,
@@ -342,15 +345,15 @@ export const Statistics = ({
               <tbody>
                 <tr>
                   <th scope="row">Carte retournée</th>
-                  <td>{turnover}</td>
+                  <td>{cardturnover}</td>
                 </tr>
                 <tr>
                   <th style={{ minWidth: "115px" }}>Réponses correctes</th>
-                  <td>{correctValue}</td>
+                  <td>{correctvalue}</td>
                 </tr>
                 <tr>
                   <th scope="row">Mauvaises REPONSES</th>
-                  <td>{wrongvalue}</td>
+                  <td>{wrongValue}</td>
                 </tr>
 
                 <tr>

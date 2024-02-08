@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useContext } from "react";
 
 import { GameContext } from "../Context/GameContext";
@@ -139,7 +141,7 @@ export default function BinaryCards() {
               />
 
               <label htmlFor={`beat_value_${i}`} className="fw-medium">
-                <img src={el.img} alt="image" />
+                <img src={el.img} alt="binaryimage" />
                 <span className="radio_box">
                   <BiCheck />
                 </span>

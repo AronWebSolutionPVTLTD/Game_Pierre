@@ -3,8 +3,14 @@ import { useContext } from "react";
 import { GameContext } from "../../Context/GameContext";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const Points = ({ color, checkValue, handleClick,pointwinner,strongvalue}) => {
-  const { selectedcardvalue, setselectedCardValue } = useContext(GameContext);
+export const Points = ({
+  color,
+  checkValue,
+  handleClick,
+  pointwinner,
+  strongvalue,
+}) => {
+  const { selectedcardvalue } = useContext(GameContext);
 
   const noireValue = [
     { value: 0.25, fraction: "1/4" },
@@ -64,16 +70,18 @@ export const Points = ({ color, checkValue, handleClick,pointwinner,strongvalue}
       exit="exit"
       variants={variants}
     >
-
-     
       <div className="points_count">
         <div className="container">
-          {strongvalue &&
-          <div className={pointwinner === "Ordinateur"?"strong_computer":"strong_user"}>
-          <h2>{`${pointwinner} a la carte la plus élevée + 1 point`}</h2>
-          </div>
-          }
-          
+          {strongvalue && (
+            <div
+              className={
+                pointwinner === "Ordinateur" ? "strong_computer" : "strong_user"
+              }
+            >
+              <h2>{`${pointwinner} a la carte la plus élevée + 1 point`}</h2>
+            </div>
+          )}
+
           <div className="row">
             <div className="col-md-1" />
             <div className="col-md-10">
@@ -272,10 +280,8 @@ export const Points = ({ color, checkValue, handleClick,pointwinner,strongvalue}
               </AnimatePresence>
             </div>
           </div>
-         
         </div>
       </div>
-     
     </motion.div>
   );
 };

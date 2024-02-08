@@ -1,14 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
+
 import Nav from "react-bootstrap/Nav";
 import BootStrapNavbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const Navbar = () => {
-  const navigate = useNavigate();
   const Token = localStorage.getItem("token");
 
   return (
@@ -23,7 +21,7 @@ export const Navbar = () => {
           <Container fluid>
             <BootStrapNavbar.Brand>
               <Link to="/">
-                <img className="site_logo" src="./img/logo.png" />
+                <img className="site_logo" src="./img/logo.png" alt="logo" />
               </Link>
             </BootStrapNavbar.Brand>
             <BootStrapNavbar.Toggle aria-controls="navbarScroll" />
@@ -40,22 +38,26 @@ export const Navbar = () => {
                 navbarScroll
               >
                 <Link to="/">Jouer</Link>
-                <Link to="/evaluation">Evaluation</Link>
+                <a href="/evaluation">Evaluation</a>
 
-                <Link to="training">Par entrainement</Link>
+                <a href="training">Par entrainement</a>
 
-                {/* <Link>Sixcard</Link> */}
+                {/* <Link to="/sixcard">Sixcard</Link> */}
 
                 <Link>Règles du jeu</Link>
-                <a href="http://www.lirelamusique.com" target="_blank">
+                <a
+                  href="http://www.lirelamusique.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Boutique
                 </a>
-                <Link to="/contact">Contact</Link>
+                <a href="/contact">Contact</a>
                 {Token && (
                   <Link
                     onClick={() => {
                       localStorage.clear();
-                      navigate("/login");
+                      window.location.reload();
                     }}
                   >
                     Déconnexion

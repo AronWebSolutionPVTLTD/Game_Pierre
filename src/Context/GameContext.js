@@ -336,6 +336,7 @@ export const AppContextProvider = ({ children }) => {
   // __________setting_____________________
   const [selectedmode, setSelectedMode] = useState("binary");
   const [selectedcardvalue, setselectedCardValue] = useState("noire");
+  const [rhythm, setRhythm] = useState("yes");
   const [binaryfiltercard, setBinaryFilterCard] = useState([]);
 
   const [compturnstop, setCompturnStop] = useState(false);
@@ -419,7 +420,8 @@ export const AppContextProvider = ({ children }) => {
         setCurrentIndex,
         selectedmode,
         setSelectedMode,
-
+        rhythm,
+        setRhythm,
         binaryfiltercard,
         setBinaryFilterCard,
         defaultbinary,

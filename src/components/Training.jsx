@@ -4,31 +4,14 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
 
-import {
-  CorrectValue,
-  Flipped,
-  GameOver,
-  MainValueSelected,
-  Shuffled,
-  TurnOver,
-  WrongValue,
-} from "../Context/action";
+import { GameOver, MainValueSelected, Shuffled } from "../Context/action";
 import { Points } from "./Home/Points";
 import { TrainingGameOver, GamePopUpModal } from "./Home/GameModals";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 function Training() {
-  const { state, dispatch, timerenable, setTimerEnable, color, setColor } =
-    useContext(GameContext);
-  const {
-    cardFlipped,
-    mainvalueselect,
-    shuffle,
-    gameOver,
-    correctValue,
-    wrongvalue,
-    turnover,
-  } = state;
+  const { state, dispatch, color, setColor, rhythm } = useContext(GameContext);
+  const { mainvalueselect, shuffle, gameOver } = state;
 
   const [cards, setCards] = useState(state.cards);
   const [img, setImg] = useState("");
@@ -36,12 +19,21 @@ function Training() {
   const [flip, setflip] = useState(true);
   const [flipcardValue, setFlipCardValue] = useState();
   const [valuePopUp, setValuePopUp] = useState(false);
-  const [correctvalue, setCorrectValue] = useState(false);
-  const pointwin = new Audio("point added.wav");
-  const lost = new Audio("lost 1 point.wav");
+  const [correctValue, setCorrectValue] = useState(false);
+  const [starttime, setStartTimer] = useState(false);
 
   const TrainingTimer = JSON.parse(localStorage.getItem("timer"));
   const [timer, setTimer] = useState();
+  const [cardturnover, setCardTurnOver] = useState(0);
+  const [correctvalue, setCorrectvalue] = useState(0);
+  const [wrongValue, setWrongValue] = useState(0);
+  const [timerenable, setTimerEnable] = useState(false);
+
+  let pointwin, lost;
+  if (rhythm === "yes") {
+    pointwin = new Audio("point added.wav");
+    lost = new Audio("lost 1 point.wav");
+  }
 
   useEffect(() => {
     TrainingTimer ? setTimer(TrainingTimer) : setTimer(120);
@@ -55,12 +47,12 @@ function Training() {
 
   useEffect(() => {
     if (timer === 0) {
-      dispatch(Flipped(false));
+      setStartTimer(false);
       dispatch(GameOver(true));
       setTimerEnable(false);
       return;
     }
-    if (!cardFlipped) {
+    if (!starttime) {
       return;
     } else {
       const interval = setInterval(() => {
@@ -78,7 +70,7 @@ function Training() {
         clearInterval(interval);
       };
     }
-  }, [timer, cardFlipped]);
+  }, [timer, starttime]);
 
   const minutes = Math.floor(timer / 60);
   const seconds = timer % 60;
@@ -90,10 +82,10 @@ function Training() {
 
   const flipCard = (id, val) => {
     if (flip) {
-      dispatch(TurnOver());
+      setCardTurnOver(cardturnover + 1);
       setFlipCardValue(val);
       dispatch(MainValueSelected(true));
-      dispatch(Flipped(true));
+      setStartTimer(true);
       setTimerEnable(true);
 
       const updatedCards = cards.map((card) => {
@@ -123,12 +115,12 @@ function Training() {
     if (mainvalueselect) {
       if (val === flipcardValue) {
         setColor("1");
-        pointwin.play();
-        dispatch(CorrectValue());
+        pointwin?.play();
+        setCorrectvalue(correctvalue + 1);
       } else {
-        dispatch(WrongValue());
+        setWrongValue(wrongValue + 1);
         setColor("2");
-        lost.play();
+        lost?.play();
         setTimeout(() => {
           setCorrectValue(true);
         }, 800);
@@ -148,17 +140,16 @@ function Training() {
     setTimer(120);
     dispatch(Shuffled(!shuffle));
     setImg("");
-    dispatch({ type: "turnoverempty" });
-
-    dispatch({ type: "correctValueempty" });
-    dispatch({ type: "wrongvalueempty" });
+    setCardTurnOver(0);
+    setCorrectvalue(0);
+    setWrongValue(0);
   };
 
   useEffect(() => {
     setTimeout(() => {
       setCorrectValue(false);
     }, 1500);
-  }, [correctvalue]);
+  }, [correctValue]);
 
   const handleValuePop = () => {
     setValuePopUp(false);
@@ -169,7 +160,7 @@ function Training() {
     transform: `translateY(${i * 1}px)`,
   });
 
-  const calculationstat = (correctValue / turnover) * 100;
+  const calculationstat = (correctvalue / cardturnover) * 100;
   const Roundpercent = Math.round(calculationstat);
   return (
     <>
@@ -226,7 +217,7 @@ function Training() {
 
       {/* --------------------------------true value pop up________________________ */}
 
-      {correctvalue && (
+      {correctValue && (
         <motion.div
           className="truevalue"
           initial={{ opacity: 0, y: -100 }}
@@ -286,9 +277,9 @@ function Training() {
               <div className="col-md-6">
                 <div className="Result_wrapper_duration_stat">
                   <div>
-                    <p> {turnover} cartes retournées</p>
-                    <p>{correctValue} bonnes réponses</p>
-                    <p>{wrongvalue} Mauvaises réponses</p>
+                    <p> {cardturnover} cartes retournées</p>
+                    <p>{correctvalue} bonnes réponses</p>
+                    <p>{wrongValue} Mauvaises réponses</p>
                     <p>
                       {Roundpercent ? Roundpercent : 0}% Pourcentage de réussite
                     </p>

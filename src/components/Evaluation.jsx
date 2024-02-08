@@ -1,44 +1,43 @@
 import { useEffect } from "react";
 import { useState } from "react";
-
 import { Points } from "./Home/Points";
 import { EvaluationSelectCard } from "./Home/GameModals";
 import { useContext } from "react";
 import { GameContext } from "../Context/GameContext";
-import {
-  CorrectValue,
-  Flipped,
-  Shuffled,
-  TurnOver,
-  WrongValue,
-} from "../Context/action";
+import { Shuffled } from "../Context/action";
 import { Statistics } from "./Home/Statistics";
 import "../main component/toaster.css";
-
 import { toast } from "react-toastify";
 
 export default function Evaluation() {
-  const { state, dispatch, timerenable, setTimerEnable } =
-    useContext(GameContext);
-  const { cardFlipped, shuffle, correctValue, turnover } = state;
+  const { state, dispatch, rhythm } = useContext(GameContext);
+  const { shuffle } = state;
   const [cards, setCards] = useState(state.cards);
   const [gameover, setGameOver] = useState(false);
   const [check, setCheck] = useState(false);
   const [img, setImg] = useState("");
   const [checkValue, setCheckValue] = useState("");
-  // const [timerValue, setTimerValue] = useState(120);
   const [color, setColor] = useState("");
   const [flipcardValue, setFlipCardValue] = useState();
   const [mainValue, setMainValue] = useState(false);
   const [valuePopUp, setValuePopUp] = useState(false);
-
   const [flip, setFlip] = useState(true);
-  const pointwin = new Audio("point added.wav");
-  const lost = new Audio("lost 1 point.wav");
   const Time = JSON.parse(localStorage.getItem("timer"));
-  const [evaluationtimer, setEvaluationTimer] = useState();
+  const [evaluationtimer, setEvaluationTimer] = useState(120);
   const [circlevalue, setCircleValue] = useState(state.cards);
   const [auto, setAuto] = useState(false);
+  const [starttime, setStartTimer] = useState(false);
+  const [cardturnover, setCardTurnOver] = useState(0);
+  const [correctvalue, setCorrectvalue] = useState(0);
+  const [wrongValue, setWrongValue] = useState(0);
+  const [timerenable, setTimerEnable] = useState(false);
+
+  let pointwin, lost;
+
+  if (rhythm === "yes") {
+    pointwin = new Audio("point added.wav");
+    lost = new Audio("lost 1 point.wav");
+  }
 
   useEffect(() => {
     Time ? setEvaluationTimer(Time) : setEvaluationTimer(120);
@@ -53,13 +52,13 @@ export default function Evaluation() {
 
   // -----Calculate percentege-------------------
 
-  const calculationstat = (correctValue / turnover) * 100;
+  const calculationstat = (correctvalue / cardturnover) * 100;
   const Roundpercent = Math.round(calculationstat);
 
   // Timer functionality
   useEffect(() => {
     if (evaluationtimer === 0) {
-      dispatch(Flipped(false));
+      setStartTimer(false);
       setGameOver(true);
       setTimerEnable(false);
       setCheck(false);
@@ -67,7 +66,7 @@ export default function Evaluation() {
       setColor("");
       return;
     }
-    if (!cardFlipped) {
+    if (!starttime) {
       return;
     } else {
       const interval = setInterval(() => {
@@ -85,7 +84,7 @@ export default function Evaluation() {
         clearInterval(interval);
       };
     }
-  }, [evaluationtimer, cardFlipped]);
+  }, [evaluationtimer, starttime]);
 
   const minutes = Math.floor(evaluationtimer / 60);
   const seconds = evaluationtimer % 60;
@@ -99,7 +98,7 @@ export default function Evaluation() {
     if (flip) {
       setFlipCardValue(card?.value);
       setMainValue(true);
-      dispatch(Flipped(true));
+      setStartTimer(true);
       setTimerEnable(true);
 
       const updatedCards = cards.map((item) => {
@@ -116,7 +115,7 @@ export default function Evaluation() {
 
       setCards(getFalse);
 
-      dispatch(TurnOver());
+      setCardTurnOver(cardturnover + 1);
       setFlip(false);
     } else {
       if (mainValue) {
@@ -131,12 +130,12 @@ export default function Evaluation() {
     if (mainValue) {
       if (val === flipcardValue) {
         setColor("1");
-        pointwin.play();
-        dispatch(CorrectValue());
+        pointwin?.play();
+        setCorrectvalue(correctvalue + 1);
       } else {
         setColor("2");
-        lost.play();
-        dispatch(WrongValue());
+        lost?.play();
+        setWrongValue(wrongValue + 1);
       }
       setTimeout(() => {
         setCheck(true);
@@ -153,7 +152,7 @@ export default function Evaluation() {
 
   useEffect(() => {
     if (check && !auto) {
-      dispatch(TurnOver());
+      setCardTurnOver(cardturnover + 1);
       let Remainingcards = [...cards];
 
       let randomIndex = Math.floor(Math.random() * Remainingcards.length);
@@ -184,12 +183,12 @@ export default function Evaluation() {
       setTimeout(() => {
         if (card === value) {
           setColor("1");
-          pointwin.play();
-          dispatch(CorrectValue());
+          pointwin?.play();
+          setCorrectvalue(correctvalue + 1);
         } else {
           setColor("2");
-          lost.play();
-          dispatch(WrongValue());
+          lost?.play();
+          setWrongValue(wrongValue + 1);
         }
       }, 1000);
 
@@ -211,9 +210,9 @@ export default function Evaluation() {
     setMainValue(false);
     setEvaluationTimer(120);
     dispatch(Shuffled(!shuffle));
-    dispatch({ type: "turnoverempty" });
-    dispatch({ type: "correctValueempty" });
-    dispatch({ type: "wrongvalueempty" });
+    setCardTurnOver(0);
+    setCorrectvalue(0);
+    setWrongValue(0);
     setFlip(true);
     setColor("");
     setImg("");
@@ -272,7 +271,7 @@ export default function Evaluation() {
               </div>
             </div>
             <div className="col-md-6">
-              {img ? <img className="bordered" src={img} /> : ""}
+              {img ? <img className="bordered" src={img} alt="image" /> : ""}
             </div>
           </div>
         </div>
@@ -285,7 +284,7 @@ export default function Evaluation() {
             <div className="row Evaluation_result">
               <div className="Result_wrapper_duration">
                 <div className="Result_timmer">
-                  <img src="./img/timmer_icon_trim.png" />
+                  <img src="./img/timmer_icon_trim.png" alt="image" />
                   <input type="text" value={formattedTime} readOnly />
                   <div className="pts_box">
                     <button
@@ -324,6 +323,9 @@ export default function Evaluation() {
         Roundpercent={Roundpercent}
         handleRestartGame={handleRestartGame}
         gameover={gameover}
+        cardturnover={cardturnover}
+        correctvalue={correctvalue}
+        wrongValue={wrongValue}
       />
     </>
   );

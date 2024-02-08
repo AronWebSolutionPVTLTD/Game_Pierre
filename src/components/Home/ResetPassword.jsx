@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 import { Toast } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export function ResetPassword() {
   const [show, setShow] = useState(false);
