@@ -499,7 +499,11 @@ a.nav-link {
         justify-content: center;
         text-align: center;
     }
-
+    img.bordered {
+        border: 3px solid #000;
+        height: auto;
+        border-radius: unset !important;
+    }
 }
 
 @media (max-width:768px) {
