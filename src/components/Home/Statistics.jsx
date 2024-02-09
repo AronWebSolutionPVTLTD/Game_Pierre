@@ -3,7 +3,8 @@
 import React, { useContext, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { GameContext } from "../../Context/GameContext";
-
+import axios from "axios";
+const URL=process.env.REACT_APP_API_URL;
 export const Statistics = ({
   showModal,
   setShowModal,
@@ -27,7 +28,9 @@ export const Statistics = ({
   } = useContext(GameContext);
   const { correctValue, wrongvalue, turnover, wonCards } = state;
   const [carddetail, setcardDetail] = useState(false);
-  const userName = localStorage.getItem("username");
+  const userData =(JSON.parse( localStorage.getItem("user")))
+
+
 
   // __________________USER RETURN CARD_________________
 
@@ -37,7 +40,7 @@ export const Statistics = ({
   //   const retrievedData = JSON.parse(storedData);
   truevaluearray.forEach((card) => {
     const cardName = card?.name?.toLowerCase();
-    if (card.isCorrect) {
+    if (card?.isCorrect) {
       rightAnswers[cardName] = (rightAnswers[cardName] || 0) + 1;
     }
   });
@@ -75,6 +78,58 @@ export const Statistics = ({
   };
 
   const cardCountsComp = calculateCardCountsComp();
+
+  const handlestats = async () => {
+    try {
+      // Prepare the data to be sent in the request body
+      const requestData = {
+        user:userData?._id,
+        cardData: Object.keys(cardCounts).map((cardName) => {
+          const timesReturned = cardCounts[cardName];
+          const rightAnswerCount = rightAnswers[cardName] || 0;
+          const ratePercentage = (rightAnswerCount / timesReturned) * 100 || 0;
+          const averageData = averageresponsetime[cardName] || {
+            sum: 0,
+            count: 0,
+            average: 0,
+          };
+
+          return {
+            cardName: cardName,
+            no_of_turns: timesReturned,
+            correctValue: rightAnswerCount,
+            responseTime: (averageData.average / 1000).toFixed(2),
+            percentage: ratePercentage.toFixed(0),
+          };
+        }),
+        totalData: {
+          totalTurns: Object.values(cardCounts).reduce((acc, count) => acc + count, 0),
+          totalCorrectValue: Object.values(rightAnswers).reduce((acc, count) => acc + count, 0),
+          totalResponseTime: (
+            Object.values(averageresponsetime).reduce((acc, data) => acc + data.average, 0) / 1000
+          ).toFixed(2),
+          totalPercentage: (
+            (Object.values(rightAnswers).reduce((acc, count) => acc + count, 0) /
+              Object.values(cardCounts).reduce((acc, count) => acc + count, 0)) *
+            100
+          ).toFixed(0) + '%',
+        },
+      };
+
+      // Send the data to the server
+      const response = await axios.post(`${URL}/api/statsData`, requestData);
+
+      console.log(response.data); 
+    } 
+    
+    
+    catch (error) {
+      console.error("Error sending data to server:", error.message);
+     
+    }
+  };
+
+
 
   return (
     <div>
@@ -120,7 +175,7 @@ export const Statistics = ({
               </button>
             </div>
             <div className="fermer" style={{ textAlign: "right" }}>
-              <button onClick={handleClose}>Fermer</button>
+              <button onClick={()=>{handleClose(); handlestats()}}>Fermer</button>
             </div>
           </div>
         </Modal.Body>
@@ -139,7 +194,7 @@ export const Statistics = ({
           >
             <table className="table table-striped">
               <thead>
-                <h4>{userName}</h4>
+                <h4>{userData?.firstName}</h4>
               </thead>
               <tbody>
                 <tr>

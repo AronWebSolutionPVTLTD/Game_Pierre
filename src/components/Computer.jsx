@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { GameContext } from "../Context/GameContext";
 import { AIsetImg, LoadingProcess, UserNameColor } from "../Context/action";
 
+
 export const Computer = () => {
   const {
     state,
@@ -35,7 +36,7 @@ export const Computer = () => {
     battle = new Audio("battle sound.wav");
   }
 
-  console.log(compcarddata, "compcarddata", currentIndex);
+  const userData =(JSON.parse( localStorage.getItem("user")))
 
   useEffect(() => {
     if (compcard?.length === 0 || compcarddata?.length === 1) {
@@ -113,7 +114,7 @@ export const Computer = () => {
     }
   }, [userCardimg]);
 
-  console.log(flippedIndex, "flipindex");
+
   return (
     <>
       {gameOver || compcarddata?.length === 0 ? (
@@ -157,7 +158,9 @@ export const Computer = () => {
               </div>
             ))}
         </article>
+       
       )}
+       
     </>
   );
 };

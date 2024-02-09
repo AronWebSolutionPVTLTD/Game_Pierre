@@ -110,14 +110,15 @@ export const Home = ({ handleFullScreen }) => {
   const [correct, setCorrect] = useState(false);
   const [showsbattlepop, setBattlePop] = useState(false);
 
-  const userName = localStorage.getItem("username");
+  const userData =(JSON.parse( localStorage.getItem("user")))
+  const userName = userData ? userData.firstName: null;
 
   const compName = "Ordinateur";
   const draw = "Egalité";
   const Timer = JSON.parse(localStorage.getItem("timer"));
   const startTimeComp = JSON.parse(localStorage.getItem("compstarttime"));
 
-  console.log(rhythm, "rhythm");
+  
 
   let pointwin, winner, buttonsound, lost;
 
@@ -700,7 +701,7 @@ export const Home = ({ handleFullScreen }) => {
             <div className="col-md-2">
               <motion.input
                 type="text"
-                defaultValue={localStorage.getItem("username")}
+                defaultValue={userName}
                 readOnly="readonly"
                 className={`${userNameColor ? "activeUser" : ""}`}
                 animate={{

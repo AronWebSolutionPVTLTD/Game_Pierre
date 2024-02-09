@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Toast from "react-bootstrap/Toast";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-
+const URL=process.env.REACT_APP_API_URL;
 export default function Login() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -53,9 +53,7 @@ export default function Login() {
 
       if (forgotpass) {
         axios
-          .post("https://game-backend-elkj.onrender.com/api/forgotpassword", {
-            email,
-          })
+          .post(`${URL}/api/forgotpassword`, {email,})
           .then((response) => {
             if (
               response.data.message ===
@@ -75,13 +73,12 @@ export default function Login() {
       } else {
         const payload = { email, password };
 
-        const response = await axios.post(
-          "https://game-backend-elkj.onrender.com/api/login",
-          payload,
-        );
+        const response = await axios.post(`${URL}/api/login`,payload,);
 
         if (response.data.message === "login successfully") {
-          localStorage.setItem("username", response.data.data.firstName);
+          console.log(response.data,"data")
+          // localStorage.setItem("username", response.data.data.firstName);
+          localStorage.setItem("user", JSON.stringify(response.data.data))
           localStorage.setItem("token", response.data.data.token);
           navigate("/");
           setData(INITIAL_STATE);

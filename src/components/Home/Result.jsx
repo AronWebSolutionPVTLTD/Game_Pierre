@@ -33,7 +33,11 @@ export const Result = ({
   const { wonCards, aiwonCards } = state;
 
   const [recovery, setRecovery] = useState(wonCards);
-  const userName = localStorage.getItem("username");
+  const userData =(JSON.parse( localStorage.getItem("user")))
+  const userName = userData ? userData.firstName: null;
+
+
+  
   const recoveryRefs = useRef([]);
   // const [check,setCheck]=useState(false)
   let clickvalue;

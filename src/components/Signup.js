@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+const URL=process.env.REACT_APP_API_URL;
 
 export default function Signup() {
   const INITIAL_STATE = {
@@ -79,10 +80,7 @@ export default function Signup() {
     try {
       const payload = { firstName, lastName, email, password, phone };
 
-      const response = await axios.post(
-        "https://game-backend-elkj.onrender.com/api/signup",
-        payload,
-      );
+      const response = await axios.post(`${URL}/api/signup`,payload,);
 
       if (response.data === "Registered Successfully") {
         console.log(response);
