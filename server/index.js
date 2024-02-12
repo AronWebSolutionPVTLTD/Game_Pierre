@@ -4,6 +4,8 @@ const Port = process.env.PORT;
 const app = express();
 const connectDB = require("./mongodb");
 const userRouter = require("./router/user");
+const statRouter = require("./router/stastics");
+
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
@@ -11,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 connectDB();
 app.use("/api", userRouter);
+app.use("/api", statRouter);
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
