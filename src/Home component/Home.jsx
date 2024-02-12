@@ -43,16 +43,13 @@ export const Home = ({ handleFullScreen }) => {
     dispatch,
     nextturn,
     setNextTurn,
-
-    setValueSelected,
+setValueSelected,
     setClickCount,
     flipback,
     setFlipBack,
     setFlipwonDeck,
-
-    setTimerEnable,
-
-    setRecoveryCardUse,
+ setTimerEnable,
+setRecoveryCardUse,
     strongvalue,
     setStrongValue,
     cardmatchValue,
@@ -68,15 +65,12 @@ export const Home = ({ handleFullScreen }) => {
     hometimer,
     setHomeTimer,
     setFlippedCardArray,
-
-    setTrueValueArray,
+setTrueValueArray,
     setCompTrueValueArray,
     setCompFlippedCardArray,
-
-    setAverageResponseTime,
+setAverageResponseTime,
     setAverageResponseTimeComp,
-
-    setCompCard,
+setCompCard,
     setCompCardData,
     rhythm,
   } = useContext(GameContext);
@@ -109,7 +103,8 @@ export const Home = ({ handleFullScreen }) => {
     JSON.parse(localStorage.getItem("cardvalue")) || 0;
   const [correct, setCorrect] = useState(false);
   const [showsbattlepop, setBattlePop] = useState(false);
-
+const[strongpointuser,setStrongPointUser]=useState(false)
+const[strongpointcomp,setStrongPointComp]=useState(false)
   const userData =(JSON.parse( localStorage.getItem("user")))
   const userName = userData ? userData.firstName: null;
 
@@ -211,13 +206,25 @@ export const Home = ({ handleFullScreen }) => {
   useEffect(() => {
     setTimeout(() => {
       setUserPoint(false);
-    }, 2000);
+    }, 1000);
   }, [userpoint]);
 
   useEffect(() => {
     setTimeout(() => {
+      setStrongPointUser(false);
+    }, 1000);
+  }, [strongpointuser]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStrongPointComp(false);
+    }, 1000);
+  }, [strongpointcomp]);
+
+  useEffect(() => {
+    setTimeout(() => {
       setCompPoint(false);
-    }, 2000);
+    }, 1000);
   }, [comppoint]);
 
   useEffect(() => {
@@ -580,11 +587,11 @@ export const Home = ({ handleFullScreen }) => {
             dispatch(WonPiles(CompCard));
 
             uservalue += 1;
-            setUserPoint(true);
+            setStrongPointUser(true);
             setTimeout(() => {
               pointwin?.play();
               setPoints(uservalue);
-            }, 1000);
+            }, 800);
             setTimeout(() => {
               dispatch(UserNameColor(true));
               setValueSelected(false);
@@ -596,13 +603,13 @@ export const Home = ({ handleFullScreen }) => {
 
             dispatch(AiWonPiles(CompCard));
             dispatch(AiWonPiles(userCard));
-            setCompPoint(true);
+            
             compvalue += 1;
-
+            setStrongPointComp(true);
             setTimeout(() => {
               pointwin?.play();
               setCompPt(compvalue);
-            }, 1000);
+            }, 800);
             setTimeout(() => {
               dispatch(UserNameColor(true));
               setValueSelected(false);
@@ -735,6 +742,21 @@ export const Home = ({ handleFullScreen }) => {
                   <span>+1 Point</span>
                 </motion.div>
               )}
+
+
+              {/* ----------------STRONG POINT USER_________________ */}
+              {strongpointuser && (
+                <motion.div
+                  className="plus_point"
+                  layout
+                  initial={{ opacity: 0, y: 200, rotateX: 120, x: 300 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
+                  exit={{ opacity: 0, y: 100 }}
+                  transition={{ duration: 0.7, ease: "linear" }}
+                >
+                  <span>+1 Point</span>
+                </motion.div>
+              )}
             </div>
             {/* ___________________USER +1 point pop end_________________ */}
 
@@ -780,6 +802,22 @@ export const Home = ({ handleFullScreen }) => {
                   <span>+1 Point</span>
                 </motion.div>
               )}
+
+{strongpointcomp && (
+                <motion.div
+                  className="plus_point"
+                  layout
+                  initial={{ opacity: 0, y: 200, rotateX: 120, x: -300 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0, x: 0 }}
+                  exit={{ opacity: 0, y: 100 }}
+                  transition={{ duration: 0.7, ease: "linear" }}
+                >
+                  <span>+1 Point</span>
+                </motion.div>
+              )}
+
+
+
             </div>
           </div>
 
