@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 import Toast from "react-bootstrap/Toast";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 const URL=process.env.REACT_APP_API_URL;
+
 export default function Login() {
-  console.log(URL,"------f----------");
+ 
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
