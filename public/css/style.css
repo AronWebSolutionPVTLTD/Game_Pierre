@@ -15,8 +15,9 @@
     height: 50px;
     padding: 10px 20px;
     width: 100%;
+    text-align: center;
+    line-height: 50px;
 }
-
 .main_battle img {
     max-width: 100%;
 }
