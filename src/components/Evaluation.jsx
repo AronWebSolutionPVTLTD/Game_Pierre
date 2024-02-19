@@ -9,6 +9,7 @@ import { Statistics } from "./Home/Statistics";
 import "../main component/toaster.css";
 import { toast } from "react-toastify";
 
+
 export default function Evaluation() {
   const { state, dispatch, rhythm } = useContext(GameContext);
   const { shuffle } = state;
@@ -24,9 +25,7 @@ export default function Evaluation() {
   const [flip, setFlip] = useState(true);
   const Time = JSON.parse(localStorage.getItem("timer"));
   const [evaluationtimer, setEvaluationTimer] = useState(120);
-  const [circlevalue, setCircleValue] = useState(state.cards);
-  const [auto, setAuto] = useState(false);
-  const [starttime, setStartTimer] = useState(false);
+ const [starttime, setStartTimer] = useState(false);
   const [cardturnover, setCardTurnOver] = useState(0);
   const [correctvalue, setCorrectvalue] = useState(0);
   const [wrongValue, setWrongValue] = useState(0);
@@ -46,7 +45,7 @@ export default function Evaluation() {
   useEffect(() => {
     if (cards.length === 0) {
       setCards(state.cards);
-      setCircleValue(state.cards);
+   
     }
   }, [shuffle, state.cards, cards]);
 
@@ -62,7 +61,7 @@ export default function Evaluation() {
       setGameOver(true);
       setTimerEnable(false);
       setCheck(false);
-      setAuto(false);
+    
       setColor("");
       return;
     }
@@ -125,9 +124,10 @@ export default function Evaluation() {
   };
 
   // __________________Handle click for circle value_________
-  const handleClick = (val) => {
+  const handleClick = (val) => {    
     setCheckValue(val);
     if (mainValue) {
+    
       if (val === flipcardValue) {
         setColor("1");
         pointwin?.play();
@@ -150,57 +150,24 @@ export default function Evaluation() {
     // ------------------------------------------
   };
 
-  useEffect(() => {
-    if (check && !auto) {
-      setCardTurnOver(cardturnover + 1);
-      let Remainingcards = [...cards];
-
-      let randomIndex = Math.floor(Math.random() * Remainingcards.length);
-
-      let picked = Remainingcards[randomIndex];
-
-      localStorage.setItem("autoflipcard", JSON.stringify(picked?.value));
-      setImg(picked?.img);
-      let remaincard = Remainingcards.filter((card) => card?.id !== picked?.id);
-      setCards(remaincard);
-
-      let MainValueIndex = Math.floor(Math.random() * circlevalue.length);
-
-      let Circle_val = circlevalue[MainValueIndex]?.value;
-      localStorage.setItem("autocircle", JSON.stringify(Circle_val));
-
-      setAuto(true);
-      setCheck(false);
-    }
-  }, [check]);
 
   useEffect(() => {
-    let timeoutId;
-    if (auto && !check) {
-      const card = JSON.parse(localStorage.getItem("autoflipcard"));
-      const value = JSON.parse(localStorage.getItem("autocircle"));
-      setCheckValue(value);
-      setTimeout(() => {
-        if (card === value) {
-          setColor("1");
-          pointwin?.play();
-          setCorrectvalue(correctvalue + 1);
-        } else {
-          setColor("2");
-          lost?.play();
-          setWrongValue(wrongValue + 1);
-        }
-      }, 1000);
+       if (check) {
+         setCardTurnOver(cardturnover + 1);
+         let Remainingcards = [...cards];
+         let randomIndex = Math.floor(Math.random() * Remainingcards.length);
+         let picked = Remainingcards[randomIndex];
+   
+         setImg(picked?.img);
+         setFlipCardValue(picked?.value);
+         let remaincard = Remainingcards.filter((card) => card?.id !== picked?.id);
+         setCards(remaincard);
+         setMainValue(true)
+         setCheck(false);
+       }
+     }, [check]);
 
-      timeoutId = setTimeout(() => {
-        setCheck(true);
-        setColor("");
-        setAuto(false);
-      }, 2000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [auto, check]);
-
+  
   // Game over--------------------------------
 
   const handleRestartGame = () => {
@@ -244,13 +211,13 @@ export default function Evaluation() {
                     >
                       <div>
                         <div className="card-front">
-                          <img src="./img/Image verso card.png" />
+                          <img src="./img/Image verso card.png" alt="verso"/>
                         </div>
                       </div>
                     </div>
                   ))}
 
-                {cards.length == 0 && (
+                {cards.length === 0 && (
                   <div
                     className="front_card_text"
                     style={{
@@ -271,7 +238,7 @@ export default function Evaluation() {
               </div>
             </div>
             <div className="col-md-6">
-              {img ? <img className="bordered" src={img} alt="image" /> : ""}
+              {img ? <img className="bordered" src={img} alt="card" /> : ""}
             </div>
           </div>
         </div>
@@ -284,7 +251,7 @@ export default function Evaluation() {
             <div className="row Evaluation_result">
               <div className="Result_wrapper_duration">
                 <div className="Result_timmer">
-                  <img src="./img/timmer_icon_trim.png" alt="image" />
+                  <img src="./img/timmer_icon_trim.png" alt="timer" />
                   <input type="text" value={formattedTime} readOnly />
                   <div className="pts_box">
                     <button

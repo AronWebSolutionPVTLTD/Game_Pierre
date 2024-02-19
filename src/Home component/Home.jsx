@@ -424,15 +424,17 @@ const[strongpointcomp,setStrongPointComp]=useState(false)
 
         if (mainvalue === cardvalue) {
           handleUserEndTime();
-
-          setColor("1");
-          setUserPoint(true);
           uservalue += 1;
+          setColor("1");
+          dispatch(CorrectValue());
+
+          setUserPoint(true);
+       
           setTimeout(() => {
             pointwin?.play();
-            setUserPoint(uservalue);
+            setPoints(uservalue);
           }, 1000);
-          dispatch(CorrectValue());
+        
           setTimeout(() => {
             setColor("");
             dispatch(UserNameColor(false));
@@ -440,7 +442,7 @@ const[strongpointcomp,setStrongPointComp]=useState(false)
           computerturn();
         } else {
           setColor("2");
-          dispatch(CorrectValue());
+          dispatch(WrongValue());
           setTimeout(() => {
             lost?.play();
             setColor("");
