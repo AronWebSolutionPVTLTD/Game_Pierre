@@ -56,7 +56,7 @@ export default function BinaryCards() {
   };
 
   const handleRegularCheckboxChange = (checked, card) => {
-    const isFirstLineCard = defaultbinary.indexOf(card) < 6;
+    const isFirstLineCard = defaultbinary.indexOf(card) < 9;
 
     if (checked && isFirstLineCard) {
       setBinaryFilterCard((prevfilter) => {

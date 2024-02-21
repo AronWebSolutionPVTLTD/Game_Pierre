@@ -51,7 +51,7 @@ function GameSettings() {
         <h3 className="text-center fs-4 fw-bold"> Settings</h3>
         <div className="row justify-content-center">
           <div className="col-md-5 text-center pt-5">
-            <h4 className="fw-semibold mb-4">Mode selection</h4>
+            <h4 className="fw-semibold mb-4">Sélection mode Binaire ou Ternaire</h4>
             <div className="setting_radio justify-content-center mt-3">
               <div className="radio_btn">
                 <input
